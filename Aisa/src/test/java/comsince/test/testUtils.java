@@ -9,5 +9,7 @@ public class testUtils extends TestCase {
 	   }
 	public void test(){
 		Log.d("test", "新加的，测试提交方法");
+		Log.d("test", "新加的，测试提交方法");
+		Log.d("test", "新加的，测试提交方法");
 	}
 }
