@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/desktop_background2" 
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/topview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+
+        <ImageButton
+            android:id="@+id/localmusic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:src="@drawable/tab_local_media" />
+
+        <ImageButton
+            android:id="@+id/favoritemusic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:src="@drawable/table_favorate_media" />
+
+        <ImageButton
+            android:id="@+id/netmusic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@null"
+            android:src="@drawable/table_net_media" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottomview"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/title_bar" >
+
+        <ImageView
+            android:id="@+id/list_show_album"
+            android:layout_width="54dp"
+            android:layout_height="60dp"
+            android:src="@drawable/default_bg_s" />
+
+        <LinearLayout
+            android:id="@+id/linearlayoutmisicdetail"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/list_show_album"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <!-- 跑马灯效果 -->
+
+            <TextView
+                android:id="@+id/musicName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:hint="musicName"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/musicTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="00:00/02:20"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/playlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/linearlayoutmisicdetail"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/prebtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@drawable/title_bar"
+                android:src="@drawable/play_pre_btn" />
+
+            <ImageButton
+                android:id="@+id/playbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@drawable/title_bar"
+                android:src="@drawable/play_play_btn" />
+
+            <ImageButton
+                android:id="@+id/nextbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@drawable/title_bar"
+                android:src="@drawable/play_next_btn" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/center_body_view_pager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/bottomview"
+        android:layout_below="@+id/topview" >
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>
