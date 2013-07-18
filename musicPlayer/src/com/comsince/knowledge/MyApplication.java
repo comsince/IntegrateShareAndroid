@@ -5,12 +5,14 @@ import java.util.List;
 
 import android.app.Application;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import com.comsince.knowledge.entity.Music;
 import com.comsince.knowledge.utils.MusicDataUtil;
 
 public class MyApplication extends Application {
+	public static MediaPlayer mediaPlayer;
 	public static Context context;
 	public static List<Music> musics = new ArrayList<Music>();
 	@Override
@@ -25,6 +27,8 @@ public class MyApplication extends Application {
 				setMusics(MusicDataUtil.getMultiDatas(context));
 			}
 		}).start();
+		//初始化mediaPlayer
+		mediaPlayer = new MediaPlayer();
 	}
 	
 	/**
@@ -35,6 +39,10 @@ public class MyApplication extends Application {
 		musics.clear();
 		musics = ms;
 		Log.i("test", "列表长度" + this.musics.size());
+	}
+
+	public static List<Music> getMusics() {
+		return musics;
 	}
 
  

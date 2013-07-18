@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -184,6 +185,19 @@ public class MainActivity extends Activity {
 			viewPager.setCurrentItem(2);
 		}
 
+	}
+	/**
+	 * 定义更新底部播放控件的状态，播放,暂停
+	 * 播放的图片，音乐名称，音乐的时间
+	 * */
+	private class MusicReciver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
 }
