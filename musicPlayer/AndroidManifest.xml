@@ -52,6 +52,14 @@
             android:screenOrientation="portrait" >
         </activity>
         
+        <!-- music player service -->
+        <service android:name=".service.MusicPlayerService">
+            <intent-filter>
+                <action android:name="com.comsince.knowledge.service.MusicPlayerService" >
+                </action>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
         
     </application>
 

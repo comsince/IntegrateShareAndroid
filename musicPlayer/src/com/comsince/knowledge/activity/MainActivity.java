@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -24,6 +25,7 @@ import com.comsince.knowledge.adapter.MyPagerAdapter;
 import com.comsince.knowledge.layout.FavoriteLayout;
 import com.comsince.knowledge.layout.LocalLayout;
 import com.comsince.knowledge.layout.NetLayout;
+import com.comsince.knowledge.service.MusicPlayerService;
 
 public class MainActivity extends Activity {
 	// 基本控件
@@ -52,6 +54,8 @@ public class MainActivity extends Activity {
 		context = this;
 		inflater = LayoutInflater.from(this);
 		initView();
+		//启动service
+		startService(new Intent(context,MusicPlayerService.class));
 	}
 
 	@Override
