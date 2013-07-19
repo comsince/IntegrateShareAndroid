@@ -87,6 +87,7 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/linearlayoutmisicdetail"
             android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <ImageButton

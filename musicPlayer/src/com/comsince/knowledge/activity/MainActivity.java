@@ -345,7 +345,16 @@ public class MainActivity extends Activity implements OnClickListener{
 				isPlaying = true;
 			}
 			break;
-
+		case R.id.nextbtn:
+			isPlaying = true;
+			playIntent.setAction(Constant.ACTION_NEXT);
+			sendBroadcast(playIntent);
+			break;
+		case R.id.prebtn:
+			isPlaying = true;
+			playIntent.setAction(Constant.ACTION_PREVIOUS);
+			sendBroadcast(playIntent);
+			break;
 		default:
 			break;
 		}

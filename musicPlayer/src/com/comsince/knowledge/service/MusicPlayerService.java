@@ -28,7 +28,7 @@ public class MusicPlayerService extends Service {
 	/**
 	 * 当前播放歌曲序号
 	 * */
-	private int current;
+	private int current = 0;
 	/**
 	 * 当前播放的音乐
 	 * */
@@ -39,8 +39,9 @@ public class MusicPlayerService extends Service {
 	public static int status = 1;
 	/**
 	 * 当前歌曲总时长
-	 * */ 
+	 * */
 	private int totalms = 0;
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -51,12 +52,12 @@ public class MusicPlayerService extends Service {
 		super.onCreate();
 		Log.d("service boardcast", "onCreate");
 		context = this;
-		//获取mediaPlayer
+		// 获取mediaPlayer
 		mPlayer = MyApplication.mediaPlayer;
-		//1 实例化广播接收器
+		// 1 实例化广播接收器
 		mReceiver = new MyReciever();
-		//获取音乐列表
-		musicList = ((MyApplication)getApplication()).getMusics();
+		// 获取音乐列表
+		musicList = ((MyApplication) getApplication()).getMusics();
 	}
 
 	@Override
@@ -72,25 +73,28 @@ public class MusicPlayerService extends Service {
 		filter.addAction(Constant.ACTION_JUMR);
 		filter.addAction(Constant.ACTION_PAUSE);
 		filter.addAction(Constant.ACTION_PLAY);
+		filter.addAction(Constant.ACTION_PREVIOUS);
+		filter.addAction(Constant.ACTION_NEXT);
+		
 		/**
-		 * 1.定义自己的boardcastReceiver,并重写onReceive方法
-		 * 2.给boardcastReceiver 加fileter
+		 * 1.定义自己的boardcastReceiver,并重写onReceive方法 2.给boardcastReceiver 加fileter
 		 * 
 		 * */
 		registerReceiver(mReceiver, filter);
 	}
-	
-	private void jump(int position){
-		if(musicList!=null && musicList.size()>0){
+
+	private void jump(int position) {
+		if (musicList != null && musicList.size() > 0) {
 			current = position;
 			play();
 		}
 	}
+
 	/**
 	 * 播放音乐
 	 * */
-	private void play(){
-		if(musicList!=null && musicList.size()>0){
+	private void play() {
+		if (musicList != null && musicList.size() > 0) {
 			nowPlayMusic = musicList.get(current);
 			try {
 				mPlayer.reset();
@@ -99,7 +103,7 @@ public class MusicPlayerService extends Service {
 				mPlayer.start();
 				status = 3;
 				totalms = mPlayer.getDuration();
-				Log.d("Asia", "service totalms"+totalms);
+				Log.d("Asia", "service totalms" + totalms);
 				updataAllMusicInfo();
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
@@ -111,14 +115,44 @@ public class MusicPlayerService extends Service {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
+
+	/**
+	 * 播放上一首歌曲
+	 * */
+	private void previous() {
+      if(musicList != null && musicList.size() > 0){
+    	  if(current == 0){
+    		  current = musicList.size()-1;
+    	  }else{
+    		  current--;
+    	  }
+    	  play();
+      }
+	}
+
+	/**
+	 * 播放下一首歌曲
+	 * */
+	private void next() {
+		if (musicList != null && musicList.size() > 0) {
+			if (current == musicList.size() - 1) {
+				current = 0;
+			} else {
+				current++;
+			}
+			play();
+		}
+	}
+
 	/**
 	 * 更新当前播放音乐的信息
 	 * */
 	private Intent updateIntent;
-	private void updataAllMusicInfo(){
-		if(updateIntent == null){
+
+	private void updataAllMusicInfo() {
+		if (updateIntent == null) {
 			updateIntent = new Intent(Constant.ACTION_UPDATE);
 		}
 		updateIntent.putExtra("status", status);
@@ -126,25 +160,26 @@ public class MusicPlayerService extends Service {
 		updateIntent.putExtra("totalms", totalms);
 		sendBroadcast(updateIntent);
 	}
+
 	/**
 	 * 接收来自activity的播放任务并作相应的处理
 	 * */
-	private class MyReciever extends BroadcastReceiver{
+	private class MyReciever extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if(Constant.ACTION_JUMR.equals(intent.getAction())){
+			if (Constant.ACTION_JUMR.equals(intent.getAction())) {
 				Log.d("service boardcast", Constant.ACTION_JUMR);
 				Toast.makeText(MusicPlayerService.this, "进入播放service", Toast.LENGTH_SHORT).show();
 				int position = intent.getIntExtra("position", 0);
 				if (position >= 0) {
 					jump(position);
 				}
-			}else if(Constant.ACTION_PAUSE.equals(intent.getAction())){
-				//暂停播放
+			} else if (Constant.ACTION_PAUSE.equals(intent.getAction())) {
+				// 暂停播放
 				mPlayer.pause();
 				status = 2;
-			}else if(Constant.ACTION_PLAY.equals(intent.getAction())){
+			} else if (Constant.ACTION_PLAY.equals(intent.getAction())) {
 				switch (status) {
 				case 2:
 					mPlayer.start();
@@ -154,9 +189,15 @@ public class MusicPlayerService extends Service {
 				default:
 					break;
 				}
+			} else if (Constant.ACTION_NEXT.equals(intent.getAction())) {
+				next();
+				status = 3;
+			} else if (Constant.ACTION_PREVIOUS.equals(intent.getAction())) {
+				previous();
+				status = 3;
 			}
 		}
-		
+
 	}
 
 }
