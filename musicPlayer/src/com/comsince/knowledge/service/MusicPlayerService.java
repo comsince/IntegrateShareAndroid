@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -58,6 +59,14 @@ public class MusicPlayerService extends Service {
 		mReceiver = new MyReciever();
 		// 获取音乐列表
 		musicList = ((MyApplication) getApplication()).getMusics();
+		//实现当前歌曲播放完后自动播放下一曲的功能
+		mPlayer.setOnCompletionListener(new OnCompletionListener() {
+			
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				next();
+			}
+		});
 	}
 
 	@Override
