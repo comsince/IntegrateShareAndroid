@@ -55,6 +55,10 @@ public class MainActivity extends Activity implements OnClickListener{
 	NetLayout netLayout;
 	MyPagerAdapter pagerAdapter;
 	/**
+	 * 记录当前音乐的播放状态
+	 */
+	boolean isPlaying = false; 
+	/**
 	 * musicReceiver
 	 * */
 	MusicReceiver musicReceiver;
@@ -261,6 +265,7 @@ public class MainActivity extends Activity implements OnClickListener{
 				}
 				if (status == 3) {
 					playBtn.setImageResource(R.drawable.desktop_pausebt);
+					isPlaying = true;
 				}
 			}
 		}
@@ -317,11 +322,33 @@ public class MainActivity extends Activity implements OnClickListener{
 		}
 
 	};
-
+	
+	/**
+	 * 播放intent
+	 */
+	Intent playIntent;
+   
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
+		playIntent = new Intent();
+		switch (v.getId()) {
+		case R.id.playbtn:
+			if(isPlaying){
+				playIntent.setAction(Constant.ACTION_PAUSE);
+				sendBroadcast(playIntent);
+				isPlaying = false;
+				playBtn.setImageResource(R.drawable.play_play_btn);
+			}else{
+				playBtn.setImageResource(R.drawable.desktop_pausebt);
+				playIntent.setAction(Constant.ACTION_PLAY);
+				sendBroadcast(playIntent);
+				isPlaying = true;
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 
 }

@@ -70,6 +70,8 @@ public class MusicPlayerService extends Service {
 		super.onStart(intent, startId);
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Constant.ACTION_JUMR);
+		filter.addAction(Constant.ACTION_PAUSE);
+		filter.addAction(Constant.ACTION_PLAY);
 		/**
 		 * 1.定义自己的boardcastReceiver,并重写onReceive方法
 		 * 2.给boardcastReceiver 加fileter
@@ -137,6 +139,20 @@ public class MusicPlayerService extends Service {
 				int position = intent.getIntExtra("position", 0);
 				if (position >= 0) {
 					jump(position);
+				}
+			}else if(Constant.ACTION_PAUSE.equals(intent.getAction())){
+				//暂停播放
+				mPlayer.pause();
+				status = 2;
+			}else if(Constant.ACTION_PLAY.equals(intent.getAction())){
+				switch (status) {
+				case 2:
+					mPlayer.start();
+					status = 3;
+					break;
+
+				default:
+					break;
 				}
 			}
 		}
