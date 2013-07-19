@@ -85,6 +85,7 @@ public class MusicPlayerService extends Service {
 		}
 	}
 	/**
+	 * 播放音乐
 	 * */
 	private void play(){
 		if(musicList!=null && musicList.size()>0){
@@ -95,6 +96,9 @@ public class MusicPlayerService extends Service {
 				mPlayer.prepare();
 				mPlayer.start();
 				status = 3;
+				totalms = mPlayer.getDuration();
+				Log.d("Asia", "service totalms"+totalms);
+				updataAllMusicInfo();
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (SecurityException e) {
@@ -106,6 +110,19 @@ public class MusicPlayerService extends Service {
 			}
 		}
 		
+	}
+	/**
+	 * 更新当前播放音乐的信息
+	 * */
+	private Intent updateIntent;
+	private void updataAllMusicInfo(){
+		if(updateIntent == null){
+			updateIntent = new Intent(Constant.ACTION_UPDATE);
+		}
+		updateIntent.putExtra("status", status);
+		updateIntent.putExtra("music", nowPlayMusic);
+		updateIntent.putExtra("totalms", totalms);
+		sendBroadcast(updateIntent);
 	}
 	/**
 	 * 接收来自activity的播放任务并作相应的处理

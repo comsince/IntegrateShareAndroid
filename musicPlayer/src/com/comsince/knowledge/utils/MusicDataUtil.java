@@ -14,7 +14,7 @@ public class MusicDataUtil {
 	/**
 	 * 循环遍历歌曲列表
 	 * 
-	 * @param context 
+	 * @param context
 	 * @return
 	 * */
 	public static List<Music> getMultiDatas(Context context) {
@@ -44,5 +44,26 @@ public class MusicDataUtil {
 			musicCursor.close();
 		}
 		return musics;
+	}
+
+	/**
+	 * 取得歌曲所对应的专辑key的图片path
+	 * @param albumKey 专辑key
+	 * */
+	public static String getAlbumArtPath(Context context, String albumkey) {
+		String[] argArr = { albumkey };
+		Cursor albumCursor = context.getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, null, MediaStore.Audio.AudioColumns.ALBUM_KEY + " = ?", argArr, null);
+		if (null != albumCursor && albumCursor.getCount() > 0) {
+			albumCursor.moveToFirst();
+			int albumArtIndex = albumCursor.getColumnIndex(MediaStore.Audio.AlbumColumns.ALBUM_ART);
+			String musicAlbumArtPath = albumCursor.getString(albumArtIndex);
+			if (null != musicAlbumArtPath) {
+				return musicAlbumArtPath;
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 }

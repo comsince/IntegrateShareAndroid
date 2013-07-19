@@ -82,11 +82,11 @@
 
         <LinearLayout
             android:id="@+id/playlayout"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/linearlayoutmisicdetail"
-            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
             android:orientation="horizontal" >
 
             <ImageButton
@@ -113,6 +113,13 @@
                 android:background="@drawable/title_bar"
                 android:src="@drawable/play_next_btn" />
         </LinearLayout>
+         <ProgressBar
+            android:id="@+id/musicProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="4dp"
+            android:layout_alignParentTop="true"
+            android:progressDrawable="@drawable/progress_dotted" />
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
