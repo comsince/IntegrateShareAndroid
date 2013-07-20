@@ -167,6 +167,7 @@ public class MusicPlayerService extends Service {
 		updateIntent.putExtra("status", status);
 		updateIntent.putExtra("music", nowPlayMusic);
 		updateIntent.putExtra("totalms", totalms);
+		updateIntent.putExtra("position", current);
 		sendBroadcast(updateIntent);
 	}
 

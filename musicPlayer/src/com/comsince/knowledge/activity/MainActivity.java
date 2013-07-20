@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.comsince.knowledge.MyApplication;
 import com.comsince.knowledge.R;
+import com.comsince.knowledge.adapter.LocalMusicListAdapter;
 import com.comsince.knowledge.adapter.MyPagerAdapter;
 import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.Music;
@@ -236,6 +237,10 @@ public class MainActivity extends Activity implements OnClickListener{
 	 * 播放状态
 	 * */
 	int status;
+	/**
+	 * 当前选中的歌曲位置，也是其在listview中的位置
+	 * */
+	public int position;
 	public Bitmap nowBitMap;
 	public Music music;
 
@@ -248,6 +253,7 @@ public class MainActivity extends Activity implements OnClickListener{
 				music = (Music) intent.getSerializableExtra("music");
 				totalms = intent.getIntExtra("totalms", 28888);
 				status = intent.getIntExtra("status", -1);
+				position = intent.getIntExtra("position", 0);
 				String musicname = music.getMusicName();
 				musicName.setText(musicname);
 				String musictime = music.getTime();
@@ -267,6 +273,15 @@ public class MainActivity extends Activity implements OnClickListener{
 				if (status == 3) {
 					playBtn.setImageResource(R.drawable.desktop_pausebt);
 					isPlaying = true;
+				}
+				//更新listview歌曲播放选中状态
+				if(localLayout.getLocalistview()!=null){
+					((LocalMusicListAdapter)localLayout.getLocalistview().getAdapter()).showNowPlayPos(position);
+					int lastPostion = localLayout.getLocalistview().getLastVisiblePosition();
+					int prePostion = localLayout.getLocalistview().getFirstVisiblePosition();
+					if(position >= lastPostion ||position <= prePostion){
+						localLayout.getLocalistview().setSelection(position);
+					}
 				}
 			}
 		}

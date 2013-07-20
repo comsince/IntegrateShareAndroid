@@ -54,7 +54,9 @@ public class LocalLayout extends LinearLayout {
 		localistview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+			public void onItemClick(AdapterView<?> adapterView, View itemView, int position, long arg3) {
+				Log.d("LocalLayout", itemView.toString());
+				//((LocalMusicListAdapter)localistview.getAdapter()).showNowPlayPos(position);
 				goplay(position);
 			}
 		});
@@ -68,5 +70,15 @@ public class LocalLayout extends LinearLayout {
 		context.sendBroadcast(intent);
 		Log.d("netlayout boardcast", Constant.ACTION_JUMR);
 	}
+
+	public ListView getLocalistview() {
+		return localistview;
+	}
+
+	public void setLocalistview(ListView localistview) {
+		this.localistview = localistview;
+	}
+	
+	
 
 }

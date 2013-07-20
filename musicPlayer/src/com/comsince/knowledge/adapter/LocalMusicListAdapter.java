@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class LocalMusicListAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	AlbumImageLoader albumImageLoader;
 	ListView listView;
+	int nowplaypos;
 
 	public LocalMusicListAdapter(Context context, List<Music> musicList, ListView listView) {
 		inflater = LayoutInflater.from(context);
@@ -38,6 +40,11 @@ public class LocalMusicListAdapter extends BaseAdapter {
 		this.listView = listView;
 		albumImageLoader = new AlbumImageLoader(context);
 		Log.d("Tag", "constructor");
+	}
+	
+	public void showNowPlayPos(int position) {
+		nowplaypos = position;
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -95,6 +102,20 @@ public class LocalMusicListAdapter extends BaseAdapter {
 		}else{
 			viewHolder.ivAlbum.setBackgroundResource(R.drawable.default_bg_s);
 		}
+		/**
+		 * 更新当前播放的歌曲的显示状态信息
+		 * */
+		if(nowplaypos == position){
+			viewHolder.tvMusicName.setTextColor(Color.rgb(0, 153, 204));
+			viewHolder.tvSinger.setTextColor(Color.rgb(0, 153, 204));
+			convertView.setPressed(true);
+			convertView.setBackgroundResource(R.drawable.navigation_title_header_bg);
+		}else{
+			viewHolder.tvMusicName.setTextColor(Color.rgb(255, 255, 255));
+			viewHolder.tvSinger.setTextColor(Color.rgb(255, 255, 255));
+			convertView.setBackgroundResource(R.drawable.navigation_bg_repeat);
+		}
+		
 		return convertView;
 	}
 
