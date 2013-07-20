@@ -78,6 +78,7 @@ public class LocalMusicListAdapter extends BaseAdapter {
 		// viewHolder.ivAlbum.setBackgroundResource(R.drawable.default_bg_s);
 		//为ivAlbum加tag
 		viewHolder.ivAlbum.setTag(music.getAlbumkey());
+		Log.d("LocalMusicListAdapter", "music albumkey: "+music.getAlbumkey());
 		Bitmap bitmap = albumImageLoader.loadImage(music.getAlbumkey(), new ImageCallback() {
 
 			@Override

@@ -67,7 +67,8 @@ public class NetLayout extends LinearLayout {
 			public void run() {
 				// 获得xml文件的输入流
 				try {
-					InputStream in = HttpTool.getStream(HttpTool.URI+"sounds.xml", null, null,HttpTool.GET);
+					//InputStream in = HttpTool.getStream(HttpTool.URI+"sounds.xml", null, null,HttpTool.GET);
+					InputStream in = context.getAssets().open("conf/sounds.xml");
 					NetMusicList netMusicList = simpleXmlReaderUtil.readXmlFromInputStream(in, NetMusicList.class);
 					Log.d(TAG, "音乐列表：" + netMusicList.getNetMusics().size());
 					for (NetMusic netMusic : netMusicList.getNetMusics()) {

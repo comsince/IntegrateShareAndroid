@@ -255,6 +255,7 @@ public class MainActivity extends Activity implements OnClickListener{
 				musicTime.setText("00:00/" + StrTime.getTime(musictime));
 				// 设置音乐图片
 				String albumkey = music.getAlbumkey();
+				Log.d("MainActivity", "music albumkey: "+music.getAlbumkey());
 				if (!TextUtils.isEmpty(albumkey)) {
 					nowBitMap = BitmapTool.getbitBmBykey(context, albumkey);
 				}

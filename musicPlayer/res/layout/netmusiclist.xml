@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge  xmlns:android="http://schemas.android.com/apk/res/android">
-  <include layout="@layout/loadingmusic"  android:id="@+id/loadinginfo"/>
-<ListView 
-    android:id="@+id/lvSounds"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:divider="@drawable/separator_all_black"
-    android:fastScrollEnabled="true"
-    android:cacheColorHint="#00000000"
-    android:dividerHeight="1dp"
-    />
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <include
+        android:id="@+id/loadinginfo"
+        layout="@layout/loadingmusic" />
+
+    <ListView
+        android:id="@+id/lvSounds"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/navigation_list_divider"
+        android:dividerHeight="2.0px"
+        android:fadingEdgeLength="0.0dip"
+        android:fastScrollEnabled="true"
+        android:listSelector="@drawable/list_item_selector" />
+
 </merge>
