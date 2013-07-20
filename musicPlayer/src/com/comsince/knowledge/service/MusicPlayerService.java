@@ -187,11 +187,13 @@ public class MusicPlayerService extends Service {
 				}
 			} else if (Constant.ACTION_PAUSE.equals(intent.getAction())) {
 				// 暂停播放
+				updataAllMusicInfo();
 				mPlayer.pause();
 				status = 2;
 			} else if (Constant.ACTION_PLAY.equals(intent.getAction())) {
 				switch (status) {
 				case 2:
+					updataAllMusicInfo();
 					mPlayer.start();
 					status = 3;
 					break;
