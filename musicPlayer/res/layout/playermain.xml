@@ -2,22 +2,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/navigation_bg_repeat" 
+    android:background="@drawable/navigation_bg_repeat"
     android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/topview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" >
 
-        <ImageButton
+        <TextView
+            android:id="@+id/localmusic"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1.0"
+            android:textSize="20.0sp"
+            android:gravity="center_horizontal|center_vertical"
+            android:hint="我的音乐"
+            android:background="@drawable/tab_local_media"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+        
+        <TextView
+            android:id="@+id/favoritemusic"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1.0"
+            android:textSize="20.0sp"
+            android:gravity="center_horizontal|center_vertical"
+            android:hint="我最爱听"
+            android:background="@drawable/tab_local_media"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+        
+        <TextView
+            android:id="@+id/netmusic"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1.0"
+            android:textSize="20.0sp"
+            android:gravity="center_horizontal|center_vertical"
+            android:hint="在线曲库"
+            android:background="@drawable/tab_local_media"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+       <!-- 
+             <ImageButton
             android:id="@+id/localmusic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
             android:background="@null"
             android:src="@drawable/tab_local_media" />
+       
 
         <ImageButton
             android:id="@+id/favoritemusic"
@@ -33,8 +70,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
             android:background="@null"
-            android:src="@drawable/table_net_media" />
+            android:src="@drawable/table_net_media" /> -->
     </LinearLayout>
+    <ImageView
+        android:id="@+id/tab_shadow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topview"
+        android:background="@drawable/bg_titlebar_shadow" />
 
     <RelativeLayout
         android:id="@+id/bottomview"
@@ -67,12 +110,12 @@
                 android:ellipsize="marquee"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:marqueeRepeatLimit="marquee_forever"
+                android:gravity="center"
                 android:hint="musicName"
+                android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:gravity="center" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/musicTime"
@@ -88,9 +131,9 @@
             android:id="@+id/playlayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/linearlayoutmisicdetail"
-            android:layout_centerInParent="true"
             android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
@@ -118,7 +161,8 @@
                 android:background="@drawable/navigation_bg_repeat"
                 android:src="@drawable/play_next_btn" />
         </LinearLayout>
-         <ProgressBar
+
+        <ProgressBar
             android:id="@+id/musicProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"

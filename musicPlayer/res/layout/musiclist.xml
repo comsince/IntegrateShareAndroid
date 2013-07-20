@@ -19,7 +19,7 @@
         android:dividerHeight="2.0px"
         android:fadingEdgeLength="0.0dip"
         android:fastScrollEnabled="true"
-        android:listSelector="@drawable/list_item_selector"
+        android:listSelector="@drawable/local_category_left_item_bg_selector"
         />
 
 </merge>

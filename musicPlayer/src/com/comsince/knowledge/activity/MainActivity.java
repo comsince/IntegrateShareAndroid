@@ -40,7 +40,7 @@ import com.comsince.knowledge.utils.StrTime;
 public class MainActivity extends Activity implements OnClickListener{
 	// 基本控件
 	ViewPager viewPager;
-	ImageButton localmusic, favoritemusic, netmusic;
+	TextView localmusic, favoritemusic, netmusic;
 	ImageView listShowAlbum;
 	TextView musicName, musicTime;
 	ImageButton preBtn, playBtn, nextBtn;
@@ -115,9 +115,9 @@ public class MainActivity extends Activity implements OnClickListener{
 		pageViews.add(netLayout);
 
 		// 顶部三个导航按钮
-		localmusic = (ImageButton) findViewById(R.id.localmusic);
-		favoritemusic = (ImageButton) findViewById(R.id.favoritemusic);
-		netmusic = (ImageButton) findViewById(R.id.netmusic);
+		localmusic = (TextView) findViewById(R.id.localmusic);
+		favoritemusic = (TextView) findViewById(R.id.favoritemusic);
+		netmusic = (TextView) findViewById(R.id.netmusic);
 		// 播放进度条
 		MusicprogressBar = (ProgressBar) findViewById(R.id.musicProgressBar);
 		// 底部播放按钮
