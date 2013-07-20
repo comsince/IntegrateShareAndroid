@@ -19,7 +19,7 @@ public class LoadingActivity extends Activity {
 			@Override
 			public void run(){
 				Intent intent = new Intent (LoadingActivity.this,GuideActivity.class);			
-				startActivity(intent);			
+				startActivity(intent);
 				LoadingActivity.this.finish();
 				Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
 			}

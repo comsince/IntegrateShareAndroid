@@ -46,7 +46,7 @@ public class LocalLayout extends LinearLayout {
 		
 		musicList = MyApplication.musics;
 		Log.d(TAG, "musicList size :" + musicList.size());
-		adapter = new LocalMusicListAdapter(context, musicList);
+		adapter = new LocalMusicListAdapter(context, musicList,localistview);
 		localistview.setAdapter(adapter);
 	}
 	

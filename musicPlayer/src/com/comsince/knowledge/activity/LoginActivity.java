@@ -27,6 +27,7 @@ public class LoginActivity extends Activity{
 		Intent intent  = new Intent();
 		intent.setClass(this, LoadingActivity.class);
 		startActivity(intent);
+		//LoginActivity.this.finish();
 	}
 	
 

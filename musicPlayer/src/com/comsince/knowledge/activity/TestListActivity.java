@@ -17,7 +17,7 @@ public class TestListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listview);
 		listview = (ListView) findViewById(R.id.lvSoundsTest);
-		adapter = new LocalMusicListAdapter(this, MyApplication.musics);
+		adapter = new LocalMusicListAdapter(this, MyApplication.musics,listview);
 		listview.setAdapter(adapter);
 	}
 	

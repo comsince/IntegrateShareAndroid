@@ -68,6 +68,7 @@ public class GuideActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setClass(GuideActivity.this, MainActivity.class);
 				startActivity(intent);
+				finish();
 			}
 
 		});
