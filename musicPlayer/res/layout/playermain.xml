@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/title_bar" >
+        android:background="@drawable/navigation_bg_repeat" >
 
         <ImageView
             android:id="@+id/list_show_album"
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:background="@drawable/title_bar"
+                android:background="@drawable/navigation_bg_repeat"
                 android:src="@drawable/play_pre_btn" />
 
             <ImageButton
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:background="@drawable/title_bar"
+                android:background="@drawable/navigation_bg_repeat"
                 android:src="@drawable/play_play_btn" />
 
             <ImageButton
@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:background="@drawable/title_bar"
+                android:background="@drawable/navigation_bg_repeat"
                 android:src="@drawable/play_next_btn" />
         </LinearLayout>
          <ProgressBar
