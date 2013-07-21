@@ -113,7 +113,8 @@ public class LocalMusicListAdapter extends BaseAdapter {
 		}else{
 			viewHolder.tvMusicName.setTextColor(Color.rgb(255, 255, 255));
 			viewHolder.tvSinger.setTextColor(Color.rgb(255, 255, 255));
-			convertView.setBackgroundResource(R.drawable.navigation_bg_repeat);
+			convertView.setBackgroundResource(0);
+		
 		}
 		
 		return convertView;

@@ -36,7 +36,9 @@ public class StartActivity extends Activity {
 				new Handler().postDelayed(new Runnable(){
 					@Override
 					public void run(){
-						Intent intent = new Intent (StartActivity.this,LoginActivity.class);			
+						//Intent intent = new Intent (StartActivity.this,LoginActivity.class);
+						//直接跳到主界面
+						Intent intent = new Intent (StartActivity.this,MainActivity.class);
 						startActivity(intent);			
 						StartActivity.this.finish();
 					}

@@ -180,14 +180,14 @@ public class MusicPlayerService extends Service {
 		public void onReceive(Context context, Intent intent) {
 			if (Constant.ACTION_JUMR.equals(intent.getAction())) {
 				Log.d("service boardcast", Constant.ACTION_JUMR);
-				Toast.makeText(MusicPlayerService.this, "进入播放service", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(MusicPlayerService.this, "进入播放service", Toast.LENGTH_SHORT).show();
 				int position = intent.getIntExtra("position", 0);
 				if (position >= 0) {
 					jump(position);
 				}
 			} else if (Constant.ACTION_PAUSE.equals(intent.getAction())) {
 				// 暂停播放
-				updataAllMusicInfo();
+				//updataAllMusicInfo();
 				mPlayer.pause();
 				status = 2;
 			} else if (Constant.ACTION_PLAY.equals(intent.getAction())) {
