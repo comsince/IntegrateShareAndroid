@@ -278,18 +278,18 @@ public class MainActivity extends Activity implements OnClickListener{
 				//更新listview歌曲播放选中状态
 				if(localLayout.getLocalistview()!=null){
 					((LocalMusicListAdapter)localLayout.getLocalistview().getAdapter()).showNowPlayPos(position);
-					//int lastPostion = localLayout.getLocalistview().getLastVisiblePosition();
-					//int prePostion = localLayout.getLocalistview().getFirstVisiblePosition();
+					int lastPostion = localLayout.getLocalistview().getLastVisiblePosition();
+					int prePostion = localLayout.getLocalistview().getFirstVisiblePosition();
 					//居中显示
 					//localLayout.getLocalistview().setSelection(position);
 					int listViewHeight = localLayout.getLocalistview().getHeight();
-					localLayout.getLocalistview().setSelectionFromTop(position, listViewHeight/2);
-					/*if(position >= lastPostion ||position <= prePostion){
+					//localLayout.getLocalistview().setSelectionFromTop(position, listViewHeight/2);
+					if(position >= lastPostion ||position <= prePostion){
 						localLayout.getLocalistview().setSelection(position);
 						listViewHeight = localLayout.getLocalistview().getHeight();
 						localLayout.getLocalistview().setSelectionFromTop(position, listViewHeight/2);
 						
-					}*/
+					}
 				}
 			}
 		}

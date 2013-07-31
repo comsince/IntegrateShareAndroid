@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.MyPagerAdapter;
+import com.comsince.knowledge.layout.MusicPlayerLocalLayout;
 
 public class MusicPlayActivity extends Activity implements OnClickListener {
 
@@ -34,6 +36,10 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	 * 装载滑动页面
 	 * */
 	private List<View> pageViews;
+	/**
+	 * 滑动装载歌曲布局
+	 * */
+	LinearLayout musicLocalLayout;
 	/**
 	 * 装在滑动页面的适配器
 	 * */
@@ -69,6 +75,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	/**
 	 * 初始化控件
 	 * */
+	
 	public void initView() {
 		viewPager = (ViewPager) findViewById(R.id.center_body_view_pager);
 		musicTitle = (TextView) findViewById(R.id.music_txt_title);
@@ -80,9 +87,10 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		musicPlay = (ImageButton) findViewById(R.id.music_button_play);
 		musicNext = (ImageButton) findViewById(R.id.music_button_next);
 		pageViews = new ArrayList<View>();
+		musicLocalLayout = new MusicPlayerLocalLayout(context);
 		pageViews.add(inflater.inflate(R.layout.mp_album, null));
 		pageViews.add(inflater.inflate(R.layout.mp_lrc, null));
-		//pageViews.add(inflater.inflate(R.layout.musiclist, null));
+		pageViews.add(musicLocalLayout);
 	}
 
 	/**
