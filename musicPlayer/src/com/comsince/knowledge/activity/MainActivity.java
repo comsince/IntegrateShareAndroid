@@ -142,6 +142,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		preBtn.setOnClickListener(this);
 		nextBtn.setOnClickListener(this);
 		playBtn.setOnClickListener(this);
+		listShowAlbum.setOnClickListener(this);
 	}
 
 	public void initpageData() {
@@ -355,6 +356,10 @@ public class MainActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		playIntent = new Intent();
 		switch (v.getId()) {
+		case R.id.list_show_album:
+			startActivity(new Intent(context, MusicPlayActivity.class));
+			overridePendingTransition(R.anim.act_in, R.anim.act_out);
+			break;
 		case R.id.playbtn:
 			if(isPlaying){
 				playIntent.setAction(Constant.ACTION_PAUSE);

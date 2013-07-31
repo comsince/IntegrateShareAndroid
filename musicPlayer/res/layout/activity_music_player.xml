@@ -53,10 +53,9 @@
             android:paddingRight="15.0dip" >
 
             <ImageButton
-                android:id="@id/music_mode"
+                android:id="@+id/music_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/music_txt_title"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="5.0dip"
                 android:background="@null"
@@ -74,12 +73,11 @@
                 android:visibility="invisible" /> -->
 
             <TextView
-                android:id="@id/music_txt_title"
+                android:id="@+id/music_txt_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="8.0dip"
-                android:layout_toLeftOf="@id/music_btn_qscreen"
                 android:ellipsize="marquee"
                 android:gravity="center_vertical"
                 android:marqueeRepeatLimit="marquee_forever"
@@ -89,7 +87,7 @@
                 android:textSize="22.0sp" />
 
             <TextView
-                android:id="@id/music_txt_album"
+                android:id="@+id/music_txt_album"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/music_txt_title"
@@ -100,7 +98,7 @@
                 android:textSize="12.0sp" />
 
             <TextView
-                android:id="@id/music_txt_artist"
+                android:id="@+id/music_txt_artist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/music_txt_album"
@@ -115,7 +113,7 @@
             android:layout_height="wrap_content" >
 
             <SeekBar
-                android:id="@id/music_seek"
+                android:id="@+id/music_seek"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5.0dip"
@@ -131,7 +129,7 @@
                 android:thumb="@drawable/btn_music_seek_thumb" />
 
             <TextView
-                android:id="@id/music_time_played"
+                android:id="@+id/music_time_played"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/music_seek"
@@ -141,7 +139,7 @@
                 android:textSize="12.0sp" />
 
             <TextView
-                android:id="@id/music_time_total"
+                android:id="@+id/music_time_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@id/music_seek"
@@ -152,7 +150,7 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@id/music_buttons_container"
+            android:id="@+id/music_buttons_container"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center_vertical"
@@ -162,7 +160,7 @@
             android:paddingRight="10.0dip" >
 
             <ImageButton
-                android:id="@id/music_button_prev"
+                android:id="@+id/music_button_prev"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
@@ -170,7 +168,7 @@
                 android:src="@drawable/btn_music_prev" />
 
             <ImageButton
-                android:id="@id/music_button_play"
+                android:id="@+id/music_button_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
@@ -178,7 +176,7 @@
                 android:src="@drawable/btn_music_pause" />
 
             <ImageButton
-                android:id="@id/music_button_next"
+                android:id="@+id/music_button_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
