@@ -199,7 +199,7 @@ public class MusicPlayerService extends Service {
 			} else if (Constant.ACTION_PLAY.equals(intent.getAction())) {
 				switch (status) {
 				case 2:
-					updateAllMusicInfo();
+					//updateAllMusicInfo();
 					mPlayer.start();
 					status = 3;
 					break;
