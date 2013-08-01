@@ -2,21 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/contorl_area"
-         >
+        android:layout_above="@+id/contorl_area" >
 
         <ListView
             android:id="@+id/showalbum_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
             android:divider="@drawable/separator_all_black"
             android:dividerHeight="2dp"
-            android:cacheColorHint="#00000000"
             android:visibility="gone" />
 
         <RelativeLayout
@@ -29,7 +28,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" >
             </android.support.v4.view.ViewPager>
-
         </RelativeLayout>
     </FrameLayout>
 
@@ -37,8 +35,8 @@
         android:id="@id/contorl_area"
         android:layout_width="fill_parent"
         android:layout_height="180dp"
-        android:background="@drawable/bg_music_control"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_music_control"
         android:orientation="vertical" >
 
         <View
@@ -61,7 +59,8 @@
                 android:background="@null"
                 android:src="@drawable/btn_music_shuffle" />
 
-           <!--  <ImageButton
+            <!--
+                 <ImageButton
                 android:id="@id/music_btn_qscreen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,15 +69,17 @@
                 android:layout_toLeftOf="@id/music_mode"
                 android:background="@null"
                 android:src="@drawable/btn_music_qscreen_remote"
-                android:visibility="invisible" /> -->
-
+                android:visibility="invisible" />
+            -->
             <TextView
                 android:id="@+id/music_txt_title"
-                android:layout_width="fill_parent"
+                android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="8.0dip"
                 android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:gravity="center_vertical"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
@@ -182,14 +183,15 @@
                 android:layout_weight="1.0"
                 android:background="@null"
                 android:src="@drawable/btn_music_next" />
-<!-- 
+            <!--
             <ImageButton
                 android:id="@id/music_button_stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
-                android:src="@drawable/btn_music_stop" /> -->
+                android:src="@drawable/btn_music_stop" />
+            -->
         </LinearLayout>
     </LinearLayout>
 

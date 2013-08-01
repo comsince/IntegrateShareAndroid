@@ -21,4 +21,8 @@ public class Constant {
 	public static final String ACTION_SET_PLAYMODE = "com.comsince.action.PALY_MODE";
 	public static final String ACTION_STAR_THREAD = "com.comsince.action.STAR_THREA";
 	public static final String ACTION_LRC = "com.comsince.action.lrc";
+	
+	
+	
+	public static final int UPDATE_SEEK_BAR = 20;
 }

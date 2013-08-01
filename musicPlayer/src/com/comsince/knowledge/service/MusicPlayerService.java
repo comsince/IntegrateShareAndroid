@@ -84,6 +84,8 @@ public class MusicPlayerService extends Service {
 		filter.addAction(Constant.ACTION_PLAY);
 		filter.addAction(Constant.ACTION_PREVIOUS);
 		filter.addAction(Constant.ACTION_NEXT);
+		//musicPlay 增加更新歌曲信息的action
+		filter.addAction(Constant.ACTION_UPDATE_ALL);
 		
 		/**
 		 * 1.定义自己的boardcastReceiver,并重写onReceive方法 2.给boardcastReceiver 加fileter
@@ -113,7 +115,7 @@ public class MusicPlayerService extends Service {
 				status = 3;
 				totalms = mPlayer.getDuration();
 				Log.d("Asia", "service totalms" + totalms);
-				updataAllMusicInfo();
+				updateAllMusicInfo();
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (SecurityException e) {
@@ -160,7 +162,7 @@ public class MusicPlayerService extends Service {
 	 * */
 	private Intent updateIntent;
 
-	private void updataAllMusicInfo() {
+	private void updateAllMusicInfo() {
 		if (updateIntent == null) {
 			updateIntent = new Intent(Constant.ACTION_UPDATE);
 		}
@@ -193,7 +195,7 @@ public class MusicPlayerService extends Service {
 			} else if (Constant.ACTION_PLAY.equals(intent.getAction())) {
 				switch (status) {
 				case 2:
-					updataAllMusicInfo();
+					updateAllMusicInfo();
 					mPlayer.start();
 					status = 3;
 					break;
@@ -207,6 +209,8 @@ public class MusicPlayerService extends Service {
 			} else if (Constant.ACTION_PREVIOUS.equals(intent.getAction())) {
 				previous();
 				status = 3;
+			} else if(Constant.ACTION_UPDATE_ALL.equals(intent.getAction())){
+			   	updateAllMusicInfo();
 			}
 		}
 
