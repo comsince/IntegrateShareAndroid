@@ -133,6 +133,8 @@ public class MusicPlayerService extends Service {
 	 * 播放上一首歌曲
 	 * */
 	private void previous() {
+		Log.d("MusicPlayerService", "previous");
+		Log.d("MusicPlayerService", "previous current :" + current);
       if(musicList != null && musicList.size() > 0){
     	  if(current == 0){
     		  current = musicList.size()-1;
@@ -147,6 +149,8 @@ public class MusicPlayerService extends Service {
 	 * 播放下一首歌曲
 	 * */
 	private void next() {
+		Log.d("MusicPlayerService", "next");
+		Log.d("MusicPlayerService", "next current :" + current);
 		if (musicList != null && musicList.size() > 0) {
 			if (current == musicList.size() - 1) {
 				current = 0;

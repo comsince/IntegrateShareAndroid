@@ -195,7 +195,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	/**
 	 * 播放器当前播放位置
 	 * */
-	int curMs;
+	int curMs = 0;
 
 	class ProgressThread extends Thread {
 
@@ -268,6 +268,8 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 				musicName.setText(curMusic.getMusicName());
 				musicArtist.setText(curMusic.getSinger());
 				musicTimeTotal.setText(StrTime.getTime(String.valueOf(totalMs)));
+				int seekBarProgress = curMs * 100 / totalMs;
+				musicSeekBar.setProgress(seekBarProgress);
 				// 设置当前播放状态
 				if (MyApplication.mediaPlayer.isPlaying()) {
 					musicPlay.setImageResource(R.drawable.btn_music_pause);

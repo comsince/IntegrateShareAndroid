@@ -83,6 +83,15 @@ public class MainActivity extends Activity implements OnClickListener{
 		// 启动service
 		startService(new Intent(context, MusicPlayerService.class));
 	}
+	
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		//启动更新当前播信息
+		sendBroadcast(new Intent(Constant.ACTION_UPDATE_ALL));
+	}
+
 
 	@Override
 	protected void onResume() {
@@ -274,6 +283,9 @@ public class MainActivity extends Activity implements OnClickListener{
 				if (status == 3) {
 					playBtn.setImageResource(R.drawable.desktop_pausebt);
 					isPlaying = true;
+				}else{
+					playBtn.setImageResource(R.drawable.play_play_btn);
+					isPlaying  = false;
 				}
 				//更新listview歌曲播放选中状态
 				if(localLayout.getLocalistview()!=null){
