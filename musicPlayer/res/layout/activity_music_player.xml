@@ -174,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:background="@null"
-                android:src="@drawable/btn_music_pause" />
+                android:src="@drawable/btn_music_play" />
 
             <ImageButton
                 android:id="@+id/music_button_next"

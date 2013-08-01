@@ -84,10 +84,42 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		registerMusicInfoReceiver();
 		executeThread();
 	}
-
+	
+	/**
+	 * musicPlayIntent 发送广播给musicservice更新歌曲播放状态
+	 * */
+    Intent  musicPlayIntent;
 	@Override
-	public void onClick(View arg0) {
-
+	public void onClick(View v) {
+		//务必实例化intent
+		musicPlayIntent = new Intent();
+		switch (v.getId()) {
+		case R.id.music_button_play:
+			if(isPlaying){
+				musicPlayIntent.setAction(Constant.ACTION_PAUSE);
+				sendBroadcast(musicPlayIntent);
+				isPlaying = false;
+				musicPlay.setImageResource(R.drawable.btn_music_play);
+			}else{
+				musicPlay.setImageResource(R.drawable.btn_music_pause);
+				musicPlayIntent.setAction(Constant.ACTION_PLAY);
+				sendBroadcast(musicPlayIntent);
+				isPlaying = true;
+			}
+			break;
+		case R.id.music_button_next:
+			isPlaying = true;
+			musicPlayIntent.setAction(Constant.ACTION_NEXT);
+			sendBroadcast(musicPlayIntent);
+			break;
+		case R.id.music_button_prev:
+			isPlaying = true;
+			musicPlayIntent.setAction(Constant.ACTION_PREVIOUS);
+			sendBroadcast(musicPlayIntent);
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**
@@ -117,7 +149,10 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	 * 设置监听器
 	 * */
 	public void setupListener() {
-
+		musicPre.setOnClickListener(this);
+		musicPlay.setOnClickListener(this);
+		musicNext.setOnClickListener(this);
+		musicMode.setOnClickListener(this);
 	}
 
 	/**
