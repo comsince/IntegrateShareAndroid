@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +27,7 @@ import com.comsince.knowledge.adapter.MyPagerAdapter;
 import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.Music;
 import com.comsince.knowledge.layout.MusicPlayerLocalLayout;
+import com.comsince.knowledge.preferences.MusicPreference;
 import com.comsince.knowledge.service.MusicPlayerService;
 import com.comsince.knowledge.utils.StrTime;
 
@@ -40,7 +42,14 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	private SeekBar musicSeekBar;
 	private TextView musicTimePlayed, musicTimeTotal;
 	private ImageButton musicPre, musicPlay, musicNext;
-
+	/**
+	 * 记录歌曲播放状态的preferece
+	 * */
+	public static MusicPreference musicPreference;
+	/**
+	 * 当前的播放模式
+	 * */
+    public int nowPlayMode;
 	/**
 	 * 装载滑动页面
 	 * */
@@ -66,6 +75,8 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		startService(new Intent(this, MusicPlayerService.class));
 		// 实例化音乐信息广播
 		musicInfoReceiver = new MusicInfoReceiver();
+		//获取musicPreferece
+		musicPreference = MyApplication.musicPreference;
 		initView();
 		setupListener();
 	}
@@ -73,8 +84,12 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onStart() {
 		super.onStart();
+		//初始化播放进度条
+		initPlayProgress();
 		// 该activity启动后，向service发送请求更新歌曲的播放信息
 		sendBroadcast(new Intent(Constant.ACTION_UPDATE_ALL));
+		nowPlayMode = musicPreference.getPlayMode(context);
+		initPlayMode();
 	}
 
 	@Override
@@ -96,6 +111,8 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.music_button_play:
 			if(isPlaying){
+				//如果要暂停播放记录当前播放歌曲的进度
+				musicPreference.saveMusicCurrentMs(context, curMs);
 				musicPlayIntent.setAction(Constant.ACTION_PAUSE);
 				sendBroadcast(musicPlayIntent);
 				isPlaying = false;
@@ -116,6 +133,23 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			isPlaying = true;
 			musicPlayIntent.setAction(Constant.ACTION_PREVIOUS);
 			sendBroadcast(musicPlayIntent);
+			break;
+		case R.id.music_mode:
+			Log.d("MusicPlayActivity", "当前模式：" + nowPlayMode);
+			nowPlayMode++;
+			if(nowPlayMode == Constant.PLAY_MODE_BY_SINGLE){
+				musicMode.setImageResource(R.drawable.btn_music_single_loop);
+			}else if(nowPlayMode == Constant.PLAY_MODE_BY_RANDOM){
+				musicMode.setImageResource(R.drawable.btn_music_shuffle);
+			}else{
+				musicMode.setImageResource(R.drawable.btn_music_order_loop);
+				nowPlayMode = 0;
+			}
+			musicPreference.savaPlayMode(context, nowPlayMode);
+			musicPlayIntent.setAction(Constant.ACTION_SET_PLAYMODE);
+			musicPlayIntent.putExtra("play_mode", nowPlayMode);
+			sendBroadcast(musicPlayIntent);
+			Log.d("MusicPlayActivity", "musicPreference mode :"+musicPreference.getPlayMode(context));
 			break;
 		default:
 			break;
@@ -163,6 +197,30 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			pagerAdapter = new MyPagerAdapter(pageViews);
 		}
 		viewPager.setAdapter(pagerAdapter);
+	}
+	/**
+	 * 初始化播放模式
+	 * */
+	public void initPlayMode(){
+		Log.v("MusicPlayActivity initPlayMode", "当前模式：" + nowPlayMode);
+		if(nowPlayMode == Constant.PLAY_MODE_BY_ORDER){
+			musicMode.setImageResource(R.drawable.btn_music_order_loop);
+		}else if(nowPlayMode == Constant.PLAY_MODE_BY_RANDOM){
+			musicMode.setImageResource(R.drawable.btn_music_shuffle);
+		}else if(nowPlayMode == Constant.PLAY_MODE_BY_SINGLE){
+			musicMode.setImageResource(R.drawable.btn_music_single_loop);
+		}
+	}
+	
+	/**
+	 * 初始化播放进度条
+	 * */
+	public void initPlayProgress(){
+		//curMs = musicPreference.getMusicCurrentMs(context);
+		curMs = MyApplication.mediaPlayer.getCurrentPosition();
+		int seekBarProgress = curMs * 100 / totalMs;
+		musicSeekBar.setProgress(seekBarProgress);
+		musicTimePlayed.setText(StrTime.gettim(curMs));
 	}
 
 	/**

@@ -2,6 +2,7 @@ package com.comsince.knowledge.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -42,6 +43,14 @@ public class MusicPlayerService extends Service {
 	 * 当前歌曲总时长
 	 * */
 	private int totalms = 0;
+	/**
+	 * 播放模式 0 顺序播放 1 随机播放 2 单曲循环
+	 * */
+	private int playMode = 0;
+	/**
+	 * 单曲播放记录当前播放的位置
+	 * */
+	public int singlePlayCurrent = 0;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -86,17 +95,28 @@ public class MusicPlayerService extends Service {
 		filter.addAction(Constant.ACTION_NEXT);
 		//musicPlay 增加更新歌曲信息的action
 		filter.addAction(Constant.ACTION_UPDATE_ALL);
+		//播放模式filter
+		filter.addAction(Constant.ACTION_SET_PLAYMODE);
 		
 		/**
 		 * 1.定义自己的boardcastReceiver,并重写onReceive方法 2.给boardcastReceiver 加fileter
 		 * 
 		 * */
 		registerReceiver(mReceiver, filter);
+		
+		playMode = MyApplication.musicPreference.getPlayMode(context);
 	}
-
+	/**
+	 * 播放点击的某一位置歌曲
+	 * 
+	 * @param position
+	 */
+	boolean isJumpToNowMusic = false;
 	private void jump(int position) {
 		if (musicList != null && musicList.size() > 0) {
 			current = position;
+			singlePlayCurrent = position;
+			isJumpToNowMusic = true;
 			play();
 		}
 	}
@@ -106,6 +126,15 @@ public class MusicPlayerService extends Service {
 	 * */
 	private void play() {
 		if (musicList != null && musicList.size() > 0) {
+			//根据播放模式选取歌曲播放
+			if(playMode == Constant.PLAY_MODE_BY_RANDOM){
+				//如果是点击进去歌曲播放不促发随机播放算法
+				if(!isJumpToNowMusic){
+					current = new Random().nextInt(musicList.size());
+				}
+			}else if(playMode == Constant.PLAY_MODE_BY_SINGLE){
+				current = singlePlayCurrent;
+			}
 			nowPlayMusic = musicList.get(current);
 			try {
 				mPlayer.reset();
@@ -215,6 +244,12 @@ public class MusicPlayerService extends Service {
 				status = 3;
 			} else if(Constant.ACTION_UPDATE_ALL.equals(intent.getAction())){
 			   	updateAllMusicInfo();
+			} else if(Constant.ACTION_SET_PLAYMODE.equals(intent.getAction())){
+				//设置播放模式
+				playMode = intent.getIntExtra("play_mode", -1);
+				if(playMode == Constant.PLAY_MODE_BY_SINGLE){
+					singlePlayCurrent = current;
+				}
 			}
 		}
 

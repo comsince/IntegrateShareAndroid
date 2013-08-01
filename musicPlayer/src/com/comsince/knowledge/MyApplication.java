@@ -9,10 +9,12 @@ import android.media.MediaPlayer;
 import android.util.Log;
 
 import com.comsince.knowledge.entity.Music;
+import com.comsince.knowledge.preferences.MusicPreference;
 import com.comsince.knowledge.utils.MusicDataUtil;
 
 public class MyApplication extends Application {
 	public static MediaPlayer mediaPlayer;
+	public static MusicPreference musicPreference;
 	public static Context context;
 	public static List<Music> musics = new ArrayList<Music>();
 	@Override
@@ -29,6 +31,7 @@ public class MyApplication extends Application {
 		}).start();
 		//初始化mediaPlayer
 		mediaPlayer = new MediaPlayer();
+		musicPreference = new MusicPreference(context);
 	}
 	
 	/**

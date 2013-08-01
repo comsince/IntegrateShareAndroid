@@ -25,4 +25,9 @@ public class Constant {
 	
 	
 	public static final int UPDATE_SEEK_BAR = 20;
+	public static final int PLAY_MODE_BY_ORDER = 0;
+	public static final int PLAY_MODE_BY_RANDOM = 1;
+	public static final int PLAY_MODE_BY_SINGLE = 2;
+	
+	
 }
