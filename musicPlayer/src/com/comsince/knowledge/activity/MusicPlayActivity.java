@@ -72,7 +72,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		inflater = LayoutInflater.from(context);
 		setContentView(R.layout.activity_music_player);
 		// 启动service
-		startService(new Intent(this, MusicPlayerService.class));
+		//startService(new Intent(this, MusicPlayerService.class));
 		// 实例化音乐信息广播
 		musicInfoReceiver = new MusicInfoReceiver();
 		//获取musicPreferece

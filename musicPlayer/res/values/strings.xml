@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello Aisa!</string>
-    <string name="app_name">Aisa</string>
+    <string name="app_name">金烩共襄音乐</string>
     <!-- main.xml String values -->
     <string name="toptext">欢迎进入主测试界面</string>
     <string name="newJob">新增工作</string>

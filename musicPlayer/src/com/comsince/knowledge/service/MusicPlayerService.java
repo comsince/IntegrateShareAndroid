@@ -136,6 +136,7 @@ public class MusicPlayerService extends Service {
 				current = singlePlayCurrent;
 			}
 			nowPlayMusic = musicList.get(current);
+			isJumpToNowMusic = false;
 			try {
 				mPlayer.reset();
 				mPlayer.setDataSource(nowPlayMusic.getSavePath());
@@ -178,8 +179,8 @@ public class MusicPlayerService extends Service {
 	 * 播放下一首歌曲
 	 * */
 	private void next() {
-		Log.d("MusicPlayerService", "next");
-		Log.d("MusicPlayerService", "next current :" + current);
+		Log.v("MusicPlayerService", "next");
+		Log.v("MusicPlayerService", "next current :" + current);
 		if (musicList != null && musicList.size() > 0) {
 			if (current == musicList.size() - 1) {
 				current = 0;

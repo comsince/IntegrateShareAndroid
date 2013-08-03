@@ -16,7 +16,7 @@
 
     <application
         android:name=".MyApplication"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/music"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
         <uses-library android:name="android.test.runner" />
