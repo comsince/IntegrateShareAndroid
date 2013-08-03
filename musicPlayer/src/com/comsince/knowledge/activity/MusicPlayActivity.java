@@ -29,7 +29,11 @@ import com.comsince.knowledge.entity.Music;
 import com.comsince.knowledge.layout.MusicPlayerLocalLayout;
 import com.comsince.knowledge.preferences.MusicPreference;
 import com.comsince.knowledge.service.MusicPlayerService;
+import com.comsince.knowledge.uikit.MMAlert;
 import com.comsince.knowledge.utils.StrTime;
+import com.tencent.mm.sdk.openapi.SendMessageToWX;
+import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.WXTextObject;
 
 public class MusicPlayActivity extends Activity implements OnClickListener {
 
@@ -42,6 +46,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	private SeekBar musicSeekBar;
 	private TextView musicTimePlayed, musicTimeTotal;
 	private ImageButton musicPre, musicPlay, musicNext;
+	private ImageButton shareMusic;
 	/**
 	 * 记录歌曲播放状态的preferece
 	 * */
@@ -151,6 +156,9 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			sendBroadcast(musicPlayIntent);
 			Log.d("MusicPlayActivity", "musicPreference mode :"+musicPreference.getPlayMode(context));
 			break;
+		case R.id.imgbt_share_music:
+			sendWinInfoDiaLog();
+			break;
 		default:
 			break;
 		}
@@ -172,6 +180,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		musicPre = (ImageButton) findViewById(R.id.music_button_prev);
 		musicPlay = (ImageButton) findViewById(R.id.music_button_play);
 		musicNext = (ImageButton) findViewById(R.id.music_button_next);
+		shareMusic = (ImageButton) findViewById(R.id.imgbt_share_music);
 		pageViews = new ArrayList<View>();
 		musicLocalLayout = new MusicPlayerLocalLayout(context);
 		pageViews.add(inflater.inflate(R.layout.mp_album, null));
@@ -187,6 +196,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		musicPlay.setOnClickListener(this);
 		musicNext.setOnClickListener(this);
 		musicMode.setOnClickListener(this);
+		shareMusic.setOnClickListener(this);
 	}
 
 	/**
@@ -339,6 +349,62 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			}
 		}
 
+	}
+	
+	/**
+	 * 微信消息选择框
+	 * */
+	private static final int MMAlertSelect1  =  0;
+	private static final int MMAlertSelect2  =  1;
+	public void sendWinInfoDiaLog(){
+		MMAlert.showAlert(this, getString(R.string.send_music), this.getResources().getStringArray(R.array.send_music_item), null, new MMAlert.OnAlertSelectId(){
+
+			@Override
+			public void onClick(int whichButton) {
+				switch (whichButton) {
+				case MMAlertSelect1:
+					SendInfoWeiXin(false);
+					break;
+				case MMAlertSelect2:
+					SendInfoWeiXin(true);
+					break;
+				default:
+					break;
+				}
+			}
+			
+		});
+	}
+	/**
+	 * 向微信发送分享
+	 * */
+	public void SendInfoWeiXin(boolean shareDirect){
+		String text = curMusic.getSinger() + "-" + curMusic.getAlbumName() + "-" + curMusic.getMusicName();
+		// 初始化一个WXTextObject对象
+		WXTextObject textObj = new WXTextObject();
+		textObj.text = text;
+
+		// 用WXTextObject对象初始化一个WXMediaMessage对象
+		WXMediaMessage msg = new WXMediaMessage();
+		msg.mediaObject = textObj;
+		// 发送文本类型的消息时，title字段不起作用
+		// msg.title = "Will be ignored";
+		msg.description = text;
+
+		// 构造一个Req
+		SendMessageToWX.Req req = new SendMessageToWX.Req();
+		req.transaction = buildTransaction("text"); // transaction字段用于唯一标识一个请求
+		req.message = msg;
+		//req.scene = SendMessageToWX.Req.WXSceneSession;
+		//req.scene = SendMessageToWX.Req.WXSceneTimeline;
+		req.scene = shareDirect ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+		Log.d("music", text);
+		// 调用api接口发送数据到微信
+		MyApplication.api.sendReq(req);
+	}
+	
+	private String buildTransaction(final String type) {
+		return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
 	}
 
 }

@@ -29,5 +29,8 @@ public class Constant {
 	public static final int PLAY_MODE_BY_RANDOM = 1;
 	public static final int PLAY_MODE_BY_SINGLE = 2;
 	
+	//从官方网站申请到的APP_ID
+	public static final String APP_ID = "wx4d2b64bdcc5c3bf8";
+	
 	
 }

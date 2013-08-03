@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="hello">Hello Aisa!</string>
     <string name="app_name">金烩共襄音乐</string>
     <!-- main.xml String values -->
@@ -24,4 +25,15 @@
     <string name="startpage">startpage</string>
     <!-- loading.xml -->
     <string name="loading">正在加载,请稍后...</string>
+
+    <!-- MM -->
+    <string name="app_cancel">取消</string>
+
+    <string-array name="send_music_item">
+        <item>分享给微信好友</item>
+        <item>分享到微信朋友圈</item>
+    </string-array>
+    
+    <string name="send_music">发送音乐</string>
+
 </resources>

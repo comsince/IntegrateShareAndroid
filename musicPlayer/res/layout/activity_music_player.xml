@@ -107,6 +107,13 @@
                 android:singleLine="true"
                 android:text="方大同"
                 android:textSize="12.0sp" />
+            <ImageButton 
+                android:id="@+id/imgbt_share_music"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/music_mode"
+                android:layout_alignRight="@id/music_mode"
+                android:src="@drawable/weixin"/>
         </RelativeLayout>
 
         <RelativeLayout
