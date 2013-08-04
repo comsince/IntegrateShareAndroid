@@ -8,6 +8,9 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+import com.baidu.sharesdk.BaiduSocialShare;
+import com.baidu.sharesdk.SocialShareLogger;
+import com.baidu.sharesdk.ui.BaiduSocialShareUserInterface;
 import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.Music;
 import com.comsince.knowledge.preferences.MusicPreference;
@@ -22,6 +25,9 @@ public class MyApplication extends Application {
 	public static List<Music> musics = new ArrayList<Music>();
 	// 微信通信api接口
 	public static IWXAPI api;
+	//百度社会化分享工具
+	public static BaiduSocialShare socialShare;
+	public static BaiduSocialShareUserInterface socialShareUi;
 
 	@Override
 	public void onCreate() {
@@ -40,6 +46,7 @@ public class MyApplication extends Application {
 		musicPreference = new MusicPreference(context);
 		// 注册到微信
 		regToWx();
+		createBaiduSocialTool();
 	}
 
 	/**
@@ -48,6 +55,18 @@ public class MyApplication extends Application {
 	public void regToWx() {
 		api = WXAPIFactory.createWXAPI(this, Constant.APP_ID, false);
 		api.registerApp(Constant.APP_ID);
+	}
+	/**
+	 * 创建百度社会化工具接口
+	 * */
+	public void createBaiduSocialTool(){
+		socialShare = BaiduSocialShare.getInstance(this, Constant.BAIDU_APP_KEY);
+		//获取社会化分享UI的实例对象   当自定义UI时使用
+		socialShareUi = socialShare.getSocialShareUserInterfaceInstance();
+		//设置支持新浪微博单点登录的appid
+        //socialShare.supportWeiBoSso(Constant.SINA_SSO_APP_KEY);
+		socialShare.supportWeixin(Constant.APP_ID);
+		SocialShareLogger.on();
 	}
 
 	/**

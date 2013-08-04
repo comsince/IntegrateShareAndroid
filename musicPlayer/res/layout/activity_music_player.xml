@@ -7,6 +7,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/topLayout"
         android:layout_above="@+id/contorl_area" >
 
         <ListView
@@ -30,6 +31,36 @@
             </android.support.v4.view.ViewPager>
         </RelativeLayout>
     </FrameLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/bg_music_control">
+        <!-- android:layout_centerVertical="true" 表示子控件在父控件中垂直居中 
+         android:onClick="loginback"   android:onClick="share"-->
+       <Button
+           android:id="@+id/backmain_btn"
+           android:layout_width="70dp"
+           android:layout_height="wrap_content"
+           android:background="@drawable/title_btn_back"
+           android:text="@string/loginBack"
+           android:textSize="14sp"
+           android:textColor="#fff"
+           android:layout_centerVertical="true"/>
+       <Button
+            android:id="@+id/share_button"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:background="@drawable/title_btn_back"
+            android:text="分享"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+        
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@id/contorl_area"

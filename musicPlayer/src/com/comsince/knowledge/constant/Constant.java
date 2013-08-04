@@ -29,8 +29,10 @@ public class Constant {
 	public static final int PLAY_MODE_BY_RANDOM = 1;
 	public static final int PLAY_MODE_BY_SINGLE = 2;
 	
-	//从官方网站申请到的APP_ID
+	//从官方网站申请到的A微信PP_ID
 	public static final String APP_ID = "wx4d2b64bdcc5c3bf8";
+	public static final String BAIDU_APP_KEY = "AVAcAhQy9g4FA7GrxPMqjQ58";
+	public static final String SINA_SSO_APP_KEY = "2563761543";
 	
 	
 }
