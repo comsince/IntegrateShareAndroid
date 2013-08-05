@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -25,6 +25,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.baidu.android.pushservice.CustomPushNotificationBuilder;
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.comsince.knowledge.MyApplication;
 import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.LocalMusicListAdapter;
@@ -78,6 +81,8 @@ public class MainActivity extends Activity implements OnClickListener{
 		context = this;
 		inflater = LayoutInflater.from(this);
 		initView();
+		//百度云推送服务初始化api
+		initBaiduPushService();
 		// 实例化musicReceiver
 		musicReceiver = new MusicReceiver();
 		// 启动service
@@ -399,6 +404,13 @@ public class MainActivity extends Activity implements OnClickListener{
 		default:
 			break;
 		}
+	}
+	
+	/**
+	 * 初始化百度云推送服务
+	 * */
+	public void initBaiduPushService(){
+		PushManager.startWork(this, PushConstants.LOGIN_TYPE_API_KEY, Constant.BAIDU_APP_KEY);
 	}
 
 }
