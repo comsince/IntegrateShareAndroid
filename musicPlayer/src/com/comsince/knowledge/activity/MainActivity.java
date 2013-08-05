@@ -112,6 +112,20 @@ public class MainActivity extends Activity implements OnClickListener{
 		musicProgressThread.start();
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(musicReceiver);
+	}
+
+
+	@Override
+	protected void onStop() {
+		isrunable = false;
+		super.onStop();
+	}
+
+
 	/**
 	 * 
 	 * 初始化界面

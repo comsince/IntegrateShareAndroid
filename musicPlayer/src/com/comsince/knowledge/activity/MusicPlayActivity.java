@@ -40,6 +40,7 @@ import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXTextObject;
 
+
 public class MusicPlayActivity extends Activity implements OnClickListener {
 
 	/**
@@ -110,6 +111,21 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		registerMusicInfoReceiver();
 		executeThread();
 	}
+	
+	
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		isProgressThreadRunable = false;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(musicInfoReceiver);
+	}
+	
 
 	/**
 	 * musicPlayIntent 发送广播给musicservice更新歌曲播放状态
@@ -170,6 +186,9 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			shareBaiduSocial();
 			break;
 		case R.id.backmain_btn:
+			startActivity(new Intent(context, MainActivity.class));
+			overridePendingTransition(R.anim.actcome,R.anim.actout);
+			finish();
 			break;
 		default:
 			break;
@@ -291,11 +310,11 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 					curMs = MyApplication.mediaPlayer.getCurrentPosition();
 					musicInfoHandler.sendEmptyMessage(Constant.UPDATE_SEEK_BAR);
 				}
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			super.run();
 		}
