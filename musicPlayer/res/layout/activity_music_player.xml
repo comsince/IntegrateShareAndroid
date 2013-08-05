@@ -142,6 +142,7 @@
                 android:id="@+id/imgbt_share_music"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:visibility="gone"
                 android:layout_below="@id/music_mode"
                 android:layout_alignRight="@id/music_mode"
                 android:src="@drawable/weixin"/>
