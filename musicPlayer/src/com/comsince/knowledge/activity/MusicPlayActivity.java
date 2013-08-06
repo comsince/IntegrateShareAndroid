@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.baidu.sharesdk.BaiduShareException;
@@ -247,6 +248,32 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		shareMusic.setOnClickListener(this);
 		shareBtn.setOnClickListener(this);
 		backToMainBtn.setOnClickListener(this);
+		setupSeekBarListerner();
+	}
+	
+	public void setupSeekBarListerner(){
+		musicSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				if (fromUser == true && Math.abs(progress - 0) >= 5) {
+					musicPlayIntent = new Intent(Constant.ACTION_SEEK);
+					musicPlayIntent.putExtra("seekprogress", progress);
+					sendBroadcast(musicPlayIntent);
+					seekBar.setProgress(progress);
+				}
+			}
+		});
 	}
 
 	/**

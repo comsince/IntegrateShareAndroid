@@ -51,6 +51,11 @@ public class MusicPlayerService extends Service {
 	 * 单曲播放记录当前播放的位置
 	 * */
 	public int singlePlayCurrent = 0;
+	
+	/**
+	 * 当前播放进度
+	 * */
+	public int currProgress = 0;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -97,6 +102,8 @@ public class MusicPlayerService extends Service {
 		filter.addAction(Constant.ACTION_UPDATE_ALL);
 		//播放模式filter
 		filter.addAction(Constant.ACTION_SET_PLAYMODE);
+		//自定义播放进度
+		filter.addAction(Constant.ACTION_SEEK);
 		
 		/**
 		 * 1.定义自己的boardcastReceiver,并重写onReceive方法 2.给boardcastReceiver 加fileter
@@ -250,6 +257,19 @@ public class MusicPlayerService extends Service {
 				playMode = intent.getIntExtra("play_mode", -1);
 				if(playMode == Constant.PLAY_MODE_BY_SINGLE){
 					singlePlayCurrent = current;
+				}
+			} else if(Constant.ACTION_SEEK.equals(intent.getAction())){
+			   //用户自定义拖动进度	
+				try {
+					currProgress = (intent.getIntExtra("seekprogress", 0)) * totalms / 100;
+					mPlayer.seekTo(currProgress);
+					if (status == 2) {
+						mPlayer.start();
+					}
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}
