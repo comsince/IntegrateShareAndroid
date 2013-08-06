@@ -17,6 +17,7 @@ import com.comsince.knowledge.entity.NetMusicList;
 import com.comsince.knowledge.lrcutil.BaiduLrc;
 import com.comsince.knowledge.utils.AndroidUtil;
 import com.comsince.knowledge.utils.FileUtil;
+import com.comsince.knowledge.utils.HttpDownloader;
 import com.comsince.knowledge.utils.HttpTool;
 import com.comsince.knowledge.utils.SimpleXmlReaderUtil;
 import com.comsince.test.xmlMode.Impda;
@@ -93,7 +94,8 @@ public class testUtiljunit extends AndroidTestCase {
 	   String strJson = "{\"students\":[{\"name\":\"Jack\",\"age\":12}, {\"name\":\"Vista\",\"age\":23}, {\"name\":\"Kaka\",\"age\":22}, {\"name\":\"Hony\",\"age\":31}]}";
        try {
            JSONObject jo = new JSONObject(strJson);
-           JSONArray jsonArray1 = (JSONArray) jo.get("students");
+           @SuppressWarnings("unused")
+		JSONArray jsonArray1 = (JSONArray) jo.get("students");
            for (int i = 0; i < jsonArray.length(); ++i) {
                JSONObject o = (JSONObject) jsonArray.get(i);
                System.out.println("name:" + o.getString("name") + "," + "age:"
@@ -105,8 +107,10 @@ public class testUtiljunit extends AndroidTestCase {
    }
    
    public void writeFile() throws IOException{
-	   InputStream in = HttpTool.getStream("http://ting.baidu.com/data2/lrc/13759942/13759942.lrc", null, null, HttpTool.GET);
-	   FileUtil.writeToFile(in, Constant.LRC_PATH + "124.lrc");
+	   //InputStream in = HttpTool.getStream("http://ting.baidu.com/data2/lrc/13759942/13759942.lrc", null, null, HttpTool.GET);
+	   HttpDownloader down = new HttpDownloader();
+	   down.downFile("http://ting.baidu.com/data2/lrc/40874168/40874168.lrc","TMusic","125.lrc");
+	   //FileUtil.writeToFile(in, Constant.LRC_PATH + "124.lrc");
    }
 
 }

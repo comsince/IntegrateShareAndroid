@@ -50,5 +50,6 @@ public class Constant {
 	
 	//存放歌词文件路径
 	public static final String LRC_PATH = "mnt/sdcard/TMusic/";
+	public static final String LRC_DIR = "TMusic";
 	
 }

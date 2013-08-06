@@ -50,6 +50,7 @@ import com.comsince.knowledge.preferences.MusicPreference;
 import com.comsince.knowledge.uikit.MMAlert;
 import com.comsince.knowledge.utils.BitmapTool;
 import com.comsince.knowledge.utils.FileUtil;
+import com.comsince.knowledge.utils.HttpDownloader;
 import com.comsince.knowledge.utils.HttpTool;
 import com.comsince.knowledge.utils.StrTime;
 import com.tarena.fashionmusic.lrc.Lyric;
@@ -522,14 +523,11 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 								Log.d("TESTJUNIT", LrcUrl);
 								Log.d("TESTJUNIT", curMusic.getMusicName());
 								Log.d("TESTJUNIT", curMusic.getSinger());
-								//下载歌词文件
-								try {
-									InputStream lrcIn = HttpTool.getStream(LrcUrl, null, null, HttpTool.GET);
-									//保存歌词文件到指定目录下
-									FileUtil.writeToFile(lrcIn, Constant.LRC_PATH+curMusic.getMusicName()+"-"+curMusic.getSinger()+".lrc");
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
+								//InputStream lrcIn = HttpTool.getStream(LrcUrl, null, null, HttpTool.GET);
+								//保存歌词文件到指定目录下
+								//FileUtil.writeToFile(lrcIn, Constant.LRC_PATH+curMusic.getMusicName()+"-"+curMusic.getSinger()+".lrc");
+								HttpDownloader down = new HttpDownloader();
+								down.downFile(LrcUrl,Constant.LRC_DIR,curMusic.getMusicName()+"-"+curMusic.getSinger()+".lrc");
 								Message msg  = musicInfoHandler.obtainMessage();
 								musicInfoHandler.sendEmptyMessage(Constant.UPDATE_LRC);
 							}
