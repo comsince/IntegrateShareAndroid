@@ -2,6 +2,7 @@ package com.comsince.knowledge.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 
 public class MusicPreference {
 	SharedPreferences sharedPreferences;
@@ -42,5 +43,42 @@ public class MusicPreference {
 	public int getMusicCurrentMs(Context context){
 		return sharedPreferences.getInt("curMs", 0);
 	}
+	
+	/**
+	 * 
+	 * @param context
+	 * @param lrc_color
+	 */
+	public void savaLrcColor(Context context, int lrc_color) {
+		sharedPreferences.edit().putInt("lrc_color", lrc_color).commit();
+	}
+
+	/**
+	 * 
+	 * @param context
+	 * @return int lrc_color 
+	 */
+	public int getLrcColor(Context context) {
+		return sharedPreferences.getInt("lrc_color", Color.rgb(51, 181, 229));
+	}
+	
+	/**
+	 * 
+	 * @param context
+	 * @param lrc_size
+	 */
+	public void savaLrcSize(Context context, int lrc_size) {
+		sharedPreferences.edit().putInt("lrc_size", lrc_size).commit();
+	}
+
+	/**
+	 * 
+	 * @param context
+	 * @return int lrc_size 
+	 */
+	public int getLrcSize(Context context) {
+		return sharedPreferences.getInt("lrc_size", 22);
+	}
+
 
 }

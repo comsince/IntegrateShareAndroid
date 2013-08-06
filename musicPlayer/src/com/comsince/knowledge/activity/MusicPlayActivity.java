@@ -1,5 +1,8 @@
 package com.comsince.knowledge.activity;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -37,12 +42,19 @@ import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.LocalMusicListAdapter;
 import com.comsince.knowledge.adapter.MyPagerAdapter;
 import com.comsince.knowledge.constant.Constant;
+import com.comsince.knowledge.entity.BaiduDevMusicList;
 import com.comsince.knowledge.entity.Music;
 import com.comsince.knowledge.layout.MusicPlayerLocalLayout;
+import com.comsince.knowledge.lrcutil.BaiduLrc;
 import com.comsince.knowledge.preferences.MusicPreference;
 import com.comsince.knowledge.uikit.MMAlert;
 import com.comsince.knowledge.utils.BitmapTool;
+import com.comsince.knowledge.utils.FileUtil;
+import com.comsince.knowledge.utils.HttpTool;
 import com.comsince.knowledge.utils.StrTime;
+import com.tarena.fashionmusic.lrc.Lyric;
+import com.tarena.fashionmusic.lrc.LyricView;
+import com.tarena.fashionmusic.lrc.PlayListItems;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXTextObject;
@@ -62,6 +74,14 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	private ImageButton shareMusic;
 	private Button shareBtn, backToMainBtn;
 	private ImageView showAlbum;
+	/**
+	 * 显示歌词相关控件
+	 * */
+	public static LyricView audioLrc;
+	public TextView noLrcTv;
+	public static Lyric mLyric;
+	public static TextView tvcurrlrc;
+	
 	/**
 	 * 记录歌曲播放状态的preferece
 	 * */
@@ -235,6 +255,9 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		pageViews.add(musicLocalLayout);
 		
 		showAlbum = (ImageView) pageViews.get(0).findViewById(R.id.show_album);
+		audioLrc = (LyricView) pageViews.get(1).findViewById(R.id.audio_lrc);
+		noLrcTv = (TextView) pageViews.get(1).findViewById(R.id.tv_nolrc);
+		tvcurrlrc = (TextView) pageViews.get(0).findViewById(R.id.tvcrrent_lrc);
 	}
 
 	/**
@@ -381,6 +404,9 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 					e.printStackTrace();
 				}
 				break;
+			case Constant.UPDATE_LRC:
+				ShowLyric(Constant.LRC_PATH + curMusic.getMusicName() +"-"+curMusic.getSinger() +".lrc");
+				break;
 
 			default:
 				break;
@@ -425,7 +451,10 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 					isPlaying = false;
 				}
 				//显示当前歌曲ablum图片
+				isHaveLrc = false;
 				ShowSongalbum(context);
+				//显示歌词
+				ShowLyric(Constant.LRC_PATH + curMusic.getMusicName() + "-" + curMusic.getSinger()+".lrc");
 				//高亮显示当前的播放歌曲
 				ListView musicListView = musicLocalLayout.getLocalistview();
 				if(musicListView!=null){
@@ -462,6 +491,76 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			showAlbum.setImageResource(R.drawable.default_bg_l);
 		}
     }
+    
+    /**
+     * 显示歌词
+     * */
+    public boolean isHaveLrc = false;
+    public String netLrcPath = null;
+    public void ShowLyric(String lrcPath){
+    	if (new File(lrcPath).exists()) {
+			doshowlrc(curMusic.getSavePath(), lrcPath);
+			Log.d("", "savepath: "+curMusic.getSavePath());
+			String path = curMusic.getSavePath();
+    		isHaveLrc = true;
+		} else {
+			noLrcTv.setVisibility(View.VISIBLE);
+			tvcurrlrc.setText(R.string.cannot_find);
+			audioLrc.setVisibility(View.GONE);
+			new Thread() {
+				@Override
+				public void run() {
+					//通过百度音乐开放接口获取给歌曲的信息列表
+					BaiduDevMusicList baiduDevMusicList = null;
+					baiduDevMusicList = BaiduLrc.getBaiduDevMusicListBySongName(curMusic.getMusicName());
+					//Log.d("TESTJUNIT", "baiduDevMusicList length :"+String.valueOf(baiduDevMusicList.getBaiduDevMusics().size()));
+					if(baiduDevMusicList!=null){
+						if(baiduDevMusicList.getBaiduDevMusics()!=null){
+							String songId  = BaiduLrc.getSongIdBySinger(curMusic.getSinger(), baiduDevMusicList);
+							if(!TextUtils.isEmpty(songId)){
+								String LrcUrl = BaiduLrc.getLrcAddressBySongId(songId);
+								Log.d("TESTJUNIT", LrcUrl);
+								Log.d("TESTJUNIT", curMusic.getMusicName());
+								Log.d("TESTJUNIT", curMusic.getSinger());
+								//下载歌词文件
+								try {
+									InputStream lrcIn = HttpTool.getStream(LrcUrl, null, null, HttpTool.GET);
+									//保存歌词文件到指定目录下
+									FileUtil.writeToFile(lrcIn, Constant.LRC_PATH+curMusic.getMusicName()+"-"+curMusic.getSinger()+".lrc");
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								Message msg  = musicInfoHandler.obtainMessage();
+								musicInfoHandler.sendEmptyMessage(Constant.UPDATE_LRC);
+							}
+							
+						}
+					}
+				}
+
+			}.start();
+		}
+    }
+    /**
+     * 显示歌词
+     * */
+    public void doshowlrc(String musicpath, String lrcpath) {
+    	noLrcTv.setVisibility(View.GONE);
+		audioLrc.setVisibility(View.VISIBLE);
+		Log.e("TESTJUNIT", musicpath);
+		Log.e("TESTJUNIT", lrcpath);
+		File file = new File(lrcpath);
+		mLyric = new Lyric(file, new PlayListItems("",musicpath,0l, true));
+		audioLrc.setmLyric(mLyric);
+		audioLrc.setSentencelist(mLyric.list);
+		audioLrc.setNotCurrentPaintColor(Color.WHITE);
+		audioLrc.setCurrentPaintColor(musicPreference.getLrcColor(context));
+		audioLrc.setLrcTextSize(musicPreference.getLrcSize(context));
+		audioLrc.setTexttypeface(Typeface.SERIF);
+		audioLrc.setTextHeight(40);
+	}
+    
+    
 	/**
 	 * 微信消息选择框
 	 * */

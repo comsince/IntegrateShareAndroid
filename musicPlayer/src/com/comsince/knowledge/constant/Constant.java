@@ -36,6 +36,7 @@ public class Constant {
 	public static final String EXTRA_MESSAGE = "message";
 	
 	public static final int UPDATE_SEEK_BAR = 20;
+	public static final int UPDATE_LRC = 21;
 	public static final int PLAY_MODE_BY_ORDER = 0;
 	public static final int PLAY_MODE_BY_RANDOM = 1;
 	public static final int PLAY_MODE_BY_SINGLE = 2;
@@ -47,5 +48,7 @@ public class Constant {
 	//sina 单点登录用
 	public static final String SINA_SSO_APP_KEY = "2563761543";
 	
+	//存放歌词文件路径
+	public static final String LRC_PATH = "mnt/sdcard/TMusic/";
 	
 }

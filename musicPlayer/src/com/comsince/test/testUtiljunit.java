@@ -3,11 +3,14 @@ package com.comsince.test;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.test.AndroidTestCase;
 import android.util.Log;
 
+import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.BaiduDevMusic;
 import com.comsince.knowledge.entity.BaiduDevMusicList;
 import com.comsince.knowledge.entity.NetMusicList;
@@ -73,13 +76,37 @@ public class testUtiljunit extends AndroidTestCase {
 	   //获取第一个music
 	   BaiduDevMusic music = list.getBaiduDevMusics().get(0);
 	   String songid = music.getSong_id();
-	   String songjsonurl = BaiduLrc.BAIDU_TING_API_PATH.replace("<songIds>", BaiduLrc.EncodeName(songid));
-	  //String songjsonurl = "http://ting.baidu.com/data/music/links?songIds=7300733";
+	   //String songjsonurl = BaiduLrc.BAIDU_TING_API_PATH.replace("<songIds>", BaiduLrc.EncodeName(songid));
+	  String songjsonur = "http://ting.baidu.com/data/music/links?songIds=7300733";
 	  // String songjson = HttpTool.getresponse(songjsonurl, null, null, HttpTool.GET);
-	   String songjson = HttpTool.getString(songjsonurl, null, null, HttpTool.GET);
+	   String songjson = HttpTool.getString(songjsonur, null, null, HttpTool.GET);
 	   JSONObject jsonobj = new JSONObject(songjson.toString()).getJSONObject("data");
+	   JSONArray jsonArray = jsonobj.getJSONArray("songList");
+	   String lrcLink = ((JSONObject) jsonArray.get(0)).getString("lrcLink");
 	   Log.d(TAG, jsonobj.getString("xcode"));
+	   Log.d(TAG, String.valueOf(jsonArray.length()));
+	   Log.d(TAG,lrcLink);
 	   
+	   
+	   
+	   
+	   String strJson = "{\"students\":[{\"name\":\"Jack\",\"age\":12}, {\"name\":\"Vista\",\"age\":23}, {\"name\":\"Kaka\",\"age\":22}, {\"name\":\"Hony\",\"age\":31}]}";
+       try {
+           JSONObject jo = new JSONObject(strJson);
+           JSONArray jsonArray1 = (JSONArray) jo.get("students");
+           for (int i = 0; i < jsonArray.length(); ++i) {
+               JSONObject o = (JSONObject) jsonArray.get(i);
+               System.out.println("name:" + o.getString("name") + "," + "age:"
+                       + o.getInt("age"));
+           }
+       } catch (JSONException e) {
+           e.printStackTrace();
+       }
+   }
+   
+   public void writeFile() throws IOException{
+	   InputStream in = HttpTool.getStream("http://ting.baidu.com/data2/lrc/13759942/13759942.lrc", null, null, HttpTool.GET);
+	   FileUtil.writeToFile(in, Constant.LRC_PATH + "124.lrc");
    }
 
 }

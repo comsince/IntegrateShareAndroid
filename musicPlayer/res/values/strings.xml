@@ -35,5 +35,6 @@
     </string-array>
     
     <string name="send_music">发送音乐</string>
+     <string name="cannot_find">未找到歌词文件</string>
 
 </resources>
