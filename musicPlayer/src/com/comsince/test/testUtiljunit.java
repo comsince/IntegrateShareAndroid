@@ -3,9 +3,12 @@ package com.comsince.test;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.json.JSONObject;
+
 import android.test.AndroidTestCase;
 import android.util.Log;
 
+import com.comsince.knowledge.entity.BaiduDevMusic;
 import com.comsince.knowledge.entity.BaiduDevMusicList;
 import com.comsince.knowledge.entity.NetMusicList;
 import com.comsince.knowledge.lrcutil.BaiduLrc;
@@ -55,10 +58,28 @@ public class testUtiljunit extends AndroidTestCase {
    public void testDevapi() throws Exception{
 	   SimpleXmlReaderUtil simpleXmlReaderUtil = new SimpleXmlReaderUtil();
 	   //InputStream in = this.mContext.getAssets().open("conf/baidudev.xml");
-	   String decPath = "http://mp3.baidu.com/dev/api/?tn=getinfo&ct=0&ie=utf-8&word="+BaiduLrc.EncodeName("大海")+"&format=xml";
+	   String decPath = "http://mp3.baidu.com/dev/api/?tn=getinfo&ct=0&ie=utf-8&word="+BaiduLrc.EncodeName("我相信")+"&format=xml";
 	   InputStream in = HttpTool.getStream(decPath, null, null, HttpTool.GET);
 	   BaiduDevMusicList list = simpleXmlReaderUtil.readXmlFromInputStream(in, BaiduDevMusicList.class);
-	   Log.d(TAG, "music : "+list.getBaiduDevMusics().get(0).getAlbum());
+	   Log.d(TAG, "music : "+list.getBaiduDevMusics().get(0).getSong_id());
+   }
+   
+   public void testTingApi() throws Exception{
+	   SimpleXmlReaderUtil simpleXmlReaderUtil = new SimpleXmlReaderUtil();
+	   //InputStream in = this.mContext.getAssets().open("conf/baidudev.xml");
+	 String decPath = "http://mp3.baidu.com/dev/api/?tn=getinfo&ct=0&ie=utf-8&word="+BaiduLrc.EncodeName("我相信")+"&format=xml";
+	   InputStream in = HttpTool.getStream(decPath, null, null, HttpTool.GET);
+	   BaiduDevMusicList list = simpleXmlReaderUtil.readXmlFromInputStream(in, BaiduDevMusicList.class);
+	   //获取第一个music
+	   BaiduDevMusic music = list.getBaiduDevMusics().get(0);
+	   String songid = music.getSong_id();
+	   String songjsonurl = BaiduLrc.BAIDU_TING_API_PATH.replace("<songIds>", BaiduLrc.EncodeName(songid));
+	  //String songjsonurl = "http://ting.baidu.com/data/music/links?songIds=7300733";
+	  // String songjson = HttpTool.getresponse(songjsonurl, null, null, HttpTool.GET);
+	   String songjson = HttpTool.getString(songjsonurl, null, null, HttpTool.GET);
+	   JSONObject jsonobj = new JSONObject(songjson.toString()).getJSONObject("data");
+	   Log.d(TAG, jsonobj.getString("xcode"));
+	   
    }
 
 }

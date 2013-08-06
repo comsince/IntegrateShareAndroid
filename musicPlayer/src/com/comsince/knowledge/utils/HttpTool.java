@@ -51,6 +51,16 @@ public class HttpTool {
 		}
 		return bytes;
 	}
+	
+	public static String getString(String path, ArrayList<BasicNameValuePair> headers, ArrayList<BasicNameValuePair> params, int method) throws IOException {
+		String str = null;
+		HttpEntity entity = getEntity(path, headers, params, method);
+		if (entity != null) {
+			str = EntityUtils.toString(entity);
+		}
+		return str;
+	}
+	
 
 	private static HttpEntity getEntity(String path, ArrayList<BasicNameValuePair> headers, ArrayList<BasicNameValuePair> params, int method) throws IOException {
 		HttpEntity entity = null;
