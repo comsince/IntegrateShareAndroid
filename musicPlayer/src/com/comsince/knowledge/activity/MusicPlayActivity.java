@@ -8,18 +8,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -29,12 +33,14 @@ import com.baidu.sharesdk.ShareListener;
 import com.baidu.sharesdk.Utility;
 import com.comsince.knowledge.MyApplication;
 import com.comsince.knowledge.R;
+import com.comsince.knowledge.adapter.LocalMusicListAdapter;
 import com.comsince.knowledge.adapter.MyPagerAdapter;
 import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.Music;
 import com.comsince.knowledge.layout.MusicPlayerLocalLayout;
 import com.comsince.knowledge.preferences.MusicPreference;
 import com.comsince.knowledge.uikit.MMAlert;
+import com.comsince.knowledge.utils.BitmapTool;
 import com.comsince.knowledge.utils.StrTime;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
@@ -54,6 +60,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	private ImageButton musicPre, musicPlay, musicNext;
 	private ImageButton shareMusic;
 	private Button shareBtn, backToMainBtn;
+	private ImageView showAlbum;
 	/**
 	 * 记录歌曲播放状态的preferece
 	 * */
@@ -69,7 +76,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	/**
 	 * 滑动装载歌曲布局
 	 * */
-	LinearLayout musicLocalLayout;
+	MusicPlayerLocalLayout musicLocalLayout;
 	/**
 	 * 装在滑动页面的适配器
 	 * */
@@ -126,6 +133,12 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		unregisterReceiver(musicInfoReceiver);
 	}
 	
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		return super.onKeyDown(keyCode, event);
+	}
+
 
 	/**
 	 * musicPlayIntent 发送广播给musicservice更新歌曲播放状态
@@ -186,8 +199,8 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			shareBaiduSocial();
 			break;
 		case R.id.backmain_btn:
-			startActivity(new Intent(context, MainActivity.class));
-			overridePendingTransition(R.anim.actcome,R.anim.actout);
+			//startActivity(new Intent(context, MainActivity.class));
+			overridePendingTransition(R.anim.act_in, R.anim.act_out);
 			finish();
 			break;
 		default:
@@ -219,6 +232,8 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		pageViews.add(inflater.inflate(R.layout.mp_album, null));
 		pageViews.add(inflater.inflate(R.layout.mp_lrc, null));
 		pageViews.add(musicLocalLayout);
+		
+		showAlbum = (ImageView) pageViews.get(0).findViewById(R.id.show_album);
 	}
 
 	/**
@@ -382,11 +397,44 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 					musicPlay.setImageResource(R.drawable.btn_music_play);
 					isPlaying = false;
 				}
+				//显示当前歌曲ablum图片
+				ShowSongalbum(context);
+				//高亮显示当前的播放歌曲
+				ListView musicListView = musicLocalLayout.getLocalistview();
+				if(musicListView!=null){
+				    ((LocalMusicListAdapter)musicListView.getAdapter()).showNowPlayPos(position);
+					int lastPostion = musicListView.getLastVisiblePosition();
+					int prePostion = musicListView.getFirstVisiblePosition();
+					//居中显示
+					int listViewHeight = musicListView.getHeight();
+					if(position >= lastPostion ||position <= prePostion){
+						musicListView.setSelection(position);
+						listViewHeight = musicListView.getHeight();
+						if(musicListView.isFocusable()){
+							musicListView.setSelectionFromTop(position, listViewHeight/2);
+						}
+					}
+				}
 			}
 		}
 
 	}
-
+	
+	/**
+	 * 显示当前播放歌曲的图片
+	 * */
+	Bitmap nowSongBitMap;
+    public void ShowSongalbum(Context context){
+    	String albumkey = curMusic.getAlbumkey();
+		if (!TextUtils.isEmpty(albumkey)) {
+			nowSongBitMap = BitmapTool.getbitBmBykey(context, curMusic.getAlbumkey());
+		} 
+		if (nowSongBitMap != null && !nowSongBitMap.isRecycled()) {
+			showAlbum.setImageBitmap(nowSongBitMap);
+		} else {
+			showAlbum.setImageResource(R.drawable.default_bg_l);
+		}
+    }
 	/**
 	 * 微信消息选择框
 	 * */

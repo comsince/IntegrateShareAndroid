@@ -108,14 +108,15 @@ public class MainActivity extends Activity implements OnClickListener{
 		// 注册监听器
 		registerReceiver(musicReceiver, musicFilter);
 		//启动更新音乐播放进度的线程
+		isrunable= true;
 		musicProgressThread = new MusicProgressThread();
 		musicProgressThread.start();
 	}
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
 		unregisterReceiver(musicReceiver);
+		super.onDestroy();
 	}
 
 

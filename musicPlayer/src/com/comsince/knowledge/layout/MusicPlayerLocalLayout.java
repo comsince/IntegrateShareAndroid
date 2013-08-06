@@ -47,4 +47,14 @@ public class MusicPlayerLocalLayout extends LinearLayout{
 		
 	}
 
+	public ListView getLocalistview() {
+		return localistview;
+	}
+
+	public void setLocalistview(ListView localistview) {
+		this.localistview = localistview;
+	}
+	
+	
+
 }
