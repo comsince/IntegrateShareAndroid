@@ -1,8 +1,6 @@
-package com.comsince.knowledge.activity;
+package com.tarena.fashionmusic.play;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +35,6 @@ import com.baidu.sharesdk.BaiduShareException;
 import com.baidu.sharesdk.ShareContent;
 import com.baidu.sharesdk.ShareListener;
 import com.baidu.sharesdk.Utility;
-import com.comsince.knowledge.MyApplication;
 import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.LocalMusicListAdapter;
 import com.comsince.knowledge.adapter.MyPagerAdapter;
@@ -49,10 +46,9 @@ import com.comsince.knowledge.lrcutil.BaiduLrc;
 import com.comsince.knowledge.preferences.MusicPreference;
 import com.comsince.knowledge.uikit.MMAlert;
 import com.comsince.knowledge.utils.BitmapTool;
-import com.comsince.knowledge.utils.FileUtil;
 import com.comsince.knowledge.utils.HttpDownloader;
-import com.comsince.knowledge.utils.HttpTool;
 import com.comsince.knowledge.utils.StrTime;
+import com.tarena.fashionmusic.MyApplication;
 import com.tarena.fashionmusic.lrc.Lyric;
 import com.tarena.fashionmusic.lrc.LyricView;
 import com.tarena.fashionmusic.lrc.PlayListItems;
@@ -105,6 +101,10 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	MyPagerAdapter pagerAdapter;
 	LayoutInflater inflater;
 	Context context;
+	/**
+	 * 更新歌词intent
+	 * */
+	public static Intent intent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +118,8 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		musicInfoReceiver = new MusicInfoReceiver();
 		// 获取musicPreferece
 		musicPreference = MyApplication.musicPreference;
+		//更新歌词intent
+		intent = new Intent(Constant.ACTION_UPDATE_LRC);
 		initView();
 		setupListener();
 	}
@@ -147,12 +149,14 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	protected void onStop() {
 		super.onStop();
 		isProgressThreadRunable = false;
+		isUpdateLrc = false;
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		unregisterReceiver(musicInfoReceiver);
+		isUpdateLrc = false;
 	}
 	
 
@@ -352,6 +356,10 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		// 更新音乐进度线程
 		musicInfoProgressThread = new ProgressThread();
 		musicInfoProgressThread.start();
+		//启动更新歌词线程
+		isUpdateLrc = true;
+		updateLrcThread = new UpdateLrcThread();
+		updateLrcThread.start();
 	}
 
 	/**
@@ -386,6 +394,41 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		}
 
 	}
+	
+	/**
+	 * 处理歌词的线程
+	 * */
+	Thread updateLrcThread;
+	boolean isUpdateLrc = true;
+	class UpdateLrcThread extends Thread{
+
+		@Override
+		public void run() {
+			super.run();
+			while(isUpdateLrc){
+				if (MyApplication.mediaPlayer.isPlaying()
+						&& isHaveLrc == true) {
+					audioLrc.updateIndex(MyApplication.mediaPlayer.getCurrentPosition());
+					mHandler.post(mUpdateResults);
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+    /**
+     * 更新现在播放的歌词突出显示
+     * */
+	Handler mHandler = new Handler();
+	Runnable mUpdateResults = new Runnable() {
+		public void run() {
+			audioLrc.invalidate();
+		}
+	};
 
 	/**
 	 * 处理音乐信息的总Handler
@@ -555,7 +598,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		audioLrc.setCurrentPaintColor(musicPreference.getLrcColor(context));
 		audioLrc.setLrcTextSize(musicPreference.getLrcSize(context));
 		audioLrc.setTexttypeface(Typeface.SERIF);
-		audioLrc.setTextHeight(40);
+		audioLrc.setTextHeight(60);
 	}
     
     

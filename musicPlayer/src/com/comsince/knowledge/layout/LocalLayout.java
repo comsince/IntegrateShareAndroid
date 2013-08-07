@@ -12,11 +12,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.comsince.knowledge.MyApplication;
 import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.LocalMusicListAdapter;
 import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.Music;
+import com.tarena.fashionmusic.MyApplication;
 
 public class LocalLayout extends LinearLayout {
 	private static String TAG = "Aisa";

@@ -8,9 +8,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.android.pushservice.PushConstants;
-import com.comsince.knowledge.activity.MusicPlayActivity;
 import com.comsince.knowledge.activity.StartActivity;
 import com.comsince.knowledge.constant.Constant;
+import com.tarena.fashionmusic.play.MusicPlayActivity;
 
 /**
  * Push消息处理receiver

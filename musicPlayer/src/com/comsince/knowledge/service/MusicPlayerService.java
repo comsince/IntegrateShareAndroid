@@ -13,11 +13,10 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.comsince.knowledge.MyApplication;
 import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.Music;
+import com.tarena.fashionmusic.MyApplication;
 
 public class MusicPlayerService extends Service {
 	public static MediaPlayer mPlayer;

@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.comsince.knowledge.MyApplication;
 import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.LocalMusicListAdapter;
+import com.tarena.fashionmusic.MyApplication;
 
 public class TestListActivity extends Activity {
 	private ListView listview;

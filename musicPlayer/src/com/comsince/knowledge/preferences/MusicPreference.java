@@ -77,7 +77,7 @@ public class MusicPreference {
 	 * @return int lrc_size 
 	 */
 	public int getLrcSize(Context context) {
-		return sharedPreferences.getInt("lrc_size", 22);
+		return sharedPreferences.getInt("lrc_size", 40);
 	}
 
 

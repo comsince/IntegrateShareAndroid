@@ -14,7 +14,7 @@ public class Constant {
 	public static final String ACTION_UPDATE = "com.comsince.action.UPDATE";
 	public static final String ACTION_UPDATE_ALL = "com.comsince.action.UPDATE_ALL";
 	public static final String ACTION_UPDATE_TIME = "com.comsince.action.UPDATE_TIME";
-	public static final String ACTION_UPDATE_LRC = "com.comsince.action.UPDATE_LRC";
+	public static final String ACTION_UPDATE_LRC = "com.tarena.action.UPDATE_LRC";
 	public static final String ACTION_SERVICESTOPED = "com.comsince.action.SERVICESTOPED";
 	public static final String ACTION_LISTCHANGED = "com.comsince.action.LISTCHANGED";
 	public static final String ACTION_DISS_DIALOG = "com.comsince.action.DISSDIALOG";

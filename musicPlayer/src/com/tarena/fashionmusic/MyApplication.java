@@ -1,4 +1,4 @@
-package com.comsince.knowledge;
+package com.tarena.fashionmusic;
 
 import java.util.ArrayList;
 import java.util.List;

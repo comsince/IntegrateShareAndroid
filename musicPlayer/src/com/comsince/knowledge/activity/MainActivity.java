@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,10 +24,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.baidu.android.pushservice.CustomPushNotificationBuilder;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
-import com.comsince.knowledge.MyApplication;
 import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.LocalMusicListAdapter;
 import com.comsince.knowledge.adapter.MyPagerAdapter;
@@ -40,6 +37,8 @@ import com.comsince.knowledge.layout.NetLayout;
 import com.comsince.knowledge.service.MusicPlayerService;
 import com.comsince.knowledge.utils.BitmapTool;
 import com.comsince.knowledge.utils.StrTime;
+import com.tarena.fashionmusic.MyApplication;
+import com.tarena.fashionmusic.play.MusicPlayActivity;
 
 public class MainActivity extends Activity implements OnClickListener{
 	// 基本控件
