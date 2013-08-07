@@ -52,6 +52,7 @@ import com.tarena.fashionmusic.MyApplication;
 import com.tarena.fashionmusic.lrc.Lyric;
 import com.tarena.fashionmusic.lrc.LyricView;
 import com.tarena.fashionmusic.lrc.PlayListItems;
+import com.tarena.fashionmusic.lrc.Sentence;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXTextObject;
@@ -406,13 +407,26 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		public void run() {
 			super.run();
 			while(isUpdateLrc){
-				if (MyApplication.mediaPlayer.isPlaying()
-						&& isHaveLrc == true) {
-					audioLrc.updateIndex(MyApplication.mediaPlayer.getCurrentPosition());
-					mHandler.post(mUpdateResults);
+				if (MyApplication.mediaPlayer.isPlaying()&& isHaveLrc == true) {
+					//audioLrc.updateIndex(MyApplication.mediaPlayer.getCurrentPosition());
+					int lastSentenceNum = audioLrc.getSentencelist().size()-1;
+					Sentence lastSentence = audioLrc.getSentencelist().get(lastSentenceNum);
+					long toTime = lastSentence.getToTime();
+					long fromTime = lastSentence.getFromTime();
+					long result = fromTime + 10;
+					if(MyApplication.mediaPlayer.getCurrentPosition() <= result){
+						audioLrc.updateIndex(MyApplication.mediaPlayer.getCurrentPosition());
+						mHandler.post(mUpdateResults);
+					}else{
+						Log.e("TESTJUNIT", "mediaPlayer current time : " + MyApplication.mediaPlayer.getCurrentPosition());
+						Log.e("TESTJUNIT", "fromtime : " + fromTime);
+						Log.e("TESTJUNIT", "totime : " + toTime);
+						Log.e("TESTJUNIT", "totaltime : " + result);
+					}
+					
 				}
 				try {
-					Thread.sleep(500);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -450,6 +464,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 				break;
 			case Constant.UPDATE_LRC:
 				ShowLyric(Constant.LRC_PATH + curMusic.getMusicName() +"-"+curMusic.getSinger() +".lrc");
+				isDownLrc = false;
 				break;
 
 			default:
@@ -541,6 +556,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
      * */
     public boolean isHaveLrc = false;
     public String netLrcPath = null;
+    public boolean isDownLrc = true;
     public void ShowLyric(String lrcPath){
     	if (new File(lrcPath).exists()) {
 			doshowlrc(curMusic.getSavePath(), lrcPath);
@@ -548,35 +564,41 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			String path = curMusic.getSavePath();
     		isHaveLrc = true;
 		} else {
+			isDownLrc = true;
 			noLrcTv.setVisibility(View.VISIBLE);
 			tvcurrlrc.setText(R.string.cannot_find);
 			audioLrc.setVisibility(View.GONE);
 			new Thread() {
 				@Override
 				public void run() {
-					//通过百度音乐开放接口获取给歌曲的信息列表
+					// 通过百度音乐开放接口获取给歌曲的信息列表
 					BaiduDevMusicList baiduDevMusicList = null;
-					baiduDevMusicList = BaiduLrc.getBaiduDevMusicListBySongName(curMusic.getMusicName());
-					//Log.d("TESTJUNIT", "baiduDevMusicList length :"+String.valueOf(baiduDevMusicList.getBaiduDevMusics().size()));
-					if(baiduDevMusicList!=null){
-						if(baiduDevMusicList.getBaiduDevMusics()!=null){
-							String songId  = BaiduLrc.getSongIdBySinger(curMusic.getSinger(), baiduDevMusicList);
-							if(!TextUtils.isEmpty(songId)){
-								String LrcUrl = BaiduLrc.getLrcAddressBySongId(songId);
-								Log.d("TESTJUNIT", LrcUrl);
-								Log.d("TESTJUNIT", curMusic.getMusicName());
-								Log.d("TESTJUNIT", curMusic.getSinger());
-								//InputStream lrcIn = HttpTool.getStream(LrcUrl, null, null, HttpTool.GET);
-								//保存歌词文件到指定目录下
-								//FileUtil.writeToFile(lrcIn, Constant.LRC_PATH+curMusic.getMusicName()+"-"+curMusic.getSinger()+".lrc");
-								HttpDownloader down = new HttpDownloader();
-								down.downFile(LrcUrl,Constant.LRC_DIR,curMusic.getMusicName()+"-"+curMusic.getSinger()+".lrc");
-								Message msg  = musicInfoHandler.obtainMessage();
-								musicInfoHandler.sendEmptyMessage(Constant.UPDATE_LRC);
+					while (isDownLrc) {
+						baiduDevMusicList = BaiduLrc.getBaiduDevMusicListBySongName(curMusic.getMusicName());
+						if (baiduDevMusicList != null) {
+							if (baiduDevMusicList.getBaiduDevMusics() != null) {
+								String songId = BaiduLrc.getSongIdBySinger(curMusic.getSinger(), baiduDevMusicList);
+								Log.e("TESTJUNIT", "songId :"+songId+curMusic.getMusicName());
+								if (!TextUtils.isEmpty(songId)) {
+									String LrcUrl = BaiduLrc.getLrcAddressBySongId(songId);
+									Log.d("TESTJUNIT", LrcUrl);
+									Log.d("TESTJUNIT", curMusic.getMusicName());
+									Log.d("TESTJUNIT", curMusic.getSinger());
+									HttpDownloader down = new HttpDownloader();
+									down.downFile(LrcUrl, Constant.LRC_DIR, curMusic.getMusicName() + "-" + curMusic.getSinger() + ".lrc");
+									Message msg = musicInfoHandler.obtainMessage();
+									musicInfoHandler.sendEmptyMessage(Constant.UPDATE_LRC);
+								}
+
 							}
-							
+						}
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
 						}
 					}
+
 				}
 
 			}.start();

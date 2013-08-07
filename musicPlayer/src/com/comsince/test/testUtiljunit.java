@@ -112,5 +112,12 @@ public class testUtiljunit extends AndroidTestCase {
 	   down.downFile("http://ting.baidu.com/data2/lrc/40874168/40874168.lrc","TMusic","125.lrc");
 	   //FileUtil.writeToFile(in, Constant.LRC_PATH + "124.lrc");
    }
+   
+   public void testLongAdd(){
+	   long i = 1000;
+	   long j = 100;
+	   long k = i+j;
+	   Log.e("TESTJUNIT", String.valueOf(k));
+   }
 
 }
