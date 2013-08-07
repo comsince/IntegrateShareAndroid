@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/searchlrc"
+        android:icon="@drawable/ic_list_dropdown_scanning_normal"
+        android:title="@string/searchlrc"/>
+    <item
+        android:id="@+id/sleepmode"
+        android:icon="@drawable/ic_list_dropdown_sleep_normal"
+        android:title="@string/sleepmode"/>
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/ic_list_dropdown_setup_normal"
+        android:title="@string/setting"/>
+    
+
+</menu>

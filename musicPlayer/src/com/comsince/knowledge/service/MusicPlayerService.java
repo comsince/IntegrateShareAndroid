@@ -90,7 +90,8 @@ public class MusicPlayerService extends Service {
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
+		MyApplication.musicPreference.savaPlayPosition(context, current);
+		unregisterReceiver(mReceiver);
 		super.onDestroy();
 	}
 

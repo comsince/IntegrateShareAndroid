@@ -36,5 +36,9 @@
     
     <string name="send_music">发送音乐</string>
      <string name="cannot_find">未找到歌词文件</string>
+     
+     <string name="searchlrc">搜索歌词</string>
+     <string name="sleepmode">睡眠模式</string>
+     <string name="setting">设置</string>
 
 </resources>

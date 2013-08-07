@@ -19,8 +19,13 @@ import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -164,6 +169,28 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		return super.onKeyDown(keyCode, event);
+	}
+
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.searchlrc:
+			
+			break;
+
+		default:
+			break;
+		}
+		return super.onContextItemSelected(item);
+	}
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.music_activity_menu, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 
