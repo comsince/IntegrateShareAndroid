@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
@@ -94,6 +96,9 @@ public class MainActivity extends Activity implements OnClickListener{
 		super.onStart();
 		//启动更新当前播信息
 		sendBroadcast(new Intent(Constant.ACTION_UPDATE_ALL));
+		//从sharedPreference读取数据初始化当前播放歌曲
+		position = MyApplication.musicPreference.getsaveposition(context);
+		showNowPalyMusicInfo();
 	}
 
 
@@ -125,6 +130,42 @@ public class MainActivity extends Activity implements OnClickListener{
 		super.onStop();
 	}
 
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {// 当keyCode等于退出事件值时
+			ToQuitTheApp();
+			return false;
+		} else {
+			return super.onKeyDown(keyCode, event);
+		}
+	}
+	
+	/**
+	 * 退出
+	 * */ 
+	public boolean isExit = false;
+	private void ToQuitTheApp() {
+		if (isExit) {
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.addCategory(Intent.CATEGORY_HOME);
+			startActivity(intent);
+			System.exit(0);// 使虚拟机停止运行并退出程序
+		} else {
+			isExit = true;
+			Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+			mHandler.sendEmptyMessageDelayed(0, 3000);// 3秒后发送消息
+		}
+	}
+
+	// 创建Handler对象，用来处理消息
+	Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {// 处理消息
+			super.handleMessage(msg);
+			isExit = false;
+		}
+	};
 
 	/**
 	 * 
@@ -171,6 +212,22 @@ public class MainActivity extends Activity implements OnClickListener{
 		nextBtn.setOnClickListener(this);
 		playBtn.setOnClickListener(this);
 		listShowAlbum.setOnClickListener(this);
+	}
+	/**
+	 * 初始化当前音乐播放信息
+	 * */
+	public void showNowPalyMusicInfo(){
+		Music music = MyApplication.musics.get(position);
+		if (music != null) {
+			nowBitMap = BitmapTool.getbitBmBykey(context, music.getAlbumkey());
+			if (nowBitMap != null && nowBitMap.isRecycled() == false) {
+				listShowAlbum.setImageBitmap(nowBitMap);
+			} else {
+				listShowAlbum.setImageResource(R.drawable.default_bg_s);
+			}
+			musicName.setText(music.getMusicName());
+			musicTime.setText("00:00/" + StrTime.getTime(music.getTime()));
+		}
 	}
 
 	public void initpageData() {

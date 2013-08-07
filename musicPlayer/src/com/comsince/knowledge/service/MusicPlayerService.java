@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.IBinder;
@@ -55,7 +56,10 @@ public class MusicPlayerService extends Service {
 	 * 当前播放进度
 	 * */
 	public int currProgress = 0;
-
+    /**
+     * 控制闪屏
+     * */
+	SharedPreferences sp;
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -64,6 +68,8 @@ public class MusicPlayerService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		sp = getSharedPreferences("service", 0);
+		sp.edit().putBoolean("isStart", true).commit();
 		Log.d("service boardcast", "onCreate");
 		context = this;
 		// 获取mediaPlayer

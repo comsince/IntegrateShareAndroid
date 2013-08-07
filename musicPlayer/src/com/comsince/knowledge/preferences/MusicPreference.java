@@ -79,6 +79,26 @@ public class MusicPreference {
 	public int getLrcSize(Context context) {
 		return sharedPreferences.getInt("lrc_size", 40);
 	}
+	
+	/**
+	 * 保存歌曲退出时的 播放位置
+	 * 
+	 * @param context
+	 * @param position
+	 */
+	public void savaPlayPosition(Context context, int position) {
+		sharedPreferences.edit().putInt("position", position).commit();
+	}
+
+	/**
+	 * 获取退出时的播放位置
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public int getsaveposition(Context context) {
+		return sharedPreferences.getInt("position", 0);
+	}
 
 
 }
