@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_bar_container"
+    android:layout_width="fill_parent"
+    android:layout_height="45.0dip"
+    android:background="@drawable/selector_song_recognition_entrance"
+    android:gravity="center"
+    android:paddingLeft="8.0dip"
+    android:paddingRight="0.0dip" >
+
+    <ImageButton
+        android:id="@+id/song_recognition_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="0.0dip"
+        android:background="@drawable/color_top_bar_bg2"
+        android:paddingLeft="6.0dip"
+        android:paddingRight="6.0dip"
+        android:src="@drawable/ui_song_recognition_entrance" />
+
+    <EditText
+        android:id="@+id/search_bar_et"
+        android:layout_width="fill_parent"
+        android:layout_height="34.0dip"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="4.0dip"
+        android:layout_marginLeft="1.0dip"
+        android:layout_toLeftOf="@id/song_recognition_btn"
+        android:background="@drawable/general_backplane_search_inputbox"
+        android:gravity="center_vertical"
+        android:hint="@string/search_hint"
+        android:paddingLeft="32.0dip"
+        android:paddingRight="10.0dip"
+        android:singleLine="true"
+        android:textColor="#ffb9b9b9"
+        android:textSize="15.0dip" />
+
+    <ImageView
+        android:id="@+id/search_bar_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/search_bar_et"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="6.0dip"
+        android:layout_marginRight="5.0dip"
+        android:layout_marginTop="10.0dip"
+        android:background="@null"
+        android:src="@drawable/ic_search_icon" />
+
+    <ImageButton
+        android:id="@+id/search_voice_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="0.0dip"
+        android:layout_marginRight="6.0dip"
+        android:layout_marginTop="0.0dip"
+        android:layout_toLeftOf="@id/song_recognition_btn"
+        android:background="@drawable/color_top_bar_bg2"
+        android:paddingLeft="5.0dip"
+        android:paddingRight="5.0dip"
+        android:src="@drawable/ic_online_search_voice" />
+
+</RelativeLayout>

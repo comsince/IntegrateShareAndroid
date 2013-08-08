@@ -40,5 +40,7 @@
      <string name="searchlrc">搜索歌词</string>
      <string name="sleepmode">睡眠模式</string>
      <string name="setting">设置</string>
+     
+     <string name="search_hint">歌曲，歌手，专辑，歌名</string>
 
 </resources>

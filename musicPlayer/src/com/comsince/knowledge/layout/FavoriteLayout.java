@@ -18,7 +18,7 @@ public class FavoriteLayout extends RelativeLayout {
 		inflater = LayoutInflater.from(context);
 		this.context = context;
 		this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
-		rootView = inflater.inflate(R.layout.favoritegroup, this, true);
+		rootView = inflater.inflate(R.layout.ui_search_music_main, this, true);
 	}
 
 }

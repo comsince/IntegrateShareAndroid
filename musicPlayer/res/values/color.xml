@@ -41,4 +41,8 @@
     <color name="lightransparent">#a0000000</color>
     <color name="transparent">#00000000</color>
     <color name="navpage">#FFE1E8EB</color>
+    
+    <color name="color_tab_bg">#ff279ce7</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="bg_song_recognition_entrance">#ffeeeeee</color>
 </resources>

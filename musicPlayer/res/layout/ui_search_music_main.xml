@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <include layout="@layout/ui_layout_search_music" />
+
+    <ListView
+        android:id="@+id/lvSounds"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/navigation_list_divider"
+        android:dividerHeight="2.0px"
+        android:fadingEdgeLength="0.0dip"
+        android:fastScrollEnabled="true"
+        android:listSelector="@drawable/local_category_left_item_bg_selector" />
+
+</LinearLayout>
