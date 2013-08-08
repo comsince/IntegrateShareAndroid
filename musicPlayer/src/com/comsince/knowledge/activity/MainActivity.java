@@ -36,6 +36,7 @@ import com.comsince.knowledge.entity.Music;
 import com.comsince.knowledge.layout.FavoriteLayout;
 import com.comsince.knowledge.layout.LocalLayout;
 import com.comsince.knowledge.layout.NetLayout;
+import com.comsince.knowledge.preferences.MusicPreference;
 import com.comsince.knowledge.service.MusicPlayerService;
 import com.comsince.knowledge.utils.BitmapTool;
 import com.comsince.knowledge.utils.StrTime;
@@ -94,10 +95,10 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onStart() {
 		super.onStart();
-		//启动更新当前播信息
-		sendBroadcast(new Intent(Constant.ACTION_UPDATE_ALL));
 		//从sharedPreference读取数据初始化当前播放歌曲
 		position = MyApplication.musicPreference.getsaveposition(context);
+		//启动更新当前播信息
+		sendBroadcast(new Intent(Constant.ACTION_UPDATE_ALL));
 		showNowPalyMusicInfo();
 	}
 
@@ -150,7 +151,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_HOME);
 			startActivity(intent);
-			System.exit(0);// 使虚拟机停止运行并退出程序
+			//System.exit(0);// 使虚拟机停止运行并退出程序
 		} else {
 			isExit = true;
 			Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
@@ -337,6 +338,10 @@ public class MainActivity extends Activity implements OnClickListener{
 			if (intent.getAction().equals(Constant.ACTION_UPDATE)) {
 				// 实现从intent获取entity,该类必须实现Serializable接口
 				music = (Music) intent.getSerializableExtra("music");
+				//如果初始广播music为空，则初始化
+				if(music == null){
+					music = MyApplication.musics.get(position);
+				}
 				totalms = intent.getIntExtra("totalms", 28888);
 				status = intent.getIntExtra("status", -1);
 				position = intent.getIntExtra("position", 0);
