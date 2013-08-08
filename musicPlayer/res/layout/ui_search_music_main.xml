@@ -6,6 +6,9 @@
     android:orientation="vertical" >
 
     <include layout="@layout/ui_layout_search_music" />
+     <include
+        android:id="@+id/loadinginfo"
+        layout="@layout/loading" />
 
     <ListView
         android:id="@+id/lvSounds"
@@ -16,6 +19,7 @@
         android:dividerHeight="2.0px"
         android:fadingEdgeLength="0.0dip"
         android:fastScrollEnabled="true"
-        android:listSelector="@drawable/local_category_left_item_bg_selector" />
+        android:listSelector="@drawable/local_category_left_item_bg_selector"
+        android:visibility="gone" />
 
 </LinearLayout>
