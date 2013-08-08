@@ -42,5 +42,10 @@
      <string name="setting">设置</string>
      
      <string name="search_hint">歌曲，歌手，专辑，歌名</string>
+     <string-array name="download_music_item">
+        <item>下载音乐</item>
+        <item>分享</item>
+    </string-array>
+     <string name="down_info">请选择</string>
 
 </resources>

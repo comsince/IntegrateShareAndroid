@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -21,6 +23,7 @@ import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.OnlineSearchResultAdapter;
 import com.comsince.knowledge.entity.BaiduDevMusic;
 import com.comsince.knowledge.lrcutil.BaiduLrc;
+import com.comsince.knowledge.uikit.MMAlert;
 
 public class FavoriteLayout extends RelativeLayout {
 	private View rootView;
@@ -71,6 +74,20 @@ public class FavoriteLayout extends RelativeLayout {
 				//这个不能放到子线程中，只能在UI主线程中操作
 				loadingView.setVisibility(View.VISIBLE);
 				new UpdateSearchResultThread().start();
+			}
+		});
+		searchResultList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				MMAlert.showAlert(context, context.getString(R.string.down_info), context.getResources().getStringArray(R.array.download_music_item), null, new MMAlert.OnAlertSelectId(){
+
+					@Override
+					public void onClick(int whichButton) {
+						
+					}
+					
+				});
 			}
 		});
 	}
