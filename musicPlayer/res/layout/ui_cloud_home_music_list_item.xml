@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <View
+        android:id="@+id/cloud_music_item_indicator"
+        android:layout_width="6.0dip"
+        android:layout_height="fill_parent"
+        android:background="#ff0099ff"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.0dip"
+        android:layout_weight="1.0"
+        android:paddingBottom="6.0dip"
+        android:paddingTop="6.0dip" >
+
+        <TextView
+            android:id="@+id/cloud_music_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:duplicateParentState="true"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="我是一首歌的标题"
+            android:textColor="#ffffffff"
+            android:textSize="16.0sp" />
+
+        <LinearLayout
+            android:id="@+id/cloud_music_item_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/cloud_music_item_title"
+            android:duplicateParentState="true"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/cloud_music_item_mini_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1.0dip"
+                android:duplicateParentState="true"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/cloud_music_item_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1.0dip"
+                android:duplicateParentState="true"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="我是歌手的名字"
+                android:textColor="#ffffffff"
+                android:textSize="16.0sp" />
+            
+            <TextView
+                android:id="@+id/cloud_music_item_ablum_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1.0dip"
+                android:duplicateParentState="true"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="专辑名"
+                android:textColor="#ffffffff"
+                android:textSize="16.0sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/ui_cloud_list_item_click_layout" />
+
+</LinearLayout>

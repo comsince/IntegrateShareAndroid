@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list android:oneshot="false"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="166" android:drawable="@drawable/general_loading_flower_01" />
+    <item android:duration="166" android:drawable="@drawable/general_loading_flower_02" />
+    <item android:duration="166" android:drawable="@drawable/general_loading_flower_03" />
+    <item android:duration="166" android:drawable="@drawable/general_loading_flower_04" />
+    <item android:duration="166" android:drawable="@drawable/general_loading_flower_05" />
+    <item android:duration="166" android:drawable="@drawable/general_loading_flower_06" />
+    <item android:duration="166" android:drawable="@drawable/general_loading_flower_07" />
+    <item android:duration="166" android:drawable="@drawable/general_loading_flower_08" />
+</animation-list>
