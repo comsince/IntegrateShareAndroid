@@ -78,7 +78,7 @@ public class OnlineSearchResultAdapter extends BaseAdapter {
 		BaiduDevMusic music = sounds.get(position);
 		holder.tvMusicName.setText(music.getSong());
 		holder.tvSinger.setText(music.getSinger());
-		holder.musicAblum.setText(music.getAlbum());
+		holder.musicAblum.setText(" - "+"<<"+music.getAlbum()+">>");
 		return convertView;
 	}
 	class ViewHolder {
