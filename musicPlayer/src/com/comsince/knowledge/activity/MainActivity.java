@@ -5,12 +5,15 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -20,6 +23,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -32,12 +37,17 @@ import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.LocalMusicListAdapter;
 import com.comsince.knowledge.adapter.MyPagerAdapter;
 import com.comsince.knowledge.constant.Constant;
+import com.comsince.knowledge.entity.BaiduDevMusic;
 import com.comsince.knowledge.entity.Music;
+import com.comsince.knowledge.entity.TingMusicJson;
 import com.comsince.knowledge.layout.FavoriteLayout;
 import com.comsince.knowledge.layout.LocalLayout;
 import com.comsince.knowledge.layout.NetLayout;
-import com.comsince.knowledge.preferences.MusicPreference;
+import com.comsince.knowledge.lrcutil.BaiduLrc;
+import com.comsince.knowledge.service.DownloadService;
+import com.comsince.knowledge.service.DownloadService.DownLoadBinder;
 import com.comsince.knowledge.service.MusicPlayerService;
+import com.comsince.knowledge.uikit.MMAlert;
 import com.comsince.knowledge.utils.BitmapTool;
 import com.comsince.knowledge.utils.StrTime;
 import com.tarena.fashionmusic.MyApplication;
@@ -75,6 +85,19 @@ public class MainActivity extends Activity implements OnClickListener{
 
 	private static String TAG = "Aisa";
 
+	private DownLoadBinder downLoadBinder;
+	// 绑定和解绑service时的回调对象conn
+	private ServiceConnection conn = new ServiceConnection() {
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			downLoadBinder = null;
+		}
+
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			downLoadBinder = (DownLoadBinder) service;
+		}
+	};
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,6 +112,9 @@ public class MainActivity extends Activity implements OnClickListener{
 		musicReceiver = new MusicReceiver();
 		// 启动service
 		startService(new Intent(context, MusicPlayerService.class));
+		Intent downLoadIntent = new Intent(context, DownloadService.class);
+        startService(downLoadIntent);
+		this.getApplicationContext().bindService(downLoadIntent, conn, BIND_AUTO_CREATE);
 	}
 	
 
@@ -213,6 +239,39 @@ public class MainActivity extends Activity implements OnClickListener{
 		nextBtn.setOnClickListener(this);
 		playBtn.setOnClickListener(this);
 		listShowAlbum.setOnClickListener(this);
+		favorLayout.getSearchResultList().setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				final BaiduDevMusic baiduDevMusic = (BaiduDevMusic) favorLayout.getSearchResultList().getAdapter().getItem(position);
+				MMAlert.showAlert(context, context.getString(R.string.down_info), context.getResources().getStringArray(R.array.download_music_item), null, new MMAlert.OnAlertSelectId(){
+
+					@Override
+					public void onClick(int whichButton) {
+						downLoadMusic(baiduDevMusic);
+					}
+					
+				});
+			}
+		});
+	}
+	/**
+	 * 下载音乐
+	 * */
+	public void downLoadMusic(BaiduDevMusic baiduDevMusic){
+		final String songId = baiduDevMusic.getSong_id();
+		if(!TextUtils.isEmpty(songId)){
+			//android.os.NetworkOnMainThreadException 不能在主线程上访问网络等耗时操作
+			new Thread(){
+				@Override
+				public void run() {
+					TingMusicJson musicJoson = BaiduLrc.getTingMusicJsonBySongId(songId);
+					downLoadBinder.addTask(musicJoson);
+				}
+				
+			}.start();
+			
+		}
 	}
 	/**
 	 * 初始化当前音乐播放信息

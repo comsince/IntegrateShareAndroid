@@ -8,8 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.comsince.knowledge.constant.Constant;
+
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 
 public class FileUtil {
 	/**
@@ -153,11 +157,14 @@ public class FileUtil {
 		if (in != null && out != null) {
 			BufferedInputStream bis = new BufferedInputStream(in);
 			BufferedOutputStream bos = new BufferedOutputStream(out);
+			int total = 0;
 			int len = -1;
 			byte[] bytes = new byte[1024];
 			while ((len = bis.read(bytes)) != -1) {
 				bos.write(bytes, 0, len);
 				bos.flush();
+				total += len;
+				Log.i("download", "" + total);
 			}
 			bos.close();
 			out.close();
@@ -181,6 +188,64 @@ public class FileUtil {
 			}
 			FileOutputStream out = new FileOutputStream(path);
 			readData(in, out);
+		}
+	}
+	/**
+	 * @param in
+	 * @param out
+	 * @param handler
+	 * @param fileLength
+	 * */
+	public static void save(InputStream in,String path,Handler handler,long fileLength) throws IOException{
+		if(in !=null && path!=null){
+			File file = new File(path);
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
+			FileOutputStream out = new FileOutputStream(path);
+			readData(in, out,handler,fileLength);
+		}
+	}
+	/**
+	 * @param in
+	 * @param out
+	 * @param handler
+	 * @throws IOException
+	 */
+	public static void readData(InputStream in,OutputStream out,Handler handler,long fileLength) throws IOException{
+		if(in!=null && out!=null){
+			BufferedInputStream bis = new BufferedInputStream(in);
+			BufferedOutputStream bos = new BufferedOutputStream(out);
+			int len = -1;
+			int total = 0;
+			int percent = 0;
+			byte[] bytes = new byte[1024];
+			int loadedLength = 0;//已下载的长度（kb）
+			while((len = bis.read(bytes))!=-1){
+				bos.write(bytes,0,len);
+				total += len;
+				percent = (int) (1.0 * total / fileLength) * 100;
+				Message msg = handler.obtainMessage(Constant.MSG_PROGRESS);
+				msg.arg1 = percent;
+				Log.i("download", String.valueOf(total)+"/"+fileLength);
+				Log.i("download", String.valueOf(percent));
+				handler.sendMessage(msg);
+				/*loadedLength++;//每下载1kb，该值+1
+				//如果已下载长度是200的整数倍，则发送消息回主线程
+				if(loadedLength%12==0 && handler!=null){
+					Message msg = handler.obtainMessage(Constant.MSG_PROGRESS);
+					msg.arg1 = loadedLength;
+					if (fileLength>0&&loadedLength<fileLength) {
+						handler.sendMessage(msg);
+					}
+				}*/
+				bos.flush();
+			}
+			bos.close();
+			out.close();
+			bis.close();
+			in.close();
 		}
 	}
 

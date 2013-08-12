@@ -52,4 +52,9 @@ public class Constant {
 	public static final String LRC_PATH = "mnt/sdcard/TMusic/";
 	public static final String LRC_DIR = "TMusic";
 	
+	//downLoad message
+	public static final int MSG_PROGRESS = 5;
+	public static final int MSG_START = 6;
+	public static final int MSG_OK = 7;
+	public static final int MSG_ERROR = 8;
 }

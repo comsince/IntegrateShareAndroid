@@ -9,10 +9,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.comsince.knowledge.entity.BaiduDevMusic;
 import com.comsince.knowledge.entity.BaiduDevMusicList;
+import com.comsince.knowledge.entity.TingMusicJson;
 import com.comsince.knowledge.utils.HttpTool;
 import com.comsince.knowledge.utils.SimpleXmlReaderUtil;
 
@@ -122,6 +124,68 @@ public class BaiduLrc {
 		}
 		
 		return lrcUrl;
+	}
+	
+	/**
+	 * 根据歌曲id,生成听MusicJson对象
+	 * */
+	public static TingMusicJson getTingMusicJsonBySongId(String songId){
+		TingMusicJson tingMusicJson = new TingMusicJson();
+		String songInfoUrl = BAIDU_TING_API_PATH.replace("<songIds>", EncodeName(songId));
+		try {
+			String songInfoJsonStr = HttpTool.getString(songInfoUrl, null, null, HttpTool.GET);
+			JSONArray songListObj = new JSONObject(songInfoJsonStr).getJSONObject("data").getJSONArray("songList"); 
+			JSONObject songDataObj = ((JSONObject) songListObj.get(0));
+			String songId1 = songDataObj.getString("songId");
+			if(!TextUtils.isEmpty(songId1)){
+				tingMusicJson.setXcode(songId1);
+			}
+			String songName = songDataObj.getString("songName");
+			if(!TextUtils.isEmpty(songName)){
+				tingMusicJson.setSongName(songName);
+			}
+			String artistName = songDataObj.getString("artistName");
+			if(!TextUtils.isEmpty(artistName)){
+				tingMusicJson.setArtistName(artistName);
+			}
+			String albumName = songDataObj.getString("albumName");
+			if(!TextUtils.isEmpty(albumName)){
+				tingMusicJson.setAlbumName(albumName);
+			}
+			String songPicSmall = songDataObj.getString("songPicSmall");
+			if(!TextUtils.isEmpty(songPicSmall)){
+				tingMusicJson.setSongPicSmall(songPicSmall);
+			}
+			String songPicBig = songDataObj.getString("songPicBig");
+			if(!TextUtils.isEmpty(songPicBig)){
+				tingMusicJson.setSongPicBig(songPicBig);
+			}
+			String songPicRadio = songDataObj.getString("songPicRadio");
+			if(!TextUtils.isEmpty(songPicRadio)){
+				tingMusicJson.setSongPicRadio(songPicRadio);
+			}
+			String lrcLink = songDataObj.getString("lrcLink");
+			if(!TextUtils.isEmpty(lrcLink)){
+				tingMusicJson.setLrcLink(lrcLink);
+			}
+			String songLink = songDataObj.getString("songLink");
+			if(!TextUtils.isEmpty(songLink)){
+				tingMusicJson.setSongLink(songLink);
+			}
+			String showLink = songDataObj.getString("showLink");
+			if(!TextUtils.isEmpty(showLink)){
+				tingMusicJson.setShowLink(showLink);
+			}
+			String size = songDataObj.getString("size");
+			if(!TextUtils.isEmpty(size)){
+				tingMusicJson.setSize(size);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return tingMusicJson;
 	}
 	
 

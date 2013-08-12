@@ -583,13 +583,14 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
      * */
     public boolean isHaveLrc = false;
     public String netLrcPath = null;
-    public boolean isDownLrc = true;
+    public boolean isDownLrc = false;
     public void ShowLyric(String lrcPath){
     	if (new File(lrcPath).exists()) {
 			doshowlrc(curMusic.getSavePath(), lrcPath);
 			Log.d("", "savepath: "+curMusic.getSavePath());
 			String path = curMusic.getSavePath();
     		isHaveLrc = true;
+    		isDownLrc = false;
 		} else {
 			isDownLrc = true;
 			noLrcTv.setVisibility(View.VISIBLE);

@@ -88,6 +88,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        <!-- music download service -->
+        <service android:name=".service.DownloadService" >
+        </service>
         
          <!-- push service client 用来接收push服务receiver-->
         <receiver android:name=".receiver.PushMessageReceiver">

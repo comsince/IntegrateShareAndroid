@@ -76,7 +76,7 @@ public class FavoriteLayout extends RelativeLayout {
 				new UpdateSearchResultThread().start();
 			}
 		});
-		searchResultList.setOnItemClickListener(new OnItemClickListener() {
+		/*searchResultList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -89,7 +89,7 @@ public class FavoriteLayout extends RelativeLayout {
 					
 				});
 			}
-		});
+		});*/
 	}
 	
 	class UpdateSearchResultThread extends Thread{
@@ -153,5 +153,13 @@ public class FavoriteLayout extends RelativeLayout {
 		}
 
 	};
+
+	public ListView getSearchResultList() {
+		return searchResultList;
+	}
+
+	public void setSearchResultList(ListView searchResultList) {
+		this.searchResultList = searchResultList;
+	}
 
 }

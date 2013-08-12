@@ -119,5 +119,23 @@ public class testUtiljunit extends AndroidTestCase {
 	   long k = i+j;
 	   Log.e("TESTJUNIT", String.valueOf(k));
    }
+   
+   public void downLoadFile() throws IOException{
+	   HttpDownloader httpDownloader = new HttpDownloader();
+	   String uri = "http://zhangmenshiting.baidu.com/data2/music/42632117/33847306122400.mp3?xcode=cee5cce0e59cd1854c919478cfdf962592370e67cf9eb94d";
+	  
+		InputStream in = HttpTool.getStream(uri, null, null, HttpTool.GET);
+	
+	   FileUtil.save(in, AndroidUtil.getSDCardRoot()+"TMusic/download/12.mp3");
+		//httpDownloader.downFile(uri, "TMusic/download", "为了遇见你" + ".mp3");
+   }
+   
+   public void testProgerss(){
+	   int max = 100;
+	   for(int i=0;i<100;i++){
+		   Log.i("download", String.valueOf(1.0*i/max *100));
+	   }
+	   
+   }
 
 }
