@@ -225,7 +225,7 @@ public class FileUtil {
 			while((len = bis.read(bytes))!=-1){
 				bos.write(bytes,0,len);
 				total += len;
-				percent = (int) (1.0 * total / fileLength) * 100;
+				percent = (int) (1.0 * total / fileLength * 100);
 				Message msg = handler.obtainMessage(Constant.MSG_PROGRESS);
 				msg.arg1 = percent;
 				Log.i("download", String.valueOf(total)+"/"+fileLength);

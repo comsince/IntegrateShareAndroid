@@ -4,15 +4,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import android.app.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.comsince.knowledge.R;
@@ -23,6 +26,7 @@ import com.comsince.knowledge.utils.AndroidUtil;
 import com.comsince.knowledge.utils.FileUtil;
 import com.comsince.knowledge.utils.HttpDownloader;
 import com.comsince.knowledge.utils.HttpTool;
+
 
 public class DownloadService extends Service {
 	/**
@@ -161,6 +165,8 @@ public class DownloadService extends Service {
 			setNotifiacationManager();
 			switch (msg.what) {
 			case Constant.MSG_START:
+				noti.contentView.setViewVisibility(R.id.processbar_layout, View.VISIBLE);
+				noti.contentView.setViewVisibility(R.id.text_layout, View.GONE);
 				noti.contentView.setTextViewText(R.id.file_name, currentMusicName + "-" + artistName);
 				noti.contentView.setTextViewText(R.id.percent, "0%");
 				noti.contentView.setProgressBar(R.id.download_progress, 100, 0, false);
@@ -174,7 +180,14 @@ public class DownloadService extends Service {
 				manager.notify(0, noti);
 				break;
 			case Constant.MSG_OK:
-
+				noti.contentView.setViewVisibility(R.id.processbar_layout, View.GONE);
+				noti.contentView.setViewVisibility(R.id.text_layout, View.VISIBLE);
+				noti.contentView.setTextViewText(R.id.status_1, "下载完成，请点击查看");
+				manager.notify(0, noti);
+				Intent intent = new Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+				Bundle bundle = new Bundle();
+				intent.putExtras(bundle);
+				sendBroadcast(intent);
 				break;
 			case Constant.MSG_ERROR:
 				manager.cancel(0);
