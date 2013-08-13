@@ -17,19 +17,15 @@ public class Desktop {
 	private Context mContext;
 	private Activity mActivity;
 	private ListView mDisplay;
-	/**
-	 * 桌面适配器
-	 */
+
 	private DesktopAdapter mAdapter;
-	/**
-	 * 当前界面的View
-	 */
+
 	private View mDesktop;
 
 	public Desktop(Context context, Activity activity) {
 		mContext = context;
 		mActivity = activity;
-		// 绑定布局到当前View
+
 		mDesktop = LayoutInflater.from(context).inflate(R.layout.desktop, null);
 		findViewById();
 		setListener();
@@ -49,18 +45,13 @@ public class Desktop {
 		mDisplay.setAdapter(mAdapter);
 	}
 
-	/**
-	 * 获取菜单界面
-	 * 
-	 * @return 菜单界面的View
-	 */
 	public View getView() {
 		return mDesktop;
 	}
 
 	public class DesktopAdapter extends BaseAdapter {
 		private Context mContext;
-		private String[] mName = { "首页", "消息", "好友", "照片", "转帖", "礼物", "游戏", "附近" };
+		private String[] mName = { "棣栭〉", "娑堟伅", "濂藉弸", "鐓х墖", "杞笘", "绀肩墿", "娓告垙", "闄勮繎" };
 
 		public DesktopAdapter(Context mContext) {
 			this.mContext = mContext;

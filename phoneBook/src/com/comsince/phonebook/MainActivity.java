@@ -14,36 +14,26 @@ import com.comsince.phonebook.ui.base.FlipperLayout;
 
 public class MainActivity extends Activity {
 	protected PhoneBookApplication phoneBookApplication;
-	/**
-	 * µ±Ç°ÏÔÊ¾ÄÚÈİµÄÈİÆ÷(¼Ì³ĞÓÚViewGroup)
-	 */
+	
 	private FlipperLayout mRoot;
-	/**
-	 * ²Ëµ¥½çÃæ
-	 */
+	
 	private Desktop mDesktop;
-	/**
-	 * ÄÚÈİÊ×Ò³½çÃæ
-	 */
+	
 	private Home mHome;
-	/**
-	 * ºÃÓÑÊ×Ò³½çÃæ
-	 */
+	
 	private Friends mFriends;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//ÒªÔÚmainfestÖĞÉùÃ÷¸Ãapplication
+		//åœ¨manifestä¸­å£°æ˜
 		phoneBookApplication = (PhoneBookApplication) getApplication();
-		/**
-		 * ´´½¨ÈİÆ÷,²¢ÉèÖÃÈ«ÆÁ´óĞ¡
-		 */
+		
 		mRoot = new FlipperLayout(this);
 		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		mRoot.setLayoutParams(params);
 		/**
-		 * Ö÷Ò³ÏÔÊ¾Ö»ÓĞÒ»¸ö£¬²»Òª×°ÔØ¶à¸ö
+		 * åªèƒ½æœ‰ä¸€ä¸ªé»˜è®¤æ˜¾ç¤ºçš„é¡µé¢
 		 * */
 		mDesktop = new Desktop(this, this);
 		mHome = new Home(this, this);

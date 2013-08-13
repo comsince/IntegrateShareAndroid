@@ -33,9 +33,7 @@ public class Home {
 	public void init() {
 
 	}
-	/**
-	 * 获取菜单界面
-	 * */
+
 	public View getView() {
 		return mHome;
 	}

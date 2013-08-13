@@ -10,12 +10,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.Scroller;
 
-/**
- * 自己重写的ViewGroup,用与滑动切换界面使用,代码不详解,慢点看的话应该能看懂的...
- * 
- * @author rendongwei
- * 
- */
 public class FlipperLayout extends ViewGroup {
 
 	private Scroller mScroller;
