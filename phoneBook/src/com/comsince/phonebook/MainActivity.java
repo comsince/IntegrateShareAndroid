@@ -11,8 +11,9 @@ import com.comsince.phonebook.menu.Desktop;
 import com.comsince.phonebook.menu.Friends;
 import com.comsince.phonebook.menu.Home;
 import com.comsince.phonebook.ui.base.FlipperLayout;
+import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnOpenListener{
 	protected PhoneBookApplication phoneBookApplication;
 	
 	private FlipperLayout mRoot;
@@ -46,13 +47,23 @@ public class MainActivity extends Activity {
 	}
 	
 	public void setListener(){
-		
+		mFriends.setOnOpenListener(this);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	/**
+	 * 实现接口以便进行侧边栏界面弹出
+	 * */
+	@Override
+	public void open() {
+		if (mRoot.getScreenState() == FlipperLayout.SCREEN_STATE_CLOSE) {
+			mRoot.open();
+		}
 	}
 
 }

@@ -13,8 +13,10 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,6 +26,7 @@ import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.entity.Persons;
+import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.ui.base.MyLetterListView;
 import com.comsince.phonebook.ui.base.MyLetterListView.OnTouchingLetterChangedListener;
 import com.comsince.phonebook.util.DataUtil;
@@ -39,7 +42,9 @@ public class Friends {
 	 * 字符索引表
 	 * */
 	private MyLetterListView mLetter;
+	private Button mMenu;
 	private FriendInfoAdapter friendInfoAdapter;
+	private OnOpenListener mOnOpenListener;
 	// 当前显示的好友数据
 	private List<Person> mMyFriendsResults = new ArrayList<Person>();
 	// 当前显示的好友的姓名的首字母的在列表中的位置
@@ -60,6 +65,7 @@ public class Friends {
 		mDisplay = (ListView) mFriends.findViewById(R.id.friends_display);
 		mSearch = (EditText) mFriends.findViewById(R.id.friends_search);
 		mLetter = (MyLetterListView) mFriends.findViewById(R.id.friends_letter);
+		mMenu = (Button) mFriends.findViewById(R.id.friends_menu);
 	}
 
 	public void setListener() {
@@ -118,7 +124,15 @@ public class Friends {
 				}
 			}
 		});
-
+		mMenu.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (mOnOpenListener != null) {
+					mOnOpenListener.open();
+				}
+			}
+		});
 	}
 
 	public void init() {
@@ -265,6 +279,12 @@ public class Friends {
 			ImageView arrow;
 		}
 
+	}
+	/**
+	 * 设置打开侧边栏的监听器，在主activity中调用
+	 * */
+	public void setOnOpenListener(OnOpenListener onOpenListener) {
+		mOnOpenListener = onOpenListener;
 	}
 
 }
