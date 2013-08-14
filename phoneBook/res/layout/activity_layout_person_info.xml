@@ -121,21 +121,16 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-            <!-- 电话  
-            android:background="@drawable/setting_pad_body_selector"
-            
-            -->
- 
+            <!-- 电话  android:background="@drawable/setting_pad_body_selector" -->
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="50.0dip"
+                android:layout_marginBottom="8dip"
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
                 android:layout_marginTop="20dip"
-                android:layout_marginBottom="8dip"
-                android:orientation="horizontal"
-                
-               >
+                android:orientation="horizontal" >
 
                 <RelativeLayout
                     android:id="@+id/view_cdetail_call"
@@ -208,13 +203,13 @@
             </LinearLayout>
             <!-- 电话 -->
             <!-- 邮箱 -->
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/personal_card_email"
@@ -261,9 +256,9 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" 
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dip"
-                android:layout_marginRight="8dip">
+                android:layout_marginRight="8dip" >
 
                 <TextView
                     android:id="@+id/personal_card_birthday"
@@ -303,14 +298,62 @@
                         android:layout_marginRight="10.0dip"
                         android:src="@drawable/setting_arrow" />
                 </RelativeLayout>
-               
             </RelativeLayout>
-             <!-- 婚姻状态 -->
-             <RelativeLayout
+            <!-- 活动区域 -->
+
+            <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" 
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dip"
-                android:layout_marginRight="8dip">
+                android:layout_marginRight="8dip" >
+
+                <TextView
+                    android:id="@+id/personal_card_reigon"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/cdetail_leftcenter"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="区域" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_reigon_editable_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/personal_card_reigon"
+                    android:background="@drawable/cdetail_rightcenter_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/personal_card_reigon_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip" />
+
+                    <ImageView
+                        android:id="@+id/personal_card_reigon_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <!-- 婚姻状态 -->
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip" >
 
                 <TextView
                     android:id="@+id/personal_card_marriage"
@@ -350,8 +393,106 @@
                         android:layout_marginRight="10.0dip"
                         android:src="@drawable/setting_arrow" />
                 </RelativeLayout>
+            </RelativeLayout>
+            <!-- 其他联系方式 -->
+            <!-- QQ -->
 
-            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:layout_marginTop="8dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/personal_card_qq"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/cdetail_lefttop"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="QQ" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_qq_editable_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/cdetail_righttop_selector"
+                    android:clickable="true" >
+
+                    <ImageView
+                        android:id="@+id/personal_card_qq_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+
+                    <TextView
+                        android:id="@+id/personal_card_qq_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_toLeftOf="@id/personal_card_qq_editable_iv"
+                        android:maxLength="99" />
+                </RelativeLayout>
+            </LinearLayout>
+            <!-- msn -->
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip" >
+
+                <TextView
+                    android:id="@+id/personal_card_msn"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/setting_pad_item_bottom_selector"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="MSN" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_msn_editable_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/personal_card_msn"
+                    android:background="@drawable/cdetail_rightbottom_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/personal_card_msn_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip" />
+
+                    <ImageView
+                        android:id="@+id/personal_card_msn_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+                </RelativeLayout>
+            </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
 
