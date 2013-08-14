@@ -21,6 +21,11 @@ public class Person {
 	private String remark;
 	@ElementList(required = false,inline=true)
 	private List<Phone> phones;
+	/**
+	 * 好友性别
+	 * */
+	@Element(required = false)
+    private String sex;
 	
 	/**
 	 * 好友的姓名拼音
@@ -30,7 +35,6 @@ public class Person {
 	 * 好友姓名的首字母
 	 */
 	private String name_first;
-
 
 	public String getName() {
 		return name;
@@ -102,6 +106,14 @@ public class Person {
 
 	public void setName_first(String name_first) {
 		this.name_first = name_first;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 
 }

@@ -165,7 +165,11 @@ public class Friends {
 				holder.alpha_line.setVisibility(View.GONE);
 			}
 			holder.name.setText(person.getName());
-			holder.avatar.setImageBitmap(phoneBookApplication.getAvatar(0));
+			if(person.getSex().equals("男")){
+				holder.avatar.setImageBitmap(phoneBookApplication.getAvatar(1));
+			}else{
+				holder.avatar.setImageBitmap(phoneBookApplication.getAvatar(0));
+			}
 			holder.arrow.setVisibility(View.GONE);
 
 			return convertView;

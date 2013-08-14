@@ -15,6 +15,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>男</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -32,6 +33,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>男</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -48,7 +50,8 @@
 	  </phones>
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
-	  <reigon>珠海,广州</reigon> 
+	  <reigon>珠海,广州</reigon>
+	  <sex>男</sex> 
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -66,6 +69,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>女</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -83,6 +87,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>男</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -100,6 +105,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>男</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -117,6 +123,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>男</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -134,6 +141,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>男</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -151,6 +159,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>男</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -168,6 +177,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>女</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -185,6 +195,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>男</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -202,6 +213,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>女</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -219,6 +231,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>男</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -236,6 +249,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>女</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -253,6 +267,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>女</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 	<person>
@@ -270,6 +285,7 @@
 	  <qq>781139560</qq>
 	  <marriage>否</marriage>
 	  <reigon>珠海,广州</reigon> 
+	  <sex>女</sex>
 	  <remark>你可以在这里添加你需要说的</remark>	
 	</person>
 </persons>
