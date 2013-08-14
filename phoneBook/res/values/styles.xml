@@ -16,5 +16,11 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    <style name="MidSizeTextStyle">
+        <item name="android:textSize">17.0sp</item>
+    </style>
+    <style name="MidSizeBlackTextStyle" parent="@style/MidSizeTextStyle">
+        <item name="android:textColor">@color/msg_recipient_text</item>
+    </style>
 
 </resources>

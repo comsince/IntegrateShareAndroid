@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/kaixin_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dip"
+        android:background="@drawable/global_top_background" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/title_bar_center_button_bg"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/about_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:maxWidth="150dip"
+                android:padding="8dip"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/about_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="8dip"
+            android:layout_marginLeft="8dip"
+            android:layout_marginTop="8dip"
+            android:background="@drawable/title_text_button_left_arrow"
+            android:ellipsize="end"
+            android:maxWidth="80dip"
+            android:minWidth="48dip"
+            android:singleLine="true"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/about_submit"
+            android:layout_width="48dip"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="8dip"
+            android:layout_marginRight="8dip"
+            android:layout_marginTop="8dip"
+            android:background="@drawable/title_text_button"
+            android:text="提交"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:id="@+id/about_avatar_layout"
+                    android:layout_width="120dip"
+                    android:layout_height="120dip" >
+
+                    <ImageButton
+                        android:id="@+id/about_avatar"
+                        android:layout_width="100dip"
+                        android:layout_height="100dip"
+                        android:layout_margin="8dip"
+                        android:background="@drawable/avatar_background_white"
+                        android:padding="4dip"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/head_default" />
+
+                    <Button
+                        android:id="@+id/about_avatar_change"
+                        android:layout_width="40dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/about_button_change_logo" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/about_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/about_avatar_layout"
+                    android:layout_toRightOf="@+id/about_avatar_layout"
+                    android:padding="8dip"
+                    android:textColor="#000000"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/about_signature"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/about_name"
+                    android:layout_below="@+id/about_name"
+                    android:paddingBottom="8dip"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <!-- 电话  
+            android:background="@drawable/setting_pad_body_selector"
+            
+            -->
+ 
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50.0dip"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:layout_marginTop="20dip"
+                android:layout_marginBottom="8dip"
+                android:orientation="horizontal"
+                
+               >
+
+                <RelativeLayout
+                    android:id="@+id/view_cdetail_call"
+                    android:layout_width="236.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/cdetail_leftbody_selector"
+                    android:clickable="true"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/dial_to_contact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/cdetail_phone"
+                        android:paddingLeft="6.0dip" />
+
+                    <TextView
+                        android:id="@+id/detail_contact_name"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/dial_to_contact"
+                        android:singleLine="true"
+                        android:textColor="#ff000000"
+                        android:textSize="17.0sp" />
+
+                    <TextView
+                        android:id="@+id/detail_contact_attribution"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/detail_contact_name"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_toRightOf="@id/detail_contact_name"
+                        android:singleLine="true"
+                        android:textColor="#ffa1a1a1"
+                        android:textSize="15.0sp" />
+
+                    <ImageView
+                        android:id="@+id/contactonline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/detail_contact_name"
+                        android:layout_marginTop="2.0dip"
+                        android:layout_toRightOf="@id/dial_to_contact"
+                        android:src="@drawable/online_status"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/detail_contact_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/detail_contact_name"
+                        android:layout_toRightOf="@id/contactonline"
+                        android:gravity="bottom"
+                        android:singleLine="true"
+                        android:textColor="#ff000000"
+                        android:textSize="15.0sp" />
+                </RelativeLayout>
+
+                <ImageButton
+                    android:id="@+id/chatwith_contact"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/cdetail_rightbody_selector"
+                    android:src="@drawable/cdetail_phone_msg" />
+            </LinearLayout>
+            <!-- 电话 -->
+            <!-- 邮箱 -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/personal_card_email"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/cdetail_lefttop"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="邮箱" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_email_editable_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/cdetail_righttop_selector"
+                    android:clickable="true" >
+
+                    <ImageView
+                        android:id="@+id/personal_card_email_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+
+                    <TextView
+                        android:id="@+id/personal_card_email_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_toLeftOf="@id/personal_card_email_editable_iv"
+                        android:maxLength="99" />
+                </RelativeLayout>
+            </LinearLayout>
+            <!-- 生日 -->
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip">
+
+                <TextView
+                    android:id="@+id/personal_card_birthday"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/cdetail_leftcenter"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="生日" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_birthday_editable_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/personal_card_birthday"
+                    android:background="@drawable/cdetail_rightcenter_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/personal_card_birthday_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip" />
+
+                    <ImageView
+                        android:id="@+id/personal_card_birthday_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+                </RelativeLayout>
+               
+            </RelativeLayout>
+             <!-- 婚姻状态 -->
+             <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip">
+
+                <TextView
+                    android:id="@+id/personal_card_marriage"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/setting_pad_item_bottom_selector"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="婚姻" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_marriage_editable_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/personal_card_marriage"
+                    android:background="@drawable/cdetail_rightbottom_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/personal_card_marriage_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip" />
+
+                    <ImageView
+                        android:id="@+id/personal_card_marriage_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+                </RelativeLayout>
+
+            
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

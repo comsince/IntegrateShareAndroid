@@ -34,5 +34,7 @@
     <drawable name="darkgray">#808080</drawable>
     <drawable name="white">#FFFFFF</drawable>
     <drawable name="blue">#0000FF</drawable>
+    
+    <color name="msg_recipient_text">#ff333333</color>
 
 </resources>
