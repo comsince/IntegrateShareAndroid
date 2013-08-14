@@ -8,11 +8,14 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +32,7 @@ public class Friends {
 	private PhoneBookApplication phoneBookApplication;
 	private View mFriends;
 	private ListView mDisplay;
+	private EditText mSearch;
 	private FriendInfoAdapter friendInfoAdapter;
 	// 当前显示的好友数据
 	private List<Person> mMyFriendsResults = new ArrayList<Person>();
@@ -48,9 +52,54 @@ public class Friends {
 
 	public void findViewById() {
 		mDisplay = (ListView) mFriends.findViewById(R.id.friends_display);
+		mSearch = (EditText) mFriends.findViewById(R.id.friends_search);
 	}
 
 	public void setListener() {
+		mSearch.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				String searchChar = s.toString().toUpperCase();
+				mMyFriendsResults.clear();
+				mMyFriendsPosition.clear();
+				mMyFriendsFirstName.clear();
+				// 判断输入内容的长度
+				if (searchChar.length() > 0) {
+					// 判断是否是字母
+					if (searchChar.matches("^[a-z,A-Z].*$")) {
+						// 判断当前好友里是有存在这个字母,有的话则取出数据更新界面,否则直接更新界面
+						if (phoneBookApplication.mMyFriendsGroupByFirstName.containsKey(searchChar)) {
+							List<Person> results = phoneBookApplication.mMyFriendsGroupByFirstName.get(searchChar);
+							mMyFriendsResults.addAll(results);
+							mMyFriendsFirstName.add(searchChar);
+							mMyFriendsPosition.add(0);
+							friendInfoAdapter.notifyDataSetChanged();
+						} else {
+							friendInfoAdapter.notifyDataSetChanged();
+						}
+					} else {
+						friendInfoAdapter.notifyDataSetChanged();
+					}
+				} else {
+					// 输入框没内容时,获取全部好友并更新界面
+					mMyFriendsResults.addAll(phoneBookApplication.mMyFriendsResults);
+					mMyFriendsPosition.addAll(phoneBookApplication.mMyFriendsPosition);
+					mMyFriendsFirstName.addAll(phoneBookApplication.mMyFriendsFirstName);
+					friendInfoAdapter.notifyDataSetChanged();
+				}
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
 
 	}
 
