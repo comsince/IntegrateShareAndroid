@@ -24,6 +24,8 @@ import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.entity.Persons;
+import com.comsince.phonebook.ui.base.MyLetterListView;
+import com.comsince.phonebook.ui.base.MyLetterListView.OnTouchingLetterChangedListener;
 import com.comsince.phonebook.util.DataUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 
@@ -33,6 +35,10 @@ public class Friends {
 	private View mFriends;
 	private ListView mDisplay;
 	private EditText mSearch;
+	/**
+	 * 字符索引表
+	 * */
+	private MyLetterListView mLetter;
 	private FriendInfoAdapter friendInfoAdapter;
 	// 当前显示的好友数据
 	private List<Person> mMyFriendsResults = new ArrayList<Person>();
@@ -53,6 +59,7 @@ public class Friends {
 	public void findViewById() {
 		mDisplay = (ListView) mFriends.findViewById(R.id.friends_display);
 		mSearch = (EditText) mFriends.findViewById(R.id.friends_search);
+		mLetter = (MyLetterListView) mFriends.findViewById(R.id.friends_letter);
 	}
 
 	public void setListener() {
@@ -98,6 +105,17 @@ public class Friends {
 			@Override
 			public void afterTextChanged(Editable s) {
 
+			}
+		});
+		
+		mLetter.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
+			
+			@Override
+			public void onTouchingLetterChanged(String s) {
+				// 根据触摸的字母,跳转到响应位置
+				if (phoneBookApplication.mMyFriendsFirstNamePosition.get(s) != null) {
+					mDisplay.setSelection(phoneBookApplication.mMyFriendsFirstNamePosition.get(s));
+				}
 			}
 		});
 
