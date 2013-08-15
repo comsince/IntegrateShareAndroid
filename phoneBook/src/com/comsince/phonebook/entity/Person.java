@@ -1,12 +1,17 @@
 package com.comsince.phonebook.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 @Root(strict=false, name="person")
-public class Person {
+public class Person implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Element(required = false)
 	private String id;
 	@Element(required = false)
@@ -20,7 +25,7 @@ public class Person {
 	@Element(required = false)
 	private String remark;
 	@ElementList(required = false,inline=true)
-	private List<Phone> phones;
+	private List<Phones> phonesList;
 	/**
 	 * 好友性别
 	 * */
@@ -76,12 +81,14 @@ public class Person {
 		this.remark = remark;
 	}
 
-	public List<Phone> getPhones() {
-		return phones;
+	
+
+	public List<Phones> getPhonesList() {
+		return phonesList;
 	}
 
-	public void setPhones(List<Phone> phones) {
-		this.phones = phones;
+	public void setPhonesList(List<Phones> phonesList) {
+		this.phonesList = phonesList;
 	}
 
 	public String getId() {

@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,8 +25,10 @@ import android.widget.TextView;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.activity.FriendInfoActivity;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.entity.Persons;
+import com.comsince.phonebook.entity.Phones;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.ui.base.MyLetterListView;
 import com.comsince.phonebook.ui.base.MyLetterListView.OnTouchingLetterChangedListener;
@@ -252,7 +255,17 @@ public class Friends {
 				holder.avatar.setImageBitmap(phoneBookApplication.getAvatar(0));
 			}
 			holder.arrow.setVisibility(View.GONE);
-
+            convertView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent();
+					intent.setClass(mContext, FriendInfoActivity.class);
+					person.getMarriage();
+					intent.putExtra("person", person);
+					mContext.startActivity(intent);
+				}
+			});
 			return convertView;
 		}
 
