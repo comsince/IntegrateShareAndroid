@@ -7,6 +7,9 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
+    <!-- 打电话发短信的权限配置 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:name=".PhoneBookApplication"

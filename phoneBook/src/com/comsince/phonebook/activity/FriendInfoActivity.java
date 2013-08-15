@@ -2,10 +2,15 @@ package com.comsince.phonebook.activity;
 
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.comsince.phonebook.R;
@@ -27,6 +32,9 @@ public class FriendInfoActivity extends Activity {
 	private TextView mMarriage;
 	private TextView mTencentQQ;
 	private TextView mMsn;
+	
+	private RelativeLayout mCall;
+	private ImageButton mSendMsg;
 	/**
 	 * 用户资料
 	 * */
@@ -58,10 +66,39 @@ public class FriendInfoActivity extends Activity {
 		mRegion = (TextView) findViewById(R.id.personal_card_reigon_editable_tv);
 		mTencentQQ = (TextView) findViewById(R.id.personal_card_qq_editable_tv);
 		mMsn = (TextView) findViewById(R.id.personal_card_msn_editable_tv);
+		mCall = (RelativeLayout) findViewById(R.id.view_cdetail_call);
+		mSendMsg = (ImageButton) findViewById(R.id.chatwith_contact);
 	}
 	
 	public void setListener(){
-		
+		mBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+		mCall.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//调用Android系统API打电话
+	            Uri uri = Uri.parse("tel:"+mContactNumber.getText().toString().trim());
+	            Intent intent = new Intent(Intent.ACTION_CALL, uri);
+	            startActivity(intent);
+			}
+		});
+		mSendMsg.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 //调用Android系统API发送短信
+	            Uri uri = Uri.parse("smsto:"+mContactNumber.getText().toString().trim());
+	            Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+	            //intent.putExtra("sms_body", "android...");
+	            startActivity(intent);
+			}
+		});
 	}
 	
 	public void init(){
