@@ -1,17 +1,20 @@
 package com.comsince.phonebook.menu;
 
-import com.comsince.phonebook.R;
-
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.comsince.phonebook.R;
+import com.comsince.phonebook.util.ViewUtil;
 
 public class Desktop {
 	private Context mContext;
@@ -21,6 +24,11 @@ public class Desktop {
 	private DesktopAdapter mAdapter;
 
 	private View mDesktop;
+	
+	/**
+	 * 接口对象,用来修改显示的View
+	 */
+	private onChangeViewListener mOnChangeViewListener;
 
 	public Desktop(Context context, Activity activity) {
 		mContext = context;
@@ -48,10 +56,32 @@ public class Desktop {
 	public View getView() {
 		return mDesktop;
 	}
+	
+	/**
+	 * 界面修改方法
+	 * 
+	 * @param onChangeViewListener
+	 */
+	public void setOnChangeViewListener(onChangeViewListener onChangeViewListener) {
+		mOnChangeViewListener = onChangeViewListener;
+	}
+	
+	/**
+	 * 切换显示界面的接口
+	 * 
+	 * @author rendongwei
+	 * 
+	 */
+	public interface onChangeViewListener {
+		public abstract void onChangeView(int arg0);
+	}
 
 	public class DesktopAdapter extends BaseAdapter {
 		private Context mContext;
-		private String[] mName = { "首页", "消息", "好友", "照片", "转帖", "礼物", "游戏", "附近" };
+		private String[] mName = { "好友", "消息" };
+		private int[] mIcon = {R.drawable.sidebar_icon_friends, R.drawable.sidebar_icon_news };
+		private int[] mIconPressed = { R.drawable.sidebar_icon_friends_pressed ,R.drawable.sidebar_icon_news_pressed };
+		private int mChoose = 0;
 
 		public DesktopAdapter(Context mContext) {
 			this.mContext = mContext;
@@ -59,7 +89,7 @@ public class Desktop {
 
 		@Override
 		public int getCount() {
-			return 8;
+			return mName.length;
 		}
 
 		@Override
@@ -73,7 +103,7 @@ public class Desktop {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.desktop_item, null);
@@ -86,6 +116,38 @@ public class Desktop {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			holder.name.setText(mName[position]);
+			if (position == mChoose) {
+				holder.name.setTextColor(Color.parseColor("#ffffffff"));
+				holder.icon.setImageResource(mIconPressed[position]);
+				holder.layout.setBackgroundColor(Color.parseColor("#20000000"));
+			} else {
+				holder.name.setTextColor(Color.parseColor("#7fffffff"));
+				holder.icon.setImageResource(mIcon[position]);
+				holder.layout.setBackgroundResource(Color.parseColor("#00000000"));
+			}
+			/**
+			 * 设置监听器
+			 * */
+			convertView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if(mOnChangeViewListener != null){
+						switch (position) {
+						case ViewUtil.FRIENDS:
+							mOnChangeViewListener.onChangeView(ViewUtil.FRIENDS);
+							break;
+						case ViewUtil.MESSAGE:
+							mOnChangeViewListener.onChangeView(ViewUtil.MESSAGE);
+							break;
+						default:
+							break;
+						}
+						mChoose = position;
+						notifyDataSetChanged();
+					}
+				}
+			});
 			return convertView;
 		}
 
