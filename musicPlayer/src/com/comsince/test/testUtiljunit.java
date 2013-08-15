@@ -137,5 +137,19 @@ public class testUtiljunit extends AndroidTestCase {
 	   }
 	   
    }
+   
+   
+   public void testBCSDown() throws IOException{
+	   String downurl = "http://bcs.duapp.com/comsince/log.txt?response-content-disposition=attachment;filename*=utf8''log.txt&response-cache-control=private";
+	   String readurl = "http://bcs.duapp.com/comsince/log.txt";
+	   String personReadUrl = "http://bcs.duapp.com/comsince/yc_zh_primary_person.xml";
+	   //HttpDownloader httpDownloader = new HttpDownloader();
+	   //String result = httpDownloader.download(readurl);
+	   //httpDownloader.downFile(downurl, "bcs", "log.txt");
+	  // Log.i("download", result);
+	   
+	   InputStream in = HttpTool.getStream(personReadUrl, null, null, HttpTool.GET);
+	   FileUtil.save(in, AndroidUtil.getSDCardRoot()+"TMusic/download/yc_zh_primary_person.xml");
+   }
 
 }
