@@ -1,5 +1,6 @@
 package com.comsince.phonebook.menu;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -9,9 +10,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,13 +30,16 @@ import android.widget.TextView;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.FriendInfoActivity;
+import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.entity.Persons;
-import com.comsince.phonebook.entity.Phones;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.ui.base.MyLetterListView;
 import com.comsince.phonebook.ui.base.MyLetterListView.OnTouchingLetterChangedListener;
+import com.comsince.phonebook.util.AndroidUtil;
 import com.comsince.phonebook.util.DataUtil;
+import com.comsince.phonebook.util.FileUtil;
+import com.comsince.phonebook.util.HttpTool;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 
 public class Friends {
@@ -41,6 +48,9 @@ public class Friends {
 	private View mFriends;
 	private ListView mDisplay;
 	private EditText mSearch;
+	private Button mRefreshFriend;
+	private View mLoading;
+	private UpdatePhoneBookInfoThread updatePhoneBookInfoThread;
 	/**
 	 * 字符索引表
 	 * */
@@ -69,6 +79,9 @@ public class Friends {
 		mSearch = (EditText) mFriends.findViewById(R.id.friends_search);
 		mLetter = (MyLetterListView) mFriends.findViewById(R.id.friends_letter);
 		mMenu = (Button) mFriends.findViewById(R.id.friends_menu);
+		mRefreshFriend = (Button) mFriends.findViewById(R.id.friends_add);
+		mLoading = mFriends.findViewById(R.id.loadinginfo);
+		mLoading.setVisibility(View.GONE);
 	}
 
 	public void setListener() {
@@ -136,6 +149,17 @@ public class Friends {
 				}
 			}
 		});
+		mRefreshFriend.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+                mLoading.setVisibility(View.VISIBLE);
+                mDisplay.setVisibility(View.GONE);
+                isUpdate = true;
+        		updatePhoneBookInfoThread = new UpdatePhoneBookInfoThread();
+        		updatePhoneBookInfoThread.start();
+			}
+		});
 	}
 
 	public void init() {
@@ -153,11 +177,23 @@ public class Friends {
 	 * 
 	 * */
 	public void getFriendInfo() {
-		if (phoneBookApplication.mMyFriendsResults.isEmpty()) {
+		if (phoneBookApplication.mMyFriendsResults.isEmpty() || isUpdate) {
+			//如果application中存储数据不为空，则进来先进行数据清理
+			phoneBookApplication.mMyFriendsResults.clear();
+			phoneBookApplication.mMyFriendsFirstName.clear();
+			phoneBookApplication.mMyFriendsPosition.clear();
+			phoneBookApplication.mMyFriendsGroupByFirstName.clear();
+			//
 			SimpleXmlReaderUtil simpleXmlReader = phoneBookApplication.simpleXmlReader;
 			try {
-				InputStream friendInfoIn = mContext.getAssets().open("personinfo/person.xml");
-				mMyFriendsResults = simpleXmlReader.readXmlFromInputStream(friendInfoIn, Persons.class).getPersons();
+				InputStream friendInfoInfromSDCard = FileUtil.getInputSteamFromFile(AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.YC_ZG_PRIMARY_PRESON_FILE_NAME);
+				if(friendInfoInfromSDCard !=null){
+					Log.i("download", "Loading sdcard info");
+					mMyFriendsResults = simpleXmlReader.readXmlFromInputStream(friendInfoInfromSDCard, Persons.class).getPersons();
+				}else{
+					InputStream friendInfoIn = mContext.getAssets().open("personinfo/person.xml");
+					mMyFriendsResults = simpleXmlReader.readXmlFromInputStream(friendInfoIn, Persons.class).getPersons();
+				}
 				for (Person person : mMyFriendsResults) {
 					person.setId(DataUtil.generateId());
 					person.setName_pinyin(DataUtil.getStringPinYin(person.getName()));
@@ -299,5 +335,52 @@ public class Friends {
 	public void setOnOpenListener(OnOpenListener onOpenListener) {
 		mOnOpenListener = onOpenListener;
 	}
+	
+	/**
+	 * 更新通讯录列表线程
+	 * */
+	boolean isUpdate = false;
+	class UpdatePhoneBookInfoThread extends Thread{
+
+		@Override
+		public void run() {
+			while(isUpdate){
+				try {
+					InputStream in = HttpTool.getStream(Constant.YC_ZG_PRIMARY_PRESON, null, null, HttpTool.GET);
+					//写入文件
+				    File file = FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH, Constant.YC_ZG_PRIMARY_PRESON_FILE_NAME, in);
+				    if(file != null){
+				    	getFriendInfo();
+				    	updatePhoneBookHandler.sendEmptyMessage(Constant.DOWN_LOAD_SUCCESS);
+				    }
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			super.run();
+		}
+		
+	}
+	
+	Handler updatePhoneBookHandler = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case Constant.DOWN_LOAD_SUCCESS:
+				//getFriendInfo();
+				isUpdate = false;
+				mLoading.setVisibility(View.GONE);
+				mDisplay.setVisibility(View.VISIBLE);
+				friendInfoAdapter.notifyDataSetChanged();
+				break;
+
+			default:
+				break;
+			}
+		}
+		
+	};
 
 }

@@ -4,5 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="app_name">通讯录</string>
+    
+    <string name="loading">正在加载数据请稍候...</string>
 
 </resources>
