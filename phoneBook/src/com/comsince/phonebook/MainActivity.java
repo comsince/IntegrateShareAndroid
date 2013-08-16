@@ -2,6 +2,8 @@ package com.comsince.phonebook;
 
 
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.comsince.phonebook.menu.Friends;
 import com.comsince.phonebook.menu.Home;
 import com.comsince.phonebook.ui.base.FlipperLayout;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
+import com.comsince.phonebook.util.BaiduPushUtil;
 import com.comsince.phonebook.util.ViewUtil;
 
 public class MainActivity extends Activity implements OnOpenListener{
@@ -147,6 +150,9 @@ public class MainActivity extends Activity implements OnOpenListener{
 	 * */
 	public void initBaiduPushService(){
 		PushManager.startWork(this, PushConstants.LOGIN_TYPE_API_KEY, Constant.BAIDU_APP_KEY);
+		//设置标签
+		List<String> tags = BaiduPushUtil.getTagsList(Constant.TITLE_GROUP);
+		PushManager.setTags(this, tags);
 	}
 
 	

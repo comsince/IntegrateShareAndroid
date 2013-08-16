@@ -14,5 +14,8 @@ public class Constant {
   	
   	//点击通知按钮是否需要更新当前数据
   	public static String IS_UPDATE_DATA_FROM_NOTIFICATION = "N";
+  	
+  	//群组标签
+  	public static final String TITLE_GROUP ="YC_ZG_PRIMARY";
     
 }
