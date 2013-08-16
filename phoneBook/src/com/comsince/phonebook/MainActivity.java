@@ -7,11 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
+import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.menu.Desktop;
 import com.comsince.phonebook.menu.Desktop.onChangeViewListener;
 import com.comsince.phonebook.menu.Friends;
@@ -38,6 +42,8 @@ public class MainActivity extends Activity implements OnOpenListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//百度云推送服务初始化api
+	    initBaiduPushService();
 		//在manifest中声明
 		phoneBookApplication = (PhoneBookApplication) getApplication();
 		
@@ -55,6 +61,7 @@ public class MainActivity extends Activity implements OnOpenListener{
 		mRoot.addView(mFriends.getView(),params);
 		setContentView(mRoot);
 		setListener();
+		Log.i("download", "notification !");
 	}
 	
 	public void setListener(){
@@ -134,6 +141,13 @@ public class MainActivity extends Activity implements OnOpenListener{
 			isExit = false;
 		}
 	};
+	
+	/**
+	 * 初始化百度云推送服务
+	 * */
+	public void initBaiduPushService(){
+		PushManager.startWork(this, PushConstants.LOGIN_TYPE_API_KEY, Constant.BAIDU_APP_KEY);
+	}
 
 	
 }

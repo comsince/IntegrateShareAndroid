@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
@@ -72,6 +73,9 @@ public class Friends {
 		findViewById();
 		setListener();
 		init();
+		if(Constant.IS_UPDATE_DATA_FROM_NOTIFICATION.equals("Y")){
+			updatePhoneBook();
+		}
 	}
 
 	public void findViewById() {
@@ -153,16 +157,23 @@ public class Friends {
 
 			@Override
 			public void onClick(View v) {
-                mLoading.setVisibility(View.VISIBLE);
-                mDisplay.setVisibility(View.GONE);
-                isUpdate = true;
-        		updatePhoneBookInfoThread = new UpdatePhoneBookInfoThread();
-        		updatePhoneBookInfoThread.start();
+				if(!AndroidUtil.getNetWorkStatus(mContext)){
+					Toast.makeText(mContext, "请确认WiFi或者GPRS已开启", Toast.LENGTH_SHORT).show();
+				}else{
+					mLoading.setVisibility(View.VISIBLE);
+	                mDisplay.setVisibility(View.GONE);
+	                isUpdate = true;
+	        		updatePhoneBookInfoThread = new UpdatePhoneBookInfoThread();
+	        		updatePhoneBookInfoThread.start();
+				}
 			}
 		});
 	}
 
 	public void init() {
+		if(!Constant.IS_UPDATE_DATA_FROM_NOTIFICATION.equals("Y")){
+			
+		}
 		getFriendInfo();
 		friendInfoAdapter = new FriendInfoAdapter();
 		mDisplay.setAdapter(friendInfoAdapter);
@@ -352,7 +363,10 @@ public class Friends {
 				    if(file != null){
 				    	getFriendInfo();
 				    	updatePhoneBookHandler.sendEmptyMessage(Constant.DOWN_LOAD_SUCCESS);
+				    }else{
+				    	updatePhoneBookHandler.sendEmptyMessage(Constant.DOWN_LOAD_FAIL);
 				    }
+				    
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -374,13 +388,36 @@ public class Friends {
 				mLoading.setVisibility(View.GONE);
 				mDisplay.setVisibility(View.VISIBLE);
 				friendInfoAdapter.notifyDataSetChanged();
+				Constant.IS_UPDATE_DATA_FROM_NOTIFICATION = "N";
+				Toast.makeText(mContext, "通讯录更新成功", Toast.LENGTH_SHORT).show();
 				break;
-
+			case Constant.DOWN_LOAD_FAIL:
+				isUpdate = false;
+				mLoading.setVisibility(View.GONE);
+				mDisplay.setVisibility(View.VISIBLE);
+				Constant.IS_UPDATE_DATA_FROM_NOTIFICATION = "N";
+				Toast.makeText(mContext, "下载失败，请重新下载", Toast.LENGTH_SHORT).show();
 			default:
 				break;
 			}
 		}
 		
 	};
+	
+	/**
+	 * update phone book
+	 * 
+	 * */
+	public void updatePhoneBook(){
+		if(!AndroidUtil.getNetWorkStatus(mContext)){
+			Toast.makeText(mContext, "请确认WiFi或者GPRS已开启", Toast.LENGTH_SHORT).show();
+		}else{
+			mLoading.setVisibility(View.VISIBLE);
+            mDisplay.setVisibility(View.GONE);
+            isUpdate = true;
+    		updatePhoneBookInfoThread = new UpdatePhoneBookInfoThread();
+    		updatePhoneBookInfoThread.start();
+		}
+	}
 
 }

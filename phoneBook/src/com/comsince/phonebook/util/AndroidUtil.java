@@ -38,6 +38,26 @@ public class AndroidUtil {
 		return status;
 	}
 	
+	
+	/**
+	 * 获取网络状态
+	 * @param context
+	 * @return  true 有网络
+	 *          fasle 无网络
+	 * */
+	public static boolean getNetWorkStatus(Context context){
+		boolean flag = false;
+		ConnectivityManager connMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+		android.net.NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		if(!wifi.isConnectedOrConnecting() && !mobile.isConnectedOrConnecting()){
+			flag = false;
+		}else{
+			flag = true;
+		}
+		return flag;
+	}
+	
 	/**
 	 * 獲取sdcard路徑
 	 */
