@@ -1,8 +1,10 @@
 package com.comsince.test;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,12 +12,14 @@ import org.json.JSONObject;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
-import com.comsince.knowledge.constant.Constant;
+import com.baidu.inf.iis.bcs.BaiduBCS;
+import com.baidu.inf.iis.bcs.auth.BCSCredentials;
 import com.comsince.knowledge.entity.BaiduDevMusic;
 import com.comsince.knowledge.entity.BaiduDevMusicList;
 import com.comsince.knowledge.entity.NetMusicList;
 import com.comsince.knowledge.lrcutil.BaiduLrc;
 import com.comsince.knowledge.utils.AndroidUtil;
+import com.comsince.knowledge.utils.BaiduCloudSaveUtil;
 import com.comsince.knowledge.utils.FileUtil;
 import com.comsince.knowledge.utils.HttpDownloader;
 import com.comsince.knowledge.utils.HttpTool;
@@ -150,6 +154,23 @@ public class testUtiljunit extends AndroidTestCase {
 	   
 	   InputStream in = HttpTool.getStream(personReadUrl, null, null, HttpTool.GET);
 	   FileUtil.save(in, AndroidUtil.getSDCardRoot()+"TMusic/download/yc_zh_primary_person.xml");
+   }
+   
+   public void testUpload() throws IOException{
+	   String urlStr = "http://bcs.duapp.com/comsince/log.txt";
+	   InputStream in = this.mContext.getAssets().open("conf/sounds.xml");
+	   HttpDownloader httpDownLoader = new HttpDownloader();
+	   httpDownLoader.upLoadFile(in, urlStr);
+   }
+   
+   public void httpUpload() throws ClientProtocolException, IOException{
+	   //BCS对象必须以斜线开头
+	   String urlStr = BaiduCloudSaveUtil.generateUrl("comsince", "/yc_zg_primary_person_test1.xml");
+		// 创建client
+	   //String urlStr = "http://bcs.duapp.com/comsince/yc_zg_primary_person_test.xml?sign=MBO:9ab8af408f719b4961bbd16f9bac9f16:RGpAqZlIwk6IZy4xFiVXG0o9EIM%3D";
+	   //String urlStr = "http://bcs.duapp.com/phonebook";
+	   String path = AndroidUtil.getSDCardRoot()+"phoneBook"+File.separator+"yc_zg_primary_person_test.xml";
+	   BaiduCloudSaveUtil.putObject(urlStr, path);
    }
 
 }

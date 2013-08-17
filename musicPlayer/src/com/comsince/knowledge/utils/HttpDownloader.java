@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -89,6 +90,27 @@ public class HttpDownloader {
 		HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
 		InputStream inputStream = urlConn.getInputStream();
 		return inputStream;
+	}
+	
+	
+	/**
+	 * 上传文件
+	 * @throws IOException 
+	 * **/
+	public OutputStream getOutputStreamFromUrl(String urlStr) throws IOException{
+		url = new URL(urlStr);
+		HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+		OutputStream outputStream = urlConn.getOutputStream();
+		return outputStream;
+	}
+	
+	/**
+	 * 上传文件
+	 * @throws IOException 
+	 * */
+	public void upLoadFile(InputStream inputSteam , String urlStr) throws IOException{
+		OutputStream outPutStream = getOutputStreamFromUrl(urlStr);
+		FileUtil.readData(inputSteam, outPutStream);
 	}
 
 }
