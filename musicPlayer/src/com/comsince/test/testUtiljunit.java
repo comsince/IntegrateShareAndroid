@@ -151,9 +151,9 @@ public class testUtiljunit extends AndroidTestCase {
 	   //String result = httpDownloader.download(readurl);
 	   //httpDownloader.downFile(downurl, "bcs", "log.txt");
 	  // Log.i("download", result);
-	   
-	   InputStream in = HttpTool.getStream(personReadUrl, null, null, HttpTool.GET);
-	   FileUtil.save(in, AndroidUtil.getSDCardRoot()+"TMusic/download/yc_zh_primary_person.xml");
+	   String urlStr = BaiduCloudSaveUtil.generateUrlForGet("comsince", "/YC_ZG_PRIMARY/yc_zg_primary_person_test1.xml");
+	   InputStream in = HttpTool.getStream(urlStr, null, null, HttpTool.GET);
+	   FileUtil.save(in, AndroidUtil.getSDCardRoot()+"TMusic/download/yc_zh_primary_person_test1.xml");
    }
    
    public void testUpload() throws IOException{
@@ -165,7 +165,7 @@ public class testUtiljunit extends AndroidTestCase {
    
    public void httpUpload() throws ClientProtocolException, IOException{
 	   //BCS对象必须以斜线开头
-	   String urlStr = BaiduCloudSaveUtil.generateUrl("comsince", "/yc_zg_primary_person_test1.xml");
+	   String urlStr = BaiduCloudSaveUtil.generateUrl("comsince", "/YC_ZG_PRIMARY/yc_zg_primary_person_test1.xml");
 		// 创建client
 	   //String urlStr = "http://bcs.duapp.com/comsince/yc_zg_primary_person_test.xml?sign=MBO:9ab8af408f719b4961bbd16f9bac9f16:RGpAqZlIwk6IZy4xFiVXG0o9EIM%3D";
 	   //String urlStr = "http://bcs.duapp.com/phonebook";

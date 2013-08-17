@@ -21,6 +21,7 @@ import com.baidu.inf.iis.bcs.request.GenerateUrlRequest;
 public class BaiduCloudSaveUtil {
 	
 	private static final String PUT = "PUT";
+	private static final String GET = "GET";
 	private static final int HTTP_CONNECT_TIMEOUT = 100000;
 	private static final int HTTP_READ_TIMEOUT = 100000;
 	
@@ -81,6 +82,7 @@ public class BaiduCloudSaveUtil {
 		}
 	}
 	
+	
 	public static Long getFileLength(String path){
 		Long fileLength = null;
 		try {
@@ -101,6 +103,17 @@ public class BaiduCloudSaveUtil {
 		BaiduBCS baiduBCS = new BaiduBCS(credentials, host);
 	    baiduBCS.setDefaultEncoding("UTF-8"); 
 		GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest(HttpMethodName.PUT, bucket, object);
+		generateUrlRequest.setBcsSignCondition(new BCSSignCondition());
+		return baiduBCS.generateUrl(generateUrlRequest); 
+	}
+	/**
+	 * 不同的請求方式，其url生成方式也不一樣，一定要設置請求方式，不能混淆
+	 * */
+	public static String  generateUrlForGet(String bucket, String object) {
+		BCSCredentials credentials = new BCSCredentials(accessKey, secretKey);
+		BaiduBCS baiduBCS = new BaiduBCS(credentials, host);
+	    baiduBCS.setDefaultEncoding("UTF-8"); 
+		GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest(HttpMethodName.GET, bucket, object);
 		generateUrlRequest.setBcsSignCondition(new BCSSignCondition());
 		return baiduBCS.generateUrl(generateUrlRequest); 
 	}
