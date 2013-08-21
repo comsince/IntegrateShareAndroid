@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.http.client.ClientProtocolException;
+import org.bouncycastle.util.encoders.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.ksoap2.serialization.SoapObject;
 
 import android.test.AndroidTestCase;
 import android.util.Log;
@@ -23,7 +25,9 @@ import com.comsince.knowledge.utils.BaiduCloudSaveUtil;
 import com.comsince.knowledge.utils.FileUtil;
 import com.comsince.knowledge.utils.HttpDownloader;
 import com.comsince.knowledge.utils.HttpTool;
+import com.comsince.knowledge.utils.MCrypt;
 import com.comsince.knowledge.utils.SimpleXmlReaderUtil;
+import com.comsince.knowledge.utils.SoapUtil;
 import com.comsince.test.xmlMode.Impda;
 
 public class testUtiljunit extends AndroidTestCase {
@@ -171,6 +175,52 @@ public class testUtiljunit extends AndroidTestCase {
 	   //String urlStr = "http://bcs.duapp.com/phonebook";
 	   String path = AndroidUtil.getSDCardRoot()+"phoneBook"+File.separator+"yc_zg_primary_person_test.xml";
 	   BaiduCloudSaveUtil.putObject(urlStr, path);
+   }
+   
+   public void testSoapRequest(){
+	   String soapUrl = "http://10.66.76.86/pdaserverExt/IMPDAMainService.asmx";
+	   String soapAction = "http://impda.newtrek.net/IMPDAWebServer/LoginInfo";
+	   String nameSpace = "http://impda.newtrek.net/IMPDAWebServer/";
+	   MCrypt mcrypt = new MCrypt();
+	   String enryptedUsername = null;
+	   String enryptedPassword = null;
+	try {
+		enryptedUsername = new String(Base64.encode( mcrypt.encrypt("MWMS1") ));
+		enryptedPassword = new String(Base64.encode( mcrypt.encrypt("abcd1234") ));
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	//login info 
+	   SoapObject loginRequest = new SoapObject(nameSpace, "LoginInfo");
+	   SoapObject para = new SoapObject("", "para");
+	   para.addProperty("PdaId", "353771057964560");
+       para.addProperty("WsPdaId", "353771057964560");
+       para.addProperty("WsUserId", enryptedUsername);
+       para.addProperty("WsUserPwd", enryptedPassword);	
+       loginRequest.addSoapObject(para);
+	   SoapObject result = SoapUtil.sendSoapRequest(soapUrl, loginRequest, soapAction);
+	   String isSuccess = result.getPropertyAsString("IsSuccess");
+	   String sessionId = result.getPropertyAsString("SessionID");
+	   Log.d("soap", isSuccess);
+	   //get ftpInformation
+	   soapAction = "http://impda.newtrek.net/IMPDAWebServer/GetFtpInformation";
+	   para = null;
+	   para = new SoapObject("", "para");
+	   para.addProperty("SessionID",sessionId);
+	   para.addProperty("PdaId", "353771057964560");
+	   para.addProperty("WsPdaId", "353771057964560");
+       para.addProperty("WsUserId", enryptedUsername);
+       para.addProperty("WsUserPwd", enryptedPassword);	
+	   SoapObject getFtpInformation = new SoapObject(nameSpace, "GetFtpInformation");
+	   getFtpInformation.addSoapObject(para);
+	   SoapObject resultFtpInformation = SoapUtil.sendSoapRequest(soapUrl, getFtpInformation, soapAction);
+	   Log.d("soap", "getFtpInformation");
+   }
+   
+   public void testHTTPWsd() throws IOException{
+	   String uri = "http://10.66.76.86/pdaserverExt/IMPDAMainService.asmx/MASRegionServer?";
+	   InputStream in = HttpTool.getStream(uri, null, null, HttpTool.GET);
+	   FileUtil.save(in, AndroidUtil.getSDCardRoot()+"TMusic/download/wsd.xml");
    }
 
 }
