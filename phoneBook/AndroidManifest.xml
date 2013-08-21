@@ -32,7 +32,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
         <activity
-            android:name="com.comsince.phonebook.MainActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,6 +46,19 @@
             android:screenOrientation="portrait" >
         </activity>
         
+        <!-- 登录加载 -->
+         <activity
+            android:name=".activity.LoadingActivity"
+            android:theme="@style/MyDialogStyle"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 主界面 -->
+         <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+         
          <!-- push service client 用来接收push服务receiver-->
         <receiver android:name=".receiver.PushMessageReceiver">
             <intent-filter>
