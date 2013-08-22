@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:background="@drawable/kaixin_background"
     android:orientation="vertical" >
-
+  <include layout="@layout/title_bar" />
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

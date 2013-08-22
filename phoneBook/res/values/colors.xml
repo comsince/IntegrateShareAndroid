@@ -36,5 +36,11 @@
     <drawable name="blue">#0000FF</drawable>
     
     <color name="msg_recipient_text">#ff333333</color>
+    <!-- register -->
+    <color name="tip_text_color">#ff333333</color>
+    <color name="edit_hint_color">#ffdddddd</color>
+    <color name="btn_text_color">#ffffffff</color>
+    <color name="edit_text_color">#ff333333</color>
+    <color name="tab_pressed_color">#ff3289cb</color>
 
 </resources>

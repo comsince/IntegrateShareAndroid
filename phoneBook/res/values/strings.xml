@@ -6,5 +6,15 @@
     <string name="app_name">通讯录</string>
     
     <string name="loading">正在加载数据请稍候...</string>
+    <!-- 注册 -->
+    <string name="username_tip2">用户名</string>
+    <string name="username_limit">仅支持中英文、数字和下划线</string>
+    <string name="password_tip">密　码</string>
+    <string name="password_limit">6-14位，字母区分大小写</string>
+    <string name="show">显示</string>
+    <string name="phone_tip">手机号</string>
+    <string name="regist">注册</string>
+    <string name="verifycode_tip">验证码</string>
+    <string name="change">换一换</string>
 
 </resources>

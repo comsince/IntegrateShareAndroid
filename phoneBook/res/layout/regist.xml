@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/kaixin_background"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title_bar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="8.0dip"
+        android:layout_marginRight="8.0dip"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/normal_tip"
+                android:layout_width="fill_parent"
+                android:layout_height="25.0dip"
+                android:gravity="left|center"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/error_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14.0sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/worklayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/username_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="44.0dip"
+                    android:background="@drawable/input_top"
+                    android:gravity="left|center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15.0dip"
+                        android:text="@string/username_tip2"
+                        android:textColor="@color/tip_text_color"
+                        android:textSize="16.0sp" />
+
+                    <EditText
+                        android:id="@+id/username"
+                        android:layout_width="0.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="15.0dip"
+                        android:layout_marginRight="8.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:hint="@string/username_limit"
+                        android:inputType="text"
+                        android:maxLength="14"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/edit_text_color"
+                        android:textColorHint="@color/edit_hint_color"
+                        android:textSize="14.0sp" />
+
+                    <Button
+                        android:id="@+id/clear_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15.0dip"
+                        android:background="@drawable/clear_btn_selector"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/password_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="44.0dip"
+                    android:background="@drawable/input_middle"
+                    android:gravity="left|center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15.0dip"
+                        android:text="@string/password_tip"
+                        android:textColor="@color/tip_text_color"
+                        android:textSize="16.0sp" />
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="0.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="15.0dip"
+                        android:layout_marginRight="5.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="@string/password_limit"
+                        android:inputType="textPassword"
+                        android:lines="1"
+                        android:maxLength="14"
+                        android:maxLines="1"
+                        android:password="true"
+                        android:textColor="@color/edit_text_color"
+                        android:textColorHint="@color/edit_hint_color"
+                        android:textSize="14.0sp" />
+
+                    <Button
+                        android:id="@+id/clear_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5.0dip"
+                        android:background="@drawable/clear_btn_selector"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/show_password"
+                        android:layout_width="40.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8.0dip"
+                        android:background="@drawable/show_btn_selector"
+                        android:gravity="center"
+                        android:text="@string/show"
+                        android:textColor="@color/edit_text_color"
+                        android:textSize="12.0sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/phone_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="44.0dip"
+                    android:background="@drawable/input_under"
+                    android:gravity="left|center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15.0dip"
+                        android:text="@string/phone_tip"
+                        android:textColor="@color/tip_text_color"
+                        android:textSize="16.0sp" />
+
+                    <EditText
+                        android:id="@+id/phone"
+                        android:layout_width="0.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="15.0dip"
+                        android:layout_marginRight="8.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:inputType="textPhonetic"
+                        android:lines="1"
+                        android:maxLength="14"
+                        android:maxLines="1"
+                        android:textColor="@color/edit_text_color"
+                        android:textColorHint="@color/edit_hint_color"
+                        android:textSize="14.0sp" />
+
+                    <Button
+                        android:id="@+id/clear_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8.0dip"
+                        android:background="@drawable/clear_btn_selector"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/verifycode_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="44.0dip"
+                    android:background="@drawable/input_under"
+                    android:gravity="left|center"
+                    android:orientation="horizontal"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15.0dip"
+                        android:text="@string/verifycode_tip"
+                        android:textColor="@color/tip_text_color"
+                        android:textSize="16.0sp" />
+
+                    <EditText
+                        android:id="@+id/verifycode"
+                        android:layout_width="0.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="15.0dip"
+                        android:layout_marginRight="8.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:lines="1"
+                        android:maxLength="10"
+                        android:maxLines="1"
+                        android:textColor="@color/edit_text_color"
+                        android:textColorHint="@color/edit_hint_color"
+                        android:textSize="14.0sp" />
+
+                    <FrameLayout
+                        android:layout_width="@dimen/verifycodeimg_width"
+                        android:layout_height="@dimen/verifycodeimg_height"
+                        android:layout_marginRight="4.0dip" >
+
+                        <ImageView
+                            android:id="@+id/verifycodeImg"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitCenter"
+                            android:visibility="invisible" />
+
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent" >
+
+                            <ImageView
+                                android:id="@+id/verify_loading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/loading_blue" />
+                        </RelativeLayout>
+                    </FrameLayout>
+
+                    <Button
+                        android:id="@+id/change_verifycode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8.0dip"
+                        android:background="@null"
+                        android:text="@string/change"
+                        android:textColor="@color/tab_pressed_color"
+                        android:textSize="14.0sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/regist"
+                android:layout_width="fill_parent"
+                android:layout_height="44.0dip"
+                android:layout_marginTop="10.0dip"
+                android:background="@drawable/global_top_background"
+                android:clickable="true" >
+
+                <TextView
+                    android:id="@+id/regist_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:text="@string/regist"
+                    android:textColor="@color/btn_text_color"
+                    android:textSize="16.0sp" />
+
+                <ImageView
+                    android:id="@+id/loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/regist_text"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="-23.0dip"
+                    android:background="@drawable/loading" />
+            </RelativeLayout>
+
+           <!--  <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8.0dip"
+                android:layout_marginRight="15.0dip"
+                android:layout_marginTop="8.0dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/agree_tip"
+                    android:textColor="@color/edit_text_color"
+                    android:textSize="14.0sp" />
+
+                <Button
+                    android:id="@id/agree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2.0dip"
+                    android:background="@null"
+                    android:text="@string/agree_link"
+                    android:textColor="@color/tab_pressed_color"
+                    android:textSize="14.0sp" />
+            </LinearLayout> -->
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
