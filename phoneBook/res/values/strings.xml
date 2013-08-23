@@ -14,6 +14,8 @@
     <string name="show">显示</string>
     <string name="phone_tip">手机号</string>
     <string name="regist">注册</string>
+    <string name="login">登录</string>
+    <string name="register_phonebook">注册同学录账号</string>
     <string name="verifycode_tip">验证码</string>
     <string name="change">换一换</string>
 

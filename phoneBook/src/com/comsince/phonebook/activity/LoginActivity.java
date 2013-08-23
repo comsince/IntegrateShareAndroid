@@ -18,8 +18,10 @@ public class LoginActivity extends Activity implements OnClickListener{
     private EditText userName , userPassWord;
     private Button loginBtn;
     private TextView registration;
+    private TextView title;
     
     public static final int LOGIN_REQUEST = 100001;
+    public static final int REGISTER_REQUEST = 100002;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,12 +33,16 @@ public class LoginActivity extends Activity implements OnClickListener{
 		userName = (EditText) findViewById(R.id.username);
 		userPassWord = (EditText) findViewById(R.id.userpassword);
 		loginBtn = (Button) findViewById(R.id.login_activity_login);
+		registration = (TextView) findViewById(R.id.registration);
+		title = (TextView) findViewById(R.id.title);
+		title.setText(R.string.login);
 	}
 	/**
 	 * 设置按钮的侦听器
 	 * */
 	public void setupListener(){
 		loginBtn.setOnClickListener(this);
+		registration.setOnClickListener(this);
 	}
 	@Override
 	public void onClick(View v) {
@@ -45,12 +51,15 @@ public class LoginActivity extends Activity implements OnClickListener{
 			login();
 			break;
 		case R.id.registration:
+			register();
 			break;
 		default:
 			break;
 		}
 	}
-	
+	/**
+	 * 登录
+	 * */
 	public void login(){
 		String username = userName.getText().toString().trim();
 		String password = userPassWord.getText().toString().trim();
@@ -64,17 +73,34 @@ public class LoginActivity extends Activity implements OnClickListener{
 			startActivityForResult(intent, LOGIN_REQUEST);
 		}
 	}
+	/*
+	 * 注册
+	 * **/
+	public void register(){
+		Intent intent = new Intent();
+		intent.setClass(this, RegisterActivity.class);
+		startActivityForResult(intent, REGISTER_REQUEST);
+	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == LOGIN_REQUEST){
 			if(resultCode == LoadingActivity.LOGIN_SUCCESS){
-				this.finish();
 				Intent intent = new Intent();
 				intent.setClass(this, MainActivity.class);
 				startActivity(intent);
+				this.finish();
 			}else if(resultCode == LoadingActivity.LOGIN_Fail){
 				Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
+			}
+		}else if(requestCode == REGISTER_REQUEST){
+			if(resultCode == RegisterActivity.REGISTER_SUCCESS){
+				Intent intent = new Intent();
+				intent.setClass(this, MainActivity.class);
+				startActivity(intent);
+				this.finish();
+			}else if(resultCode == RegisterActivity.REGISTER_FAIL){
+				Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

@@ -129,6 +129,10 @@ public class MainActivity extends Activity implements OnOpenListener{
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_HOME);
 			startActivity(intent);
+			//结束当前程序
+			finish();
+			android.os.Process.killProcess(android.os.Process.myPid());
+			System.exit(0);
 		} else {
 			isExit = true;
 			Toast.makeText(MainActivity.this, "再按一次退出通讯录", Toast.LENGTH_SHORT).show();

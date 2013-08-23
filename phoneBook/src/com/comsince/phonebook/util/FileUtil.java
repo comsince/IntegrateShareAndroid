@@ -95,6 +95,16 @@ public class FileUtil {
 		System.out.println(dirFile.mkdirs());
 		return dirFile;
 	}
+	/**
+	 * 如果该目录不存在，则创建该目录
+	 * */
+	public static File createEmptyDir(String dir){
+		File dirFile = new File(AndroidUtil.getSDCardRoot() + dir + File.separator);
+		if(!dirFile.exists()){
+			dirFile.mkdirs();
+		}
+		return dirFile;
+	}
 
 	/**
 	 * 判断SD卡上的文件夹是否存在

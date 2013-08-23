@@ -37,14 +37,14 @@ public class LoadingActivity extends Activity {
 		@Override
 		public void run() {
 			//从服务器中LoginInfo中读取其注册文件
-			String urlStr = BaiduCloudSaveUtil.generateUrlForGet("phonebook", "/LoginInfo/"+userName.toUpperCase()+".xml");
+			String urlStr = BaiduCloudSaveUtil.generateUrlForGet("phonebook", "/LoginInfo/"+userName+".xml");
 			try {
 				InputStream logIn = HttpTool.getStream(urlStr, null, null, HttpTool.GET);
 				Loginfo loginfo = simpleXmlReaderUtil.readXmlFromInputStream(logIn, Loginfo.class);
 				if(loginfo != null){
 					if(loginfo.getPassword().equals(userPassWord)){
 						//将该文件写入手机中
-						FileUtil.write2SDFromInput("phoneBook/LoginInfo", userName.toUpperCase()+".xml", logIn);
+						FileUtil.write2SDFromInput("phoneBook/LoginInfo", userName+".xml", logIn);
 						loginHandler.sendEmptyMessage(LOGIN_SUCCESS);
 					}else{
 						loginHandler.sendEmptyMessage(LOGIN_Fail);

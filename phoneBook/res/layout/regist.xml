@@ -261,7 +261,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="44.0dip"
                 android:layout_marginTop="10.0dip"
-                android:background="@drawable/global_top_background"
+                android:background="@drawable/login_btn"
                 android:clickable="true" >
 
                 <TextView

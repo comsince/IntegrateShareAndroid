@@ -9,6 +9,8 @@ public class Loginfo {
 	public String username;
 	@Element(required = false)
 	public String password;
+	@Element(required = false)
+	public String phonenumber;
 	public String getUsername() {
 		return username;
 	}
@@ -20,6 +22,12 @@ public class Loginfo {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getPhonenumber() {
+		return phonenumber;
+	}
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
 	}
 	
 	

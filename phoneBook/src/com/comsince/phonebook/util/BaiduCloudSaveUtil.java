@@ -34,7 +34,8 @@ public class BaiduCloudSaveUtil {
 	 * @param path 上传文件的路径
 	 * @param url 上传的文件的网络地址
 	 * */
-	public static void putObject(String url,String path){
+	public static String putObject(String url,String path){
+		String respondMsg = null;
 		URL  uRLObj;
 		HttpURLConnection connection = null;
 		try {
@@ -67,11 +68,10 @@ public class BaiduCloudSaveUtil {
 			//获取相应
 			InputStream responseIn = null;
 			connection.connect();
-			String w = connection.getResponseMessage();
+		    respondMsg = connection.getResponseMessage();
 			//connection.getInputStream(); 
-			Log.d("download", "sdfsd");
+			Log.d("upload", "responeMsg");
 			int s = connection.getContentLength();
-			Log.i("download",String.valueOf(s));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -80,6 +80,7 @@ public class BaiduCloudSaveUtil {
 		if(connection != null){
 			connection.disconnect();
 		}
+		return respondMsg;
 	}
 	
 	

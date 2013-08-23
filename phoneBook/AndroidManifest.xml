@@ -45,23 +45,27 @@
             android:name=".activity.FriendInfoActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- 登录加载 -->
-         <activity
+        <activity
             android:name=".activity.LoadingActivity"
-            android:theme="@style/MyDialogStyle"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle" >
         </activity>
         <!-- 主界面 -->
-         <activity
+        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-         
-         <!-- push service client 用来接收push服务receiver-->
-        <receiver android:name=".receiver.PushMessageReceiver">
+        <!-- 注册 -->
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- push service client 用来接收push服务receiver -->
+        <receiver android:name=".receiver.PushMessageReceiver" >
             <intent-filter>
+
                 <!-- 接收push消息 -->
                 <action android:name="com.baidu.android.pushservice.action.MESSAGE" />
                 <!-- 接收bind,unbind,fetch,delete等反馈消息 -->
@@ -69,10 +73,11 @@
                 <action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
             </intent-filter>
         </receiver>
-        
-         <!-- push service -->
-        <receiver android:name="com.baidu.android.pushservice.PushServiceReceiver"
-            android:process=":bdservice_v1">
+
+        <!-- push service -->
+        <receiver
+            android:name="com.baidu.android.pushservice.PushServiceReceiver"
+            android:process=":bdservice_v1" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -80,26 +85,27 @@
                 <action android:name="com.baidu.android.pushservice.action.media.CLICK" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name="com.baidu.android.pushservice.RegistrationReceiver"
-            android:process=":bdservice_v1">
+        <receiver
+            android:name="com.baidu.android.pushservice.RegistrationReceiver"
+            android:process=":bdservice_v1" >
             <intent-filter>
                 <action android:name="com.baidu.android.pushservice.action.METHOD" />
                 <action android:name="com.baidu.android.pushservice.action.BIND_SYNC" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
-            </intent-filter>                   
+            </intent-filter>
         </receiver>
-        
+
         <service
             android:name="com.baidu.android.pushservice.PushService"
             android:exported="true"
             android:process=":bdservice_v1" />
-        
+
         <!-- push service end -->
-        
+
     </application>
 
 </manifest>

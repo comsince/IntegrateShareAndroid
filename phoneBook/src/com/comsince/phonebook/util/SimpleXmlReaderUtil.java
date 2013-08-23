@@ -48,6 +48,19 @@ public class SimpleXmlReaderUtil {
 	  }
  		
 	}
+	/**
+	 * @param path 该文件所在目录，多级目录 dir/secondDir
+	 * @param fileName 文件名，不带后綴名例如 test
+	 * */
+	public void writeXml(Object obj,String path,String fileName){
+		FileUtil.createEmptyDir(path);
+		File outputXmlFile = new File(AndroidUtil.getSDCardRoot()+path+File.separator+fileName+".xml");
+		   try {
+			serializer.write(obj, outputXmlFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+		  }
+	}
 	
 
 }
