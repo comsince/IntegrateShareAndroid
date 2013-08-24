@@ -66,6 +66,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	
 	public void initData(){
 		leftBtn.setVisibility(View.VISIBLE);
+		loading.setVisibility(View.GONE);
 		leftBtn.setText(R.string.login);
 		rightBtn.setText(R.string.regist);
 		title.setText(R.string.register_phonebook);

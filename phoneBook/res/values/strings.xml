@@ -21,5 +21,7 @@
     <!-- add info dialog -->
     <string name="btn_confirm">确认</string>
     <string name="btn_cancel">取消</string>
-
+    <!-- perosn info -->
+    <string name="pcard_name">姓名</string>
+    <string name="pcard_phone">电话</string>
 </resources>

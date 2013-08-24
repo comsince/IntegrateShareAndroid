@@ -2,6 +2,7 @@ package com.comsince.phonebook.menu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +12,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.activity.PersonInfoActivity;
 import com.comsince.phonebook.util.ViewUtil;
 
 public class Desktop {
 	private Context mContext;
 	private Activity mActivity;
 	private ListView mDisplay;
-
+    private RelativeLayout personInfo;
 	private DesktopAdapter mAdapter;
 
 	private View mDesktop;
@@ -42,10 +45,20 @@ public class Desktop {
 
 	public void findViewById() {
 		mDisplay = (ListView) mDesktop.findViewById(R.id.desktop_display);
+		//点击该空间进入个人信息修改界面
+		personInfo = (RelativeLayout) mDesktop.findViewById(R.id.desktop_top_layout);
 	}
 
 	public void setListener() {
-
+        personInfo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(mContext, PersonInfoActivity.class);
+				mContext.startActivity(intent);
+			}
+		});
 	}
 
 	public void init() {

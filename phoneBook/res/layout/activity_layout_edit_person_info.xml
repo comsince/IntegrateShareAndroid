@@ -42,6 +42,7 @@
             android:maxWidth="80dip"
             android:minWidth="48dip"
             android:singleLine="true"
+            android:text="主页"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -70,138 +71,80 @@
             android:layout_height="fill_parent"
             android:orientation="vertical" >
 
+            <!-- 个人基本资料 -->
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="80.0dip"
+                android:layout_margin="10.0dip" >
 
                 <RelativeLayout
-                    android:id="@+id/about_avatar_layout"
-                    android:layout_width="120dip"
-                    android:layout_height="120dip" >
-
-                    <ImageButton
-                        android:id="@+id/about_avatar"
-                        android:layout_width="100dip"
-                        android:layout_height="100dip"
-                        android:layout_margin="8dip"
-                        android:background="@drawable/avatar_background_white"
-                        android:padding="4dip"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/head_default" />
-
-                    <Button
-                        android:id="@+id/about_avatar_change"
-                        android:layout_width="40dip"
-                        android:layout_height="40dip"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/about_button_change_logo" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/about_name"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/about_avatar_layout"
-                    android:layout_toRightOf="@+id/about_avatar_layout"
-                    android:padding="8dip"
-                    android:textColor="#000000"
-                    android:textSize="19sp" />
-
-                <TextView
-                    android:id="@+id/about_signature"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/about_name"
-                    android:layout_below="@+id/about_name"
-                    android:paddingBottom="8dip"
-                    android:paddingLeft="8dip"
-                    android:paddingRight="8dip"
-                    android:textColor="#333333"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <!-- 电话  android:background="@drawable/setting_pad_body_selector" -->
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="50.0dip"
-                android:layout_marginBottom="8dip"
-                android:layout_marginLeft="8dip"
-                android:layout_marginRight="8dip"
-                android:layout_marginTop="20dip"
-                android:orientation="horizontal" >
-
-                <RelativeLayout
-                    android:id="@+id/view_cdetail_call"
-                    android:layout_width="236.0dip"
+                    android:id="@+id/personal_card_avatar_box"
+                    android:layout_width="80.0dip"
                     android:layout_height="fill_parent"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/cdetail_leftbody_selector"
-                    android:clickable="true"
-                    android:gravity="center_vertical" >
+                    android:background="@drawable/cdetail_leftbody" >
+
+                    <ImageButton
+                        android:id="@+id/personal_card_avatar"
+                        android:layout_width="60.0dip"
+                        android:layout_height="60.0dip"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/personal_card_avatar"
+                        android:scaleType="fitXY" />
 
                     <ImageView
-                        android:id="@+id/dial_to_contact"
+                        android:id="@+id/personal_card_avatar_editable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/avatar_editable" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_name_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40.0dip"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@id/personal_card_avatar_box"
+                    android:background="@drawable/cdetail_righttop_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/personal_card_name"
+                        style="@style/MidSizeGrayTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/cdetail_phone"
-                        android:paddingLeft="6.0dip" />
-
-                    <TextView
-                        android:id="@+id/detail_contact_name"
-                        style="@style/MidSizeBlackTextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/dial_to_contact"
-                        android:singleLine="true"
-                        android:textColor="#ff000000"
-                        android:textSize="17.0sp" />
-
-                    <TextView
-                        android:id="@+id/detail_contact_attribution"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/detail_contact_name"
                         android:layout_marginLeft="10.0dip"
-                        android:layout_toRightOf="@id/detail_contact_name"
+                        android:ellipsize="end"
+                        android:maxLength="15"
                         android:singleLine="true"
-                        android:textColor="#ffa1a1a1"
-                        android:textSize="15.0sp" />
-
-                    <ImageView
-                        android:id="@+id/contactonline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/detail_contact_name"
-                        android:layout_marginTop="2.0dip"
-                        android:layout_toRightOf="@id/dial_to_contact"
-                        android:src="@drawable/online_status"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/detail_contact_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/detail_contact_name"
-                        android:layout_toRightOf="@id/contactonline"
-                        android:gravity="bottom"
-                        android:singleLine="true"
-                        android:textColor="#ff000000"
-                        android:textSize="15.0sp" />
+                        android:text="@string/pcard_name" />
                 </RelativeLayout>
 
-                <ImageButton
-                    android:id="@+id/chatwith_contact"
+                <RelativeLayout
+                    android:id="@+id/personal_card_phone_box"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@drawable/cdetail_rightbody_selector"
-                    android:src="@drawable/cdetail_phone_msg" />
-            </LinearLayout>
-            <!-- 电话 -->
+                    android:layout_height="40.0dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/personal_card_name_box"
+                    android:layout_toRightOf="@id/personal_card_avatar_box"
+                    android:background="@drawable/cdetail_rightbottom_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/personal_card_phone"
+                        style="@style/MidSizeGrayTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip"
+                        android:text="@string/pcard_phone" />
+                </RelativeLayout>
+            </RelativeLayout>
+
             <!-- 性别 -->
 
             <LinearLayout
@@ -334,6 +277,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:hint="你当前经常活动的地方"
                         android:layout_marginLeft="10.0dip" />
 
                     <ImageView
@@ -446,7 +390,7 @@
                         android:maxLength="99" />
                 </RelativeLayout>
             </LinearLayout>
-            <!-- email -->
+            <!-- 邮箱 -->
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
