@@ -1,5 +1,7 @@
 package com.comsince.phonebook.util;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
@@ -69,5 +71,39 @@ public class DataUtil {
 			return null;
 		// 只取一个发音，如果是多音字，仅取第一个发音
 		return pinyin[0];
+	}
+	
+	
+	/**
+	 * 数据加密
+	 * */
+	public static String md5(String s) {
+		String strResult = "";
+		try {
+			// Create MD5 Hash
+			MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+			digest.update(s.getBytes());
+			byte[] messageDigest = digest.digest();
+			strResult = byte2hex(messageDigest);
+			strResult = strResult.toLowerCase();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
+		return strResult;
+	}
+
+	public static String byte2hex(byte[] b) {
+		String hs = "";
+		String stmp = "";
+
+		for (int n = 0; n < b.length; n++) {
+			stmp = (java.lang.Integer.toHexString(b[n] & 0XFF));
+			if (stmp.length() == 1)
+				hs = hs + "0" + stmp;
+			else
+				hs = hs + stmp;
+		}
+		return hs.toUpperCase();
 	}
 }

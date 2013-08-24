@@ -12,7 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comsince.phonebook.MainActivity;
+import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.preference.PhoneBookPreference;
+import com.comsince.phonebook.util.DataUtil;
 
 public class LoginActivity extends Activity implements OnClickListener{
     private EditText userName , userPassWord;
@@ -20,11 +23,14 @@ public class LoginActivity extends Activity implements OnClickListener{
     private TextView registration;
     private TextView title;
     
+    private static PhoneBookPreference phoneBookPreference;
+    
     public static final int LOGIN_REQUEST = 100001;
     public static final int REGISTER_REQUEST = 100002;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		phoneBookPreference = PhoneBookApplication.phoneBookPreference;
 		setContentView(R.layout.login_activity);
 		findViewById();
 		setupListener();
@@ -66,6 +72,9 @@ public class LoginActivity extends Activity implements OnClickListener{
 		if(TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
 			Toast.makeText(LoginActivity.this, "用户名或密码不能为空！", Toast.LENGTH_SHORT).show();
 		}else{
+			//保存數據到共享數據元
+			phoneBookPreference.saveUserName(this, username);
+			phoneBookPreference.savePassWord(this, DataUtil.md5(password));
 			Intent intent  = new Intent();
 			intent.putExtra("username", username);
 			intent.putExtra("password", password);

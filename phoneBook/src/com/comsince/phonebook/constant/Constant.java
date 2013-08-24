@@ -17,5 +17,9 @@ public class Constant {
   	
   	//群组标签
   	public static final String TITLE_GROUP ="YC_ZG_PRIMARY";
+  	
+  	//存放用户信息的主目录
+  	public static final String MAIN_DIR_PHONE_BOOK = "phoneBook";
+  	public static final String DIR_PERSON_INFO = "personInfo";
     
 }

@@ -24,6 +24,12 @@ public class Person implements Serializable{
 	private String reigon;
 	@Element(required = false)
 	private String remark;
+	@Element(required = false)
+	private String birthDay;
+	@Element(required = false)
+	private String email;
+	@Element(required = false)
+	private String msn;
 	@ElementList(required = false,inline=true)
 	private List<Phones> phonesList;
 	/**
@@ -122,5 +128,30 @@ public class Person implements Serializable{
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+
+	public String getBirthDay() {
+		return birthDay;
+	}
+
+	public void setBirthDay(String birthDay) {
+		this.birthDay = birthDay;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getMsn() {
+		return msn;
+	}
+
+	public void setMsn(String msn) {
+		this.msn = msn;
+	}
+	
 
 }

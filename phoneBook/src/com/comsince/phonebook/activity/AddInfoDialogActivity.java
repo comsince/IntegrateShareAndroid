@@ -23,9 +23,10 @@ public class AddInfoDialogActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	    setContentView(R.layout.addinfo_dialog);
+	    dialogTitle = getIntent().getStringExtra("titleName");
 	    initView();
 	    setOnClickListener();
-	    dialogTitle = getIntent().getStringExtra("titleName");
+	    
 	}
 	public void initView(){
 		title = (TextView) findViewById(R.id.add_info_title);
@@ -47,6 +48,7 @@ public class AddInfoDialogActivity extends Activity implements OnClickListener {
 			commitData();
 			break;
 		case R.id.add_info_cancel:
+			setResult(ADD_INFO_CANCEL);
 			finish();
 			break;
 		default:
@@ -57,9 +59,10 @@ public class AddInfoDialogActivity extends Activity implements OnClickListener {
 	public void commitData(){
 		String infoinput = infoInput.getText().toString().trim();
 		if(TextUtils.isEmpty(infoinput)){
-			Toast.makeText(this, "请输入信息", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "请输入"+dialogTitle+"信息", Toast.LENGTH_SHORT).show();
 		}else{
 			setResult(ADD_INFO_COMMIT, (new Intent()).setAction(infoinput));
+			finish();
 		}
 	}
 

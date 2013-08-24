@@ -15,8 +15,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.PersonInfoActivity;
+import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.ViewUtil;
 
 public class Desktop {
@@ -24,10 +26,12 @@ public class Desktop {
 	private Activity mActivity;
 	private ListView mDisplay;
     private RelativeLayout personInfo;
+    private TextView personAccount;
 	private DesktopAdapter mAdapter;
 
 	private View mDesktop;
 	
+	private static PhoneBookPreference phoneBookPreference;
 	/**
 	 * 接口对象,用来修改显示的View
 	 */
@@ -36,7 +40,7 @@ public class Desktop {
 	public Desktop(Context context, Activity activity) {
 		mContext = context;
 		mActivity = activity;
-
+		phoneBookPreference = PhoneBookApplication.phoneBookPreference;
 		mDesktop = LayoutInflater.from(context).inflate(R.layout.desktop, null);
 		findViewById();
 		setListener();
@@ -47,6 +51,9 @@ public class Desktop {
 		mDisplay = (ListView) mDesktop.findViewById(R.id.desktop_display);
 		//点击该空间进入个人信息修改界面
 		personInfo = (RelativeLayout) mDesktop.findViewById(R.id.desktop_top_layout);
+		//用户名
+		personAccount = (TextView) mDesktop.findViewById(R.id.desktop_name);
+		personAccount.setText(phoneBookPreference.getUserName(mContext));
 	}
 
 	public void setListener() {

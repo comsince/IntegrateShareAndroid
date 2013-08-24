@@ -8,23 +8,28 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.comsince.phonebook.entity.Person;
+import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.PhotoUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 
 public class PhoneBookApplication extends Application {
-
+    public static PhoneBookPreference phoneBookPreference;
+    public static Context context;
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		context = getApplicationContext();
 		try {
 			mAvatars = getAssets().list("avatar");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		phoneBookPreference = new PhoneBookPreference(context);
 	}
 
 	/**
