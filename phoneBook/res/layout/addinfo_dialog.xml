@@ -36,6 +36,8 @@
             android:paddingRight="10.0dip"
             android:singleLine="true"
             android:textSize="16.0dip"
+            android:textColor="@color/add_black"
+            android:hint="请输入相应信息"
             android:windowSoftInputMode="adjustPan" >
 
             <requestFocus />

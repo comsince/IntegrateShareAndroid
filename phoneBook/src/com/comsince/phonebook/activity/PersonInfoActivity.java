@@ -289,6 +289,10 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		if(!TextUtils.isEmpty(birthDay)){
 			person.setBirthDay(birthDay);
 		}
+		String sex = personSex.getText().toString().trim();
+		if(!TextUtils.isEmpty(sex)){
+			person.setSex(sex);
+		}
 		String region = personRegion.getText().toString().trim();
 		if(!TextUtils.isEmpty(region)){
 			person.setReigon(region);
