@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,8 +22,11 @@ import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Person;
+import com.comsince.phonebook.entity.Phone;
+import com.comsince.phonebook.entity.Phones;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.AndroidUtil;
+import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 
 /**
@@ -58,8 +63,9 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		xmlUtil = new SimpleXmlReaderUtil();
 		setContentView(R.layout.activity_layout_edit_person_info);
 		initView();
-		initData();
 		setUpListener();
+		//如果放在resume中每次弹出的对话框都会重新调用此函数重新加载本地数据，导致无法显示修改的数据
+		initData();
 	}
 
 	@Override
@@ -98,7 +104,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	 * */
 	public void initData() {
 		// 先从本地加载文件
-		String personInfoDir = AndroidUtil.getSDCardRoot() + Constant.MAIN_DIR_PHONE_BOOK + File.separator + Constant.DIR_PERSON_INFO + File.separator;
+		String personInfoDir = PhoneBookUtil.getPersonInfoPath();
 		String personInfoPath = personInfoDir + phoneBookPreference.getUserName(this) + "_" + phoneBookPreference.getPassWord(this) + ".xml";
 		try {
 			if(new File(personInfoPath).exists()){
@@ -138,6 +144,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 			finish();
 			break;
 		case R.id.about_submit:
+			subMitData();
 			break;
 		case R.id.about_title:
 			break;
@@ -253,6 +260,60 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		if(!TextUtils.isEmpty(msn)){
 			PersonMSN.setText(msn);
 		}
+	}
+	
+	/**
+	 * 获取数据准备提交数据
+	 * 1、将数据保存到本地
+	 * 2、将数据上传到服务器
+	 * **/
+	public void subMitData(){
+		person = new Person();
+		String realName = personName.getText().toString().trim();
+		if(!TextUtils.isEmpty(realName)){
+			person.setName(realName);
+		}
+		String phoneNumber = personPhone.getText().toString().trim();
+		if(!TextUtils.isEmpty(phoneNumber)){
+			Phone phone = new Phone();
+			List<Phone> phoneList = new ArrayList<Phone>();
+			Phones phones = new Phones();
+			List<Phones> phonesList = new ArrayList<Phones>();
+			phone.setNumber(phoneNumber);
+			phoneList.add(phone);
+			phones.setPhones(phoneList);
+			phonesList.add(phones);
+			person.setPhonesList(phonesList);
+		}
+		String birthDay = personBirthDay.getText().toString().trim();
+		if(!TextUtils.isEmpty(birthDay)){
+			person.setBirthDay(birthDay);
+		}
+		String region = personRegion.getText().toString().trim();
+		if(!TextUtils.isEmpty(region)){
+			person.setReigon(region);
+		}
+		String marriage = personMarrige.getText().toString().trim();
+		if(!TextUtils.isEmpty(marriage)){
+			person.setMarriage(marriage);
+		}
+		String qq = personQQ.getText().toString().trim();
+		if(!TextUtils.isEmpty(qq)){
+			person.setQq(qq);
+		}
+		String email = personEmail.getText().toString().trim();
+		if(!TextUtils.isEmpty(email)){
+			person.setEmail(email);
+		}
+		String msn = PersonMSN.getText().toString().trim();
+		if(!TextUtils.isEmpty(msn)){
+			person.setMsn(msn);
+		}
+		
+		String personInfoDir = Constant.MAIN_DIR_PHONE_BOOK +"/"+Constant.DIR_PERSON_INFO;
+		String personInfoName = phoneBookPreference.getUserName(this) + "_" + phoneBookPreference.getPassWord(this);
+		xmlUtil.writeXml(person,personInfoDir, personInfoName);
+		Toast.makeText(this, "保存本地成功", Toast.LENGTH_SHORT).show();
 	}
 
 }
