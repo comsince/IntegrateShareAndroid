@@ -42,5 +42,12 @@
     <color name="btn_text_color">#ffffffff</color>
     <color name="edit_text_color">#ff333333</color>
     <color name="tab_pressed_color">#ff3289cb</color>
+    
+    
+    <!-- add dialog -->
+    <color name="color_dialog_list_line">#eeeeeee6</color>
+    <color name="color_dialog_list_press">#ff47caff</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_text_grey">#ff999999</color>
 
 </resources>

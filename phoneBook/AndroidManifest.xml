@@ -62,6 +62,18 @@
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <!-- 添加消息通用消息框 -->
+        <activity
+            android:name=".activity.AddInfoDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle" >
+        </activity>
+        <!-- 个人消息修改页面 -->
+        <activity
+            android:name=".activity.PersonInfoActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        
         <!-- push service client 用来接收push服务receiver -->
         <receiver android:name=".receiver.PushMessageReceiver" >
             <intent-filter>

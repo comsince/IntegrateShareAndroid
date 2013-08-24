@@ -18,5 +18,8 @@
     <string name="register_phonebook">注册同学录账号</string>
     <string name="verifycode_tip">验证码</string>
     <string name="change">换一换</string>
+    <!-- add info dialog -->
+    <string name="btn_confirm">确认</string>
+    <string name="btn_cancel">取消</string>
 
 </resources>
