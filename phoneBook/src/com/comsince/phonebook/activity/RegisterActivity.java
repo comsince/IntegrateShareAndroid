@@ -3,6 +3,7 @@ package com.comsince.phonebook.activity;
 import java.io.File;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +35,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
     private Loginfo loginfo;
     private String username,password,phonenumber;
     private SimpleXmlReaderUtil simpleXmlReaderUtil;
+    //Animation-list实现逐帧动画
+    private AnimationDrawable animationDrawable;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,6 +99,9 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		}else{
 			loading.setVisibility(View.VISIBLE);
 			register.setClickable(false);
+			//实现逐帧动画
+			animationDrawable = (AnimationDrawable) loading.getBackground();
+			animationDrawable.start();
 			loginfo = new Loginfo();
 			loginfo.setUsername(username);
 			loginfo.setPassword(password);
