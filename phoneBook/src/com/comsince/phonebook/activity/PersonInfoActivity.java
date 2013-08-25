@@ -65,6 +65,9 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	private static final int MMAlertSelect_Save  =  0;
 	private static final int MMAlertSelect_UpLoad  =  1;
 	private static final int MMAlertSelect_Send  =  2;
+	private static final int MMAlertSelect_DownLoad  =  3;
+	
+	private boolean isUpdateData = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,6 +84,10 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if(isUpdateData){
+			initData();
+			isUpdateData = false;
+		}
 	}
 
 	public void initView() {
@@ -349,6 +356,12 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 					generalAsyncTask.execute();
 					break;
 				case MMAlertSelect_Send:
+					break;
+				case MMAlertSelect_DownLoad:
+					//设置当下载数据成功，更新当前页面
+					isUpdateData = true;
+					generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.person_info_download), Constant.TASK_DOWNLOAD, context);
+					generalAsyncTask.execute();
 					break;
 				default:
 					break;

@@ -1,6 +1,7 @@
 package com.comsince.phonebook.asynctask;
 
 import java.io.File;
+import java.io.InputStream;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.activity.GeneralLoadingActivity;
@@ -9,6 +10,8 @@ import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.AndroidUtil;
 import com.comsince.phonebook.util.BaiduCloudSaveUtil;
 import com.comsince.phonebook.util.DataUtil;
+import com.comsince.phonebook.util.FileUtil;
+import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +33,10 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		//关闭进度框
-		context.sendBroadcast(new Intent(Constant.ACTION_FINISH));
+		Log.d("text", String.valueOf(result));
+		if(result){
+			context.sendBroadcast(new Intent(Constant.ACTION_FINISH));
+		}
 	}
 
 	@Override
@@ -56,6 +62,18 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			Log.d("text", responeMsg);
 			if(responeMsg.equals("OK")){
 				flag = true;
+			}else{
+				flag = false;
+			}
+		}else if(taskTag == Constant.TASK_DOWNLOAD){
+			String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+			String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
+			//注意请求方式
+			String downloadURL = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_INFO+"/"+fileName+".xml");
+			InputStream in = BaiduCloudSaveUtil.getObject(downloadURL);
+			if(in !=null){
+				flag = true;
+				FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_PERSON_INFO, fileName+".xml", in);
 			}else{
 				flag = false;
 			}

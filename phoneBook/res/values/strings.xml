@@ -32,8 +32,10 @@
         <item>保存到本地</item>
         <item>保存并上传数据</item>
         <item>向群组发送信息</item>
+        <item>从云上下载个人信息</item>
     </string-array>
     
     <!-- progress dialog info  -->
-    <string name="person_info_upload">正在上传数据，请稍后...</string>
+    <string name="person_info_upload">正在上传数据，请稍候...</string>
+    <string name="person_info_download">正在下载数据，请稍候...</string>
 </resources>

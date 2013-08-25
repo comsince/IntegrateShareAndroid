@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.baidu.inf.iis.bcs.auth.BCSCredentials;
 import com.baidu.inf.iis.bcs.auth.BCSSignCondition;
 import com.baidu.inf.iis.bcs.http.HttpMethodName;
 import com.baidu.inf.iis.bcs.request.GenerateUrlRequest;
+import com.comsince.phonebook.constant.Constant;
 
 public class BaiduCloudSaveUtil {
 	
@@ -81,6 +83,39 @@ public class BaiduCloudSaveUtil {
 			connection.disconnect();
 		}
 		return respondMsg;
+	}
+	
+	/**
+	 * 从云上获取数据,注意不要关闭connection,如果关闭的就无法读取数据
+	 * */
+	public static InputStream getObject(String url){
+		InputStream in = null;
+		String responseMsg = null;
+		URL  uRLObj;
+		HttpURLConnection connection = null;
+		try {
+			uRLObj = new URL(url);
+			connection = (HttpURLConnection) uRLObj.openConnection();
+			//设置请求方法
+			connection.setRequestMethod(GET);
+			//设置文件类型
+			connection.setRequestProperty("Content-Type", "text/xml");
+			connection.setRequestProperty("charset", "utf-8");
+			connection.setDoInput(true);
+			//设置超时时间
+			connection.setConnectTimeout(HTTP_CONNECT_TIMEOUT);
+			connection.setReadTimeout(HTTP_READ_TIMEOUT);
+			
+			responseMsg = connection.getResponseMessage();
+			if(responseMsg.equals(Constant.SUCCESS_MSG)){
+				in = connection.getInputStream();
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return in;
 	}
 	
 	
