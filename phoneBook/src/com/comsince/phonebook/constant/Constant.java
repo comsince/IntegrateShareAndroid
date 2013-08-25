@@ -2,7 +2,7 @@ package com.comsince.phonebook.constant;
 
 public class Constant {
 	//存储路径
-	public static final String PHONE_BOOK_PATH = "phoneBook";
+	public static final String PHONE_BOOK_PATH = "phonebook";
 	public static final String YC_ZG_PRIMARY_PRESON = "http://bcs.duapp.com/comsince/yc_zg_primary_person.xml";
     public static final String YC_ZG_PRIMARY_PRESON_FILE_NAME = "yc_zg_primary_person.xml";
     
@@ -19,7 +19,14 @@ public class Constant {
   	public static final String TITLE_GROUP ="YC_ZG_PRIMARY";
   	
   	//存放用户信息的主目录
-  	public static final String MAIN_DIR_PHONE_BOOK = "phoneBook";
+  	public static final String MAIN_DIR_PHONE_BOOK = "phonebook";
   	public static final String DIR_PERSON_INFO = "personInfo";
+  	public static final String DIR_LOGIN_INFO = "loginInfo";
+  	
+  	//loading activity 广播
+  	public static final String ACTION_FINISH = "com.comsince.phonebook.loadingfinish";
+  	
+  	//general task type
+  	public static final int TASK_UPLOAD = 30001;
     
 }

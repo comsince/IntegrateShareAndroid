@@ -10,6 +10,7 @@ import android.os.Message;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Loginfo;
 import com.comsince.phonebook.util.BaiduCloudSaveUtil;
 import com.comsince.phonebook.util.FileUtil;
@@ -37,14 +38,14 @@ public class LoadingActivity extends Activity {
 		@Override
 		public void run() {
 			//从服务器中LoginInfo中读取其注册文件
-			String urlStr = BaiduCloudSaveUtil.generateUrlForGet("phonebook", "/LoginInfo/"+userName+".xml");
+			String urlStr = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_LOGIN_INFO+"/"+userName+".xml");
 			try {
 				InputStream logIn = HttpTool.getStream(urlStr, null, null, HttpTool.GET);
 				Loginfo loginfo = simpleXmlReaderUtil.readXmlFromInputStream(logIn, Loginfo.class);
 				if(loginfo != null){
 					if(loginfo.getPassword().equals(userPassWord)){
 						//将该文件写入手机中
-						FileUtil.write2SDFromInput("phoneBook/LoginInfo", userName+".xml", logIn);
+						FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_LOGIN_INFO, userName+".xml", logIn);
 						loginHandler.sendEmptyMessage(LOGIN_SUCCESS);
 					}else{
 						loginHandler.sendEmptyMessage(LOGIN_Fail);

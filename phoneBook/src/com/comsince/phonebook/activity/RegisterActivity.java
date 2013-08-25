@@ -17,10 +17,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Loginfo;
+import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.AndroidUtil;
 import com.comsince.phonebook.util.BaiduCloudSaveUtil;
+import com.comsince.phonebook.util.DataUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 
 public class RegisterActivity extends Activity implements OnClickListener {
@@ -37,9 +41,11 @@ public class RegisterActivity extends Activity implements OnClickListener {
     private SimpleXmlReaderUtil simpleXmlReaderUtil;
     //Animation-list实现逐帧动画
     private AnimationDrawable animationDrawable;
+    private static PhoneBookPreference phoneBookPreference;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		phoneBookPreference = PhoneBookApplication.phoneBookPreference;
 		setContentView(R.layout.regist);
 		findViewById();
 		setupListener();
@@ -98,6 +104,9 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		if(TextUtils.isEmpty(username)||TextUtils.isEmpty(password)||TextUtils.isEmpty(phonenumber)){
 			Toast.makeText(this, "用户名或密码,手机号不能为空！", Toast.LENGTH_SHORT).show();
 		}else{
+			//保存數據到共享數據元
+			phoneBookPreference.saveUserName(this, username);
+			phoneBookPreference.savePassWord(this, DataUtil.md5(password));
 			loading.setVisibility(View.VISIBLE);
 			register.setClickable(false);
 			//实现逐帧动画
@@ -116,10 +125,10 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		@Override
 		public void run() {
 			//将注册信息写入到本地
-			simpleXmlReaderUtil.writeXml(loginfo, "phoneBook/LoginInfo",username);
+			simpleXmlReaderUtil.writeXml(loginfo, Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_LOGIN_INFO,username);
 			//将该注册用户信息上传到服务器
-			String uploadURL = BaiduCloudSaveUtil.generateUrl("phonebook", "/LoginInfo/"+username+".xml");
-			String uploadXmlPath = AndroidUtil.getSDCardRoot()+"phoneBook"+File.separator+"LoginInfo"+File.separator+username+".xml";
+			String uploadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_LOGIN_INFO+"/"+username+".xml");
+			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_LOGIN_INFO+File.separator+username+".xml";
 			String responeMsg = BaiduCloudSaveUtil.putObject(uploadURL, uploadXmlPath);
 			if(!TextUtils.isEmpty(responeMsg)&&responeMsg.equals("OK")){
 				registerHandler.sendEmptyMessage(REGISTER_SUCCESS);

@@ -68,6 +68,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle" >
         </activity>
+        <!-- 通用加载信息弹出框 -->
+        <activity
+            android:name=".activity.GeneralLoadingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle" >
+        </activity>
         <!-- 个人消息修改页面 -->
         <activity
             android:name=".activity.PersonInfoActivity"

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.entity.Phone;
@@ -48,6 +49,8 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	private Person person;
 	private SimpleXmlReaderUtil xmlUtil;
 	private Context context;
+	//通用asyncTask
+	GeneralAsyncTask generalAsyncTask;
 	
 	public static final int  REQUEST_PERSON_NAME = 0;
 	public static final int  REQUEST_PHONE_NUMBER = 1;
@@ -252,7 +255,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 			personRegion.setText(region);
 		}
 		String marriage = person.getMarriage();
-		if(!TextUtils.isDigitsOnly(marriage)){
+		if(!TextUtils.isEmpty(marriage)){
 			personMarrige.setText(marriage);
 		}
 		String qq = person.getQq();
@@ -342,6 +345,8 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 				case MMAlertSelect_UpLoad:
 					subMitData();
 					//上传数据
+					generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.person_info_upload), Constant.TASK_UPLOAD, context);
+					generalAsyncTask.execute();
 					break;
 				case MMAlertSelect_Send:
 					break;
