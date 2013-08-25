@@ -3,6 +3,7 @@ package com.comsince.phonebook.activity;
 import java.io.File;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,9 +43,11 @@ public class RegisterActivity extends Activity implements OnClickListener {
     //Animation-list实现逐帧动画
     private AnimationDrawable animationDrawable;
     private static PhoneBookPreference phoneBookPreference;
+    private Context context;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		context = this;
 		phoneBookPreference = PhoneBookApplication.phoneBookPreference;
 		setContentView(R.layout.regist);
 		findViewById();
@@ -125,10 +128,11 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		@Override
 		public void run() {
 			//将注册信息写入到本地
-			simpleXmlReaderUtil.writeXml(loginfo, Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_LOGIN_INFO,username);
+			String Md5pasword = phoneBookPreference.getPassWord(context);
+			simpleXmlReaderUtil.writeXml(loginfo, Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_LOGIN_INFO,username+"_"+Md5pasword);
 			//将该注册用户信息上传到服务器
-			String uploadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_LOGIN_INFO+"/"+username+".xml");
-			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_LOGIN_INFO+File.separator+username+".xml";
+			String uploadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_LOGIN_INFO+"/"+username+"_"+Md5pasword+".xml");
+			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_LOGIN_INFO+File.separator+username+"_"+Md5pasword+".xml";
 			String responeMsg = BaiduCloudSaveUtil.putObject(uploadURL, uploadXmlPath);
 			if(!TextUtils.isEmpty(responeMsg)&&responeMsg.equals("OK")){
 				registerHandler.sendEmptyMessage(REGISTER_SUCCESS);

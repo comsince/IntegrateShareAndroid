@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
     private String loadingText;
@@ -34,9 +35,10 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 	protected void onPostExecute(Boolean result) {
 		//关闭进度框
 		Log.d("text", String.valueOf(result));
-		if(result){
-			context.sendBroadcast(new Intent(Constant.ACTION_FINISH));
+		if(!result){
+			Toast.makeText(context, "没有您的数据，请先编辑个人信息上传", Toast.LENGTH_SHORT).show();
 		}
+		context.sendBroadcast(new Intent(Constant.ACTION_FINISH));
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			//注意请求方式
 			String downloadURL = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_INFO+"/"+fileName+".xml");
 			InputStream in = BaiduCloudSaveUtil.getObject(downloadURL);
-			if(in !=null){
+			if(in != null){
 				flag = true;
 				FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_PERSON_INFO, fileName+".xml", in);
 			}else{

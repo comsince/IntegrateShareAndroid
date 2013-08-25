@@ -7,12 +7,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Loginfo;
 import com.comsince.phonebook.util.BaiduCloudSaveUtil;
+import com.comsince.phonebook.util.DataUtil;
 import com.comsince.phonebook.util.FileUtil;
 import com.comsince.phonebook.util.HttpTool;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
@@ -33,26 +35,43 @@ public class LoadingActivity extends Activity {
 		new loginThread().start();
 	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			return false;
+		}else{
+			return super.onKeyDown(keyCode, event);
+		}
+		
+	}
+	
 	class loginThread extends Thread {
 
 		@Override
 		public void run() {
 			//从服务器中LoginInfo中读取其注册文件
-			String urlStr = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_LOGIN_INFO+"/"+userName+".xml");
+			String md5password = DataUtil.md5(userPassWord);
+			String urlStr = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_LOGIN_INFO+"/"+userName+"_"+md5password+".xml");
 			try {
-				InputStream logIn = HttpTool.getStream(urlStr, null, null, HttpTool.GET);
-				Loginfo loginfo = simpleXmlReaderUtil.readXmlFromInputStream(logIn, Loginfo.class);
-				if(loginfo != null){
-					if(loginfo.getPassword().equals(userPassWord)){
-						//将该文件写入手机中
-						FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_LOGIN_INFO, userName+".xml", logIn);
-						loginHandler.sendEmptyMessage(LOGIN_SUCCESS);
+				//InputStream logIn = HttpTool.getStream(urlStr, null, null, HttpTool.GET);
+				InputStream logIn = BaiduCloudSaveUtil.getObject(urlStr);
+				if(logIn == null ){
+					loginHandler.sendEmptyMessage(LOGIN_Fail);
+				}else{
+					Loginfo loginfo = simpleXmlReaderUtil.readXmlFromInputStream(logIn, Loginfo.class);
+					if(loginfo != null){
+						if(loginfo.getPassword().equals(userPassWord)){
+							//将该文件写入手机中
+							//FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_LOGIN_INFO, userName+"_"+md5password+".xml", logIn);
+							loginHandler.sendEmptyMessage(LOGIN_SUCCESS);
+						}else{
+							loginHandler.sendEmptyMessage(LOGIN_Fail);
+						}
 					}else{
 						loginHandler.sendEmptyMessage(LOGIN_Fail);
 					}
-				}else{
-					loginHandler.sendEmptyMessage(LOGIN_Fail);
 				}
+				
 				
 			} catch (IOException e) {
 				loginHandler.sendEmptyMessage(LOGIN_Fail);
