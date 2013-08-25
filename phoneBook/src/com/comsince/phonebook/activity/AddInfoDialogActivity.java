@@ -16,6 +16,7 @@ public class AddInfoDialogActivity extends Activity implements OnClickListener {
 	public static final int ADD_INFO_COMMIT = 0;
 	public static final int ADD_INFO_CANCEL = 1;
 	String dialogTitle;
+	String viewData;
     private TextView title;
     private EditText infoInput;
     private TextView addInfoCommit,addInfoCancel;
@@ -24,6 +25,9 @@ public class AddInfoDialogActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 	    setContentView(R.layout.addinfo_dialog);
 	    dialogTitle = getIntent().getStringExtra("titleName");
+	    if(!TextUtils.isEmpty(getIntent().getStringExtra("viewData"))){
+	    	viewData = getIntent().getStringExtra("viewData");
+	    }
 	    initView();
 	    setOnClickListener();
 	    
@@ -34,6 +38,9 @@ public class AddInfoDialogActivity extends Activity implements OnClickListener {
 			title.setText("请输入"+dialogTitle);
 		}
 		infoInput = (EditText) findViewById(R.id.add_info_input);
+		if(!TextUtils.isEmpty(viewData)){
+			infoInput.setText(viewData);
+		}
 		addInfoCommit = (TextView) findViewById(R.id.add_info_commit);
 		addInfoCancel = (TextView) findViewById(R.id.add_info_cancel);
 	}

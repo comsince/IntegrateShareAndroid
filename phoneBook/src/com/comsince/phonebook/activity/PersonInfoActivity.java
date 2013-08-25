@@ -111,7 +111,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		personEmail = (TextView) findViewById(R.id.personal_card_email_editable_tv);
 		PersonMSN = (TextView) findViewById(R.id.personal_card_msn_editable_tv);
 		title = (TextView) findViewById(R.id.about_title);
-		title.setText("点击刷新");
+		title.setText("个人资料");
 		btnBack = (Button) findViewById(R.id.about_back);
 		btnCommit = (Button) findViewById(R.id.about_submit);
 	}
@@ -166,31 +166,31 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		case R.id.about_title:
 			break;
 		case R.id.personal_card_name_box:
-			startToAddInfoDialog("姓名",REQUEST_PERSON_NAME);
+			startToAddInfoDialog("姓名",personName,REQUEST_PERSON_NAME);
 			break;
 		case R.id.personal_card_phone_box:
-			startToAddInfoDialog("电话",REQUEST_PHONE_NUMBER);
+			startToAddInfoDialog("电话",personPhone,REQUEST_PHONE_NUMBER);
 			break;
 		case R.id.personal_card_sex_editable_box:
-			startToAddInfoDialog("性别",REQUEST_PERSON_SEX);
+			startToAddInfoDialog("性别",personSex,REQUEST_PERSON_SEX);
 			break;
 		case R.id.personal_card_birthday_editable_box:
-			startToAddInfoDialog("生日",REQUEST_PERSON_BIRTHDAY);
+			startToAddInfoDialog("生日",personBirthDay,REQUEST_PERSON_BIRTHDAY);
 			break;
 		case R.id.personal_card_reigon_editable_box:
-			startToAddInfoDialog("区域",REQUEST_PERSON_REGION);
+			startToAddInfoDialog("区域",personRegion,REQUEST_PERSON_REGION);
 			break;
 		case R.id.personal_card_marriage_editable_box:
-			startToAddInfoDialog("婚姻",REQUEST_PERSON_MARRIAGE);
+			startToAddInfoDialog("婚姻",personMarrige,REQUEST_PERSON_MARRIAGE);
 			break;
 		case R.id.personal_card_qq_editable_box:
-			startToAddInfoDialog("QQ",REQUEST_PERSON_QQ);
+			startToAddInfoDialog("QQ",personQQ,REQUEST_PERSON_QQ);
 			break;
 		case R.id.personal_card_email_editable_box:
-			startToAddInfoDialog("邮箱",REQUEST_PERSON_EMAIL);
+			startToAddInfoDialog("邮箱",personEmail,REQUEST_PERSON_EMAIL);
 			break;
 		case R.id.personal_card_msn_editable_box:
-			startToAddInfoDialog("MSN",REQUEST_PERSON_MSN);
+			startToAddInfoDialog("MSN",PersonMSN,REQUEST_PERSON_MSN);
 			break;
 		default:
 			break;
@@ -228,8 +228,12 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	/**
 	 * 跳转到增加信息dialog中进行信息填写
 	 * */
-	public void startToAddInfoDialog(String titleName,int requestCode){
+	public void startToAddInfoDialog(String titleName,TextView v,int requestCode){
 		Intent intent = new Intent();
+		String viewData = v.getText().toString().trim();
+		if(!TextUtils.isEmpty(viewData)){
+			intent.putExtra("viewData", viewData);
+		}
 		intent.putExtra("titleName", titleName);
 		intent.setClass(this, AddInfoDialogActivity.class);
 		startActivityForResult(intent, requestCode);
