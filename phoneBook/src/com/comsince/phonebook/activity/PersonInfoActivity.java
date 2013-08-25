@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,7 +26,7 @@ import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.entity.Phone;
 import com.comsince.phonebook.entity.Phones;
 import com.comsince.phonebook.preference.PhoneBookPreference;
-import com.comsince.phonebook.util.AndroidUtil;
+import com.comsince.phonebook.uikit.MMAlert;
 import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 
@@ -46,6 +47,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	private static PhoneBookPreference phoneBookPreference;
 	private Person person;
 	private SimpleXmlReaderUtil xmlUtil;
+	private Context context;
 	
 	public static final int  REQUEST_PERSON_NAME = 0;
 	public static final int  REQUEST_PHONE_NUMBER = 1;
@@ -56,9 +58,14 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	public static final int  REQUEST_PERSON_QQ = 6;
 	public static final int  REQUEST_PERSON_EMAIL = 7;
 	public static final int  REQUEST_PERSON_MSN = 8;
+	
+	private static final int MMAlertSelect_Save  =  0;
+	private static final int MMAlertSelect_UpLoad  =  1;
+	private static final int MMAlertSelect_Send  =  2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		context = this;
 		phoneBookPreference = PhoneBookApplication.phoneBookPreference;
 		xmlUtil = new SimpleXmlReaderUtil();
 		setContentView(R.layout.activity_layout_edit_person_info);
@@ -144,7 +151,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 			finish();
 			break;
 		case R.id.about_submit:
-			subMitData();
+			selectDialog();
 			break;
 		case R.id.about_title:
 			break;
@@ -318,6 +325,32 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		String personInfoName = phoneBookPreference.getUserName(this) + "_" + phoneBookPreference.getPassWord(this);
 		xmlUtil.writeXml(person,personInfoDir, personInfoName);
 		Toast.makeText(this, "保存本地成功", Toast.LENGTH_SHORT).show();
+	}
+	
+	/**
+	 * 弹出功能选择框
+	 * */
+	public void selectDialog(){
+		MMAlert.showAlert(context, context.getString(R.string.select_info), context.getResources().getStringArray(R.array.select_item), null, new MMAlert.OnAlertSelectId(){
+
+			@Override
+			public void onClick(int whichButton) {
+				switch (whichButton) {
+				case MMAlertSelect_Save:
+					subMitData();
+					break;
+				case MMAlertSelect_UpLoad:
+					subMitData();
+					//上传数据
+					break;
+				case MMAlertSelect_Send:
+					break;
+				default:
+					break;
+				}
+			}
+			
+		});
 	}
 
 }

@@ -24,4 +24,13 @@
     <!-- perosn info -->
     <string name="pcard_name">姓名</string>
     <string name="pcard_phone">电话</string>
+    
+    <!-- MM dialog -->
+    <string name="app_cancel">取消</string>
+    <string name="select_info">请选择</string>
+    <string-array name="select_item">
+        <item>保存到本地</item>
+        <item>保存并上传数据</item>
+        <item>向群组发送信息</item>
+    </string-array>
 </resources>
