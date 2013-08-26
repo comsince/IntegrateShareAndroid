@@ -51,6 +51,8 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	private Context context;
 	//通用asyncTask
 	GeneralAsyncTask generalAsyncTask;
+	//发送群组标签
+	ArrayList<String> tags = new ArrayList<String>();
 	
 	public static final int  REQUEST_PERSON_NAME = 0;
 	public static final int  REQUEST_PHONE_NUMBER = 1;
@@ -61,6 +63,8 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	public static final int  REQUEST_PERSON_QQ = 6;
 	public static final int  REQUEST_PERSON_EMAIL = 7;
 	public static final int  REQUEST_PERSON_MSN = 8;
+	
+	public static final int REQUEST_SELECT_GROUP = 9;
 	
 	private static final int MMAlertSelect_Save  =  0;
 	private static final int MMAlertSelect_UpLoad  =  1;
@@ -221,6 +225,10 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 			}else if(requestCode == REQUEST_PERSON_MSN){
 				PersonMSN.setText(data.getAction());
 			}
+		}else if(resultCode == SelectGroupDialogActivity.RESULT_SELECT_GROUP_SUCCESS){
+			if(requestCode == REQUEST_SELECT_GROUP){
+				tags = data.getStringArrayListExtra("tags");
+			}
 		}
 		
 	}
@@ -360,6 +368,9 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 					generalAsyncTask.execute();
 					break;
 				case MMAlertSelect_Send:
+					Intent intent = new Intent();
+					intent.setClass(context, SelectGroupDialogActivity.class);
+					startActivityForResult(intent, REQUEST_SELECT_GROUP);
 					break;
 				case MMAlertSelect_DownLoad:
 					//设置当下载数据成功，更新当前页面

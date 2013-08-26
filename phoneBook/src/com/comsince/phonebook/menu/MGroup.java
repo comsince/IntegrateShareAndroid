@@ -15,10 +15,12 @@ import android.widget.ListView;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.adapter.MGroupAdapter;
+import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.Groups;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
+import com.comsince.phonebook.uikit.MMAlert;
 import com.comsince.phonebook.util.AndroidUtil;
 
 public class MGroup {
@@ -34,6 +36,11 @@ public class MGroup {
 	private MGroupAdapter mGroupAdapter;
 	
 	private OnOpenListener mOnOpenListener;
+	//通用asyncTask
+	GeneralAsyncTask generalAsyncTask;
+	
+	private static final int MMAlertSelect_Get_Group  =  0;
+	private static final int MMAlertSelect_Create_Group  =  1;
 	
 	public MGroup(Context context,PhoneBookApplication application){
 		this.mContext = context;
@@ -61,6 +68,13 @@ public class MGroup {
 				}
 			}
 		});
+		selection.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				selectDialog();
+			}
+		});
 	}
 	
 	public void initData(){
@@ -72,7 +86,7 @@ public class MGroup {
 	 * 从本地获取分组信息
 	 * */
 	public void getGroupData(){
-		String filePath = AndroidUtil.getSDCardRoot()+Constant.DIR_PERSON_INFO+File.separator;
+		String filePath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_PERSON_INFO+File.separator;
 		String fileName = phoneBookApplication.phoneBookPreference.getUserName(mContext)+"_"+phoneBookApplication.phoneBookPreference.getPassWord(mContext)+"_"+Constant.FILE_GROUP_SUFFIX+".xml";
 		String fileUrl = filePath + fileName;
 		if(new File(fileUrl).exists()){
@@ -85,6 +99,34 @@ public class MGroup {
 		}
 	}
 	
+	/**
+	 * 功能选项
+	 * */
+	public void selectDialog(){
+		MMAlert.showAlert(mContext, mContext.getString(R.string.select_info), mContext.getResources().getStringArray(R.array.select_item_group), null, new MMAlert.OnAlertSelectId(){
+
+			@Override
+			public void onClick(int whichButton) {
+				switch (whichButton) {
+				case MMAlertSelect_Get_Group:
+					generalAsyncTask = new GeneralAsyncTask(mContext.getString(R.string.person_group_info_download), Constant.TASK_DOWNLOAD_PERSON_GROUP_INFO, mContext);
+					generalAsyncTask.execute();
+					break;
+				case MMAlertSelect_Create_Group:
+					
+					break;
+
+				default:
+					break;
+				}
+			}
+			
+		});
+	}
+	
+	/**
+	 * 获取页面的view
+	 * */
 	public View getView(){
 		return mGroup;
 	}

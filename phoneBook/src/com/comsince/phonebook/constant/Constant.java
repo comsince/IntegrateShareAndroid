@@ -29,6 +29,8 @@ public class Constant {
   	//general task type
   	public static final int TASK_UPLOAD = 30001;
   	public static final int TASK_DOWNLOAD = 30002;
+  	public static final int TASK_DOWNLOAD_PERSON_GROUP_INFO = 30003;
+  	public static final int TASK_SEND_NOTIFICATION_TO_GROUP = 30004;
   	
   	//http msg
   	public static final String SUCCESS_MSG = "OK";

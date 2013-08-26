@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/kaixin_background"
+        android:orientation="vertical"
+        android:clickable="true" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48dip"
+            android:background="@drawable/global_top_background" >
+
+            <Button
+                android:id="@+id/group_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="8dip"
+                android:background="@drawable/title_home_button" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dip"
+                    android:text="群组"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/group_add"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="8dip"
+                android:background="@drawable/button_title_addfriends" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <LinearLayout
+                android:id="@+id/group_search_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/friendsearchbarbg"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/group_search"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="8dip"
+                    android:layout_weight="1"
+                    android:background="@drawable/edit_input_bg"
+                    android:drawableLeft="@drawable/globle_search_icon"
+                    android:drawablePadding="8dip"
+                    android:hint="输入拼音首字母查找"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            
+            <TextView
+                android:id="@+id/group_birthday"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="按照字母顺序排序"
+                android:textColor="#999999"
+                android:textSize="14sp"
+                android:textStyle="bold" 
+                android:padding="8dip"
+                android:layout_below="@+id/group_search_layout"/>
+
+            <ListView
+                android:id="@+id/group_display"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/group_birthday"
+                android:layout_weight="1"
+                android:cacheColorHint="#00000000"
+                android:divider="@drawable/list_line"
+                android:listSelector="#00000000" >
+            </ListView>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

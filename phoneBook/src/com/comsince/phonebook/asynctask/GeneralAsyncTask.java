@@ -79,8 +79,21 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			}else{
 				flag = false;
 			}
+		}else if(taskTag == Constant.TASK_DOWNLOAD_PERSON_GROUP_INFO){
+			String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+			String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord+"_"+Constant.FILE_GROUP_SUFFIX;
+			String downloadURL = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_INFO+"/"+fileName+".xml");
+			InputStream in = BaiduCloudSaveUtil.getObject(downloadURL);
+			if(in != null){
+				flag = true;
+				FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_PERSON_INFO, fileName+".xml", in);
+			}else{
+				flag = false;
+			}
 		}
 		return flag;
 	}
+	
+	
 
 }

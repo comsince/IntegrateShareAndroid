@@ -74,6 +74,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle" >
         </activity>
+        <!-- 选择群组对话框 -->
+        <activity
+            android:name=".activity.SelectGroupDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle" >
+        </activity>
         <!-- 个人消息修改页面 -->
         <activity
             android:name=".activity.PersonInfoActivity"
