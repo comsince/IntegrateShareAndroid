@@ -5,6 +5,7 @@ package com.comsince.phonebook;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import com.comsince.phonebook.menu.Desktop;
 import com.comsince.phonebook.menu.Desktop.onChangeViewListener;
 import com.comsince.phonebook.menu.Friends;
 import com.comsince.phonebook.menu.Home;
+import com.comsince.phonebook.menu.MGroup;
 import com.comsince.phonebook.ui.base.FlipperLayout;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.util.BaiduPushUtil;
@@ -37,14 +39,19 @@ public class MainActivity extends Activity implements OnOpenListener{
 	private Home mHome;
 	
 	private Friends mFriends;
+	
+	private MGroup mGroup;
 	/**
 	 * 当前显示的View的编号
 	 */
 	private int mViewPosition;
+	
+	private Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		context = this;
 		//百度云推送服务初始化api
 	    initBaiduPushService();
 		//在manifest中声明
@@ -58,10 +65,12 @@ public class MainActivity extends Activity implements OnOpenListener{
 		 * */
 		mDesktop = new Desktop(this, this);
 		mHome = new Home(this, this);
-		mFriends = new Friends(this, phoneBookApplication);
+		mGroup = new MGroup(this, phoneBookApplication);
+		//mFriends = new Friends(this, phoneBookApplication);
 		mRoot.addView(mDesktop.getView(), params);
 		//mRoot.addView(mHome.getView(), params);
-		mRoot.addView(mFriends.getView(),params);
+		//mRoot.addView(mFriends.getView(),params);
+		mRoot.addView(mGroup.getView(),params);
 		setContentView(mRoot);
 		setListener();
 		Log.i("download", "notification !");
@@ -70,8 +79,13 @@ public class MainActivity extends Activity implements OnOpenListener{
 	public void setListener(){
 		/**
 		 * 默认打开好友界面
+		 * 增加菜单响应过程
+		 * 1.destop中增加时间监听
+		 * 2.在mainActivity中覆盖onChangeView
+		 * 3.非主显示页面要初始化监听setOnOpenListener
 		 * */
-		mFriends.setOnOpenListener(this);
+		//mFriends.setOnOpenListener(this);
+		mGroup.setOnOpenListener(this);
 		mDesktop.setOnChangeViewListener(new onChangeViewListener() {
 			
 			@Override
@@ -79,7 +93,14 @@ public class MainActivity extends Activity implements OnOpenListener{
 				mViewPosition = arg0;
 				switch (arg0) {
 				case ViewUtil.FRIENDS:
+					if(mFriends == null){
+						mFriends = new Friends(context, phoneBookApplication);
+						mFriends.setOnOpenListener(MainActivity.this);
+					}
 					mRoot.close(mFriends.getView());
+					break;
+				case ViewUtil.GROUPS:
+					mRoot.close(mGroup.getView());
 					break;
 
 				default:

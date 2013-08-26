@@ -12,6 +12,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.PhotoUtil;
@@ -52,6 +53,10 @@ public class PhoneBookApplication extends Application {
 	 * 当前用户的好友的姓名的首字母的在列表中的位置
 	 */
 	public List<Integer> mMyFriendsPosition = new ArrayList<Integer>();
+	/**
+	 * 当前用户的群组信息
+	 * */
+	public List<Group> mGroupResult = new ArrayList<Group>();
 	/**
 	 * 头像名称
 	 */

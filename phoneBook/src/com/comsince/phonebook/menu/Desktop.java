@@ -98,9 +98,9 @@ public class Desktop {
 
 	public class DesktopAdapter extends BaseAdapter {
 		private Context mContext;
-		private String[] mName = { "好友", "消息" };
-		private int[] mIcon = {R.drawable.sidebar_icon_friends, R.drawable.sidebar_icon_news };
-		private int[] mIconPressed = { R.drawable.sidebar_icon_friends_pressed ,R.drawable.sidebar_icon_news_pressed };
+		private String[] mName = { "群组","好友", "消息" };
+		private int[] mIcon = {R.drawable.sidebar_icon_friends,R.drawable.sidebar_icon_friends, R.drawable.sidebar_icon_news };
+		private int[] mIconPressed = { R.drawable.sidebar_icon_friends_pressed,R.drawable.sidebar_icon_friends_pressed ,R.drawable.sidebar_icon_news_pressed };
 		private int mChoose = 0;
 
 		public DesktopAdapter(Context mContext) {
@@ -159,6 +159,9 @@ public class Desktop {
 							break;
 						case ViewUtil.MESSAGE:
 							mOnChangeViewListener.onChangeView(ViewUtil.MESSAGE);
+							break;
+						case ViewUtil.GROUPS:
+							mOnChangeViewListener.onChangeView(ViewUtil.GROUPS);
 							break;
 						default:
 							break;

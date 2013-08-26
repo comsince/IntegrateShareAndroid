@@ -56,7 +56,7 @@
             android:layout_marginRight="8dip"
             android:layout_marginTop="8dip"
             android:background="@drawable/title_text_button"
-            android:text="提交"
+            android:text="功能"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:textStyle="bold" />

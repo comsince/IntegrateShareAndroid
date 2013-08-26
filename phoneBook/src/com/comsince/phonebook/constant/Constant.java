@@ -22,7 +22,7 @@ public class Constant {
   	public static final String MAIN_DIR_PHONE_BOOK = "phonebook";
   	public static final String DIR_PERSON_INFO = "personInfo";
   	public static final String DIR_LOGIN_INFO = "loginInfo";
-  	
+  	public static final String FILE_GROUP_SUFFIX = "groupInfo";
   	//loading activity 广播
   	public static final String ACTION_FINISH = "com.comsince.phonebook.loadingfinish";
   	
