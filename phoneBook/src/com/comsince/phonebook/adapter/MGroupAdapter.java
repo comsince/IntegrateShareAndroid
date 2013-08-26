@@ -22,6 +22,17 @@ public class MGroupAdapter extends BaseAdapter {
 			this.mGroupResult = mGroupResult;
 		}
 	}
+	
+	/**
+	 * refresh data
+	 * */
+	public void refreshData(List<Group> groups){
+		mGroupResult.clear();
+		if(groups != null){
+			mGroupResult = groups;
+			this.notifyDataSetChanged();
+		}
+	}
 
 	@Override
 	public int getCount() {

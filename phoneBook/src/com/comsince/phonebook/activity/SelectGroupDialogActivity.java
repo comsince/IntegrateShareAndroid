@@ -86,6 +86,7 @@ public class SelectGroupDialogActivity extends Activity implements OnClickListen
 			Intent intent = new Intent();
 			intent.putStringArrayListExtra("tags", (ArrayList<String>) tags);
 			setResult(RESULT_SELECT_GROUP_SUCCESS, intent);
+			finish();
 		}
 	}
 

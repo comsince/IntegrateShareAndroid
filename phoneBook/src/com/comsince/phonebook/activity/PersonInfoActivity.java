@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -228,6 +229,9 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		}else if(resultCode == SelectGroupDialogActivity.RESULT_SELECT_GROUP_SUCCESS){
 			if(requestCode == REQUEST_SELECT_GROUP){
 				tags = data.getStringArrayListExtra("tags");
+				Log.i("test", "ssss");
+				generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.send_notification_to_group), Constant.TASK_SEND_NOTIFICATION_TO_GROUP, context);
+				generalAsyncTask.execute();
 			}
 		}
 		

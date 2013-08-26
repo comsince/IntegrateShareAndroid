@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import com.comsince.phonebook.PhoneBookApplication;
+import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.GeneralLoadingActivity;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.preference.PhoneBookPreference;
@@ -12,6 +13,7 @@ import com.comsince.phonebook.util.BaiduCloudSaveUtil;
 import com.comsince.phonebook.util.DataUtil;
 import com.comsince.phonebook.util.FileUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
+import com.comsince.phonebook.util.baidupush.BaiduPush;
 
 import android.content.Context;
 import android.content.Intent;
@@ -90,6 +92,13 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			}else{
 				flag = false;
 			}
+		}else if(taskTag == Constant.TASK_SEND_NOTIFICATION_TO_GROUP){
+			String title = PhoneBookApplication.phoneBookPreference.getUserName(context);
+	        String description = context.getString(R.string.push_messge_content);
+			String groupTag = "YC_ZG_PRIMARY";
+			String msg = "{\"title\":\""+title+"\",\"description\":\""+description+"\"}";
+			BaiduPush.pushMsgToGroup(groupTag,msg);
+			flag = true;
 		}
 		return flag;
 	}
