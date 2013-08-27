@@ -25,8 +25,11 @@ import android.widget.Toast;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
+import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.GroupInfo;
+import com.comsince.phonebook.entity.Groups;
 import com.comsince.phonebook.util.AndroidUtil;
+import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 
 public class JoinGroupDialogActivity extends Activity implements OnClickListener{
@@ -113,11 +116,38 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
 		if(tags.size() == 0){
 			Toast.makeText(context, "请选择要加入的群组", Toast.LENGTH_SHORT).show();
 		}else{
+			//建立个人已经加入的分组信息
+			createPersonGroupInfo();
 			Intent intent = new Intent(Constant.ACTION_ADD_TAG);
 			intent.putExtra("tag", groupTag);
 			sendBroadcast(intent);
 			finish();
 		}
+	}
+	
+	public void createPersonGroupInfo(){
+		List<Group> groupsList = new ArrayList<Group>();
+		Group group = new Group();
+		String groupName = groupInfo.getGroupName();
+		if(!TextUtils.isEmpty(groupName)){
+			group.setGroupName(groupName);
+		}
+		String groupTag = groupInfo.getGroupTag();
+		if(!TextUtils.isEmpty(groupTag)){
+			group.setGroupTag(groupTag);
+		}
+		groupsList = PhoneBookUtil.getCurrentUserGroup(context);
+		if(groupsList.size()!= 0){
+			if(!groupsList.contains(group)){
+				groupsList.add(group);
+			}
+		}else{
+			groupsList.add(group);
+		}
+		Groups groups = new Groups();
+    	groups.setGroups(groupsList);
+    	PhoneBookUtil.writePersonGroupInfo(groups, PhoneBookUtil.getPerosnGroupInfoFileName(context));
+		
 	}
 	
     public void getGroupInfoFromFile(){

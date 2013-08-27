@@ -129,6 +129,12 @@ public class MainActivity extends Activity implements OnOpenListener{
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+		mGroup.refreshGroupData();
+	}
+
+	@Override
 	protected void onDestroy() {
 		unregisterReceiver(addTagReceiver);
 		super.onDestroy();

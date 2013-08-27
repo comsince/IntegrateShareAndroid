@@ -164,6 +164,11 @@ public class MGroup {
 		
 	};
 	
+	public void refreshGroupData(){
+		getGroupData();
+		mGroupAdapter.refreshData(mGroupResult);
+	}
+	
 	/**
 	 * 获取页面的view
 	 * */
