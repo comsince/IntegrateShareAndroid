@@ -194,7 +194,7 @@ public class MainActivity extends Activity implements OnOpenListener{
 	public void initBaiduPushService(){
 		PushManager.startWork(this, PushConstants.LOGIN_TYPE_API_KEY, Constant.BAIDU_APP_KEY);
 		//设置标签
-		List<String> tags = BaiduPushUtil.getTagsList(Constant.TITLE_GROUP);
+		List<String> tags = BaiduPushUtil.getTagFromFile(context);
 		PushManager.setTags(this, tags);
 	}
 	

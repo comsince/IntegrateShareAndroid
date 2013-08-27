@@ -231,7 +231,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 				tags = data.getStringArrayListExtra("tags");
 				Log.i("test", "ssss");
 				generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.send_notification_to_group), Constant.TASK_SEND_NOTIFICATION_TO_GROUP, context);
-				generalAsyncTask.execute();
+				generalAsyncTask.execute(tags.get(0));
 			}
 		}
 		

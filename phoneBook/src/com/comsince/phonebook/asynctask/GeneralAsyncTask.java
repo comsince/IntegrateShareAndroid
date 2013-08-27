@@ -118,7 +118,7 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 		}else if(taskTag == Constant.TASK_SEND_NOTIFICATION_TO_GROUP){
 			String title = PhoneBookApplication.phoneBookPreference.getUserName(context);
 	        String description = context.getString(R.string.push_messge_content);
-			String groupTag = "YC_ZG_PRIMARY";
+			String groupTag = params[0];
 			String msg = "{\"title\":\""+title+"\",\"description\":\""+description+"\"}";
 			BaiduPush.pushMsgToGroup(groupTag,msg);
 			flag = true;
