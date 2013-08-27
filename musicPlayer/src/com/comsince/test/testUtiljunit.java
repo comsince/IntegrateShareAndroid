@@ -43,6 +43,11 @@ public class testUtiljunit extends AndroidTestCase {
 	   FileUtil.writeToFile(is, fileName);   
    }
    
+   public void textCreateDir(){
+	   //成功
+	   FileUtil.creatSDDir("test/text");
+   }
+   
    public void testSimpleXmlReader() throws Exception{
 	   SimpleXmlReaderUtil simpleXmlReader = new SimpleXmlReaderUtil();
 	   String[] xmlPath = this.mContext.getAssets().list("conf/impda.xml");
@@ -222,5 +227,7 @@ public class testUtiljunit extends AndroidTestCase {
 	   InputStream in = HttpTool.getStream(uri, null, null, HttpTool.GET);
 	   FileUtil.save(in, AndroidUtil.getSDCardRoot()+"TMusic/download/wsd.xml");
    }
+   
+   
 
 }
