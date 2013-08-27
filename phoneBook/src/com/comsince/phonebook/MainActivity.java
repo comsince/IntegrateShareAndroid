@@ -5,8 +5,10 @@ package com.comsince.phonebook;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,6 +49,11 @@ public class MainActivity extends Activity implements OnOpenListener{
 	private int mViewPosition;
 	
 	private Context context;
+	
+	/**
+	 * 接收加入群组tag的广播
+	 * */
+	private AddTagBroadcastReceiber addTagReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,11 @@ public class MainActivity extends Activity implements OnOpenListener{
 	    initBaiduPushService();
 		//在manifest中声明
 		phoneBookApplication = (PhoneBookApplication) getApplication();
+		//建立并注册广播
+		addTagReceiver = new AddTagBroadcastReceiber();
+		IntentFilter tagFilter = new IntentFilter();
+		tagFilter.addAction(Constant.ACTION_ADD_TAG);
+		registerReceiver(addTagReceiver, tagFilter);
 		
 		mRoot = new FlipperLayout(this);
 		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
@@ -114,6 +126,12 @@ public class MainActivity extends Activity implements OnOpenListener{
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(addTagReceiver);
+		super.onDestroy();
 	}
 
 	/**
@@ -178,6 +196,21 @@ public class MainActivity extends Activity implements OnOpenListener{
 		//设置标签
 		List<String> tags = BaiduPushUtil.getTagsList(Constant.TITLE_GROUP);
 		PushManager.setTags(this, tags);
+	}
+	
+	class AddTagBroadcastReceiber extends BroadcastReceiver{
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if(intent.getAction().equals(Constant.ACTION_ADD_TAG)){
+				String tag = intent.getStringExtra("tag");
+				if(!phoneBookApplication.tags.contains(tag)){
+					phoneBookApplication.tags.add(tag);
+					PushManager.setTags(context, phoneBookApplication.tags);
+				}
+			}
+		}
+		
 	}
 
 	

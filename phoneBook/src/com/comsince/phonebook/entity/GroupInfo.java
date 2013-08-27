@@ -17,6 +17,8 @@ public class GroupInfo {
 	private String groupTag;
 	@Element(required = false)
 	private String remark;
+	@Element(required = false)
+	private String groupName;
 
 	public String getAdminAccount() {
 		return adminAccount;
@@ -48,6 +50,14 @@ public class GroupInfo {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
 }

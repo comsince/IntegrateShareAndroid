@@ -109,6 +109,8 @@ public class BaiduCloudSaveUtil {
 			responseMsg = connection.getResponseMessage();
 			if(responseMsg.equals(Constant.SUCCESS_MSG)){
 				in = connection.getInputStream();
+			}else{
+				in = connection.getInputStream();
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

@@ -58,6 +58,10 @@ public class PhoneBookApplication extends Application {
 	 * */
 	public List<Group> mGroupResult = new ArrayList<Group>();
 	/**
+	 * 广播分组
+	 * */
+	public List<String> tags = new ArrayList<String>();
+	/**
 	 * 头像名称
 	 */
 	public String[] mAvatars;

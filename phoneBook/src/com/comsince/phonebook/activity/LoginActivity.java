@@ -54,11 +54,11 @@ public class LoginActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.login_activity_login:
-			login();
+			//login();
 			//跳过登录
-			/*Intent intent = new Intent();
+			Intent intent = new Intent();
 			intent.setClass(this, MainActivity.class);
-			startActivity(intent);*/
+			startActivity(intent);
 			break;
 		case R.id.registration:
 			register();

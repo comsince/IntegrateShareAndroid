@@ -23,14 +23,17 @@ public class Constant {
   	public static final String DIR_PERSON_INFO = "personInfo";
   	public static final String DIR_LOGIN_INFO = "loginInfo";
   	public static final String FILE_GROUP_SUFFIX = "groupInfo";
+  	public static final String FILE_GROUP_INFO = "groupDetail.xml";
   	//loading activity 广播
   	public static final String ACTION_FINISH = "com.comsince.phonebook.loadingfinish";
+  	public static final String ACTION_ADD_TAG = "com.comsince.phonebook.addtag";
   	
   	//general task type
   	public static final int TASK_UPLOAD = 30001;
   	public static final int TASK_DOWNLOAD = 30002;
   	public static final int TASK_DOWNLOAD_PERSON_GROUP_INFO = 30003;
   	public static final int TASK_SEND_NOTIFICATION_TO_GROUP = 30004;
+  	public static final int TASK_GET_GROUP_BY_TAG = 30005;
   	
   	//http msg
   	public static final String SUCCESS_MSG = "OK";

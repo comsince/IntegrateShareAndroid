@@ -38,6 +38,7 @@
     <string-array name="select_item_group">
         <item>获取个人群组</item>
         <item>创建群组</item>
+        <item>加入群组</item>
     </string-array>
     
     <!-- progress dialog info  -->

@@ -128,7 +128,7 @@ public class FileUtil {
 	 * @param path
 	 *            文件路径
 	 * @param fileName
-	 *            文件名
+	 *            文件名,带后缀
 	 * @param input
 	 *            输入流
 	 * 

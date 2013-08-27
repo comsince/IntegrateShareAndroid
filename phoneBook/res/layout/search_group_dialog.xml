@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240.0dip"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/add_info_title"
+        android:layout_width="240.0dip"
+        android:layout_height="30.0dip"
+        android:background="@drawable/global_top_background"
+        android:gravity="center_vertical"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip"
+        android:text="选择要加入的群组"
+        android:textColor="@color/white"
+        android:textSize="16.0dip" />
+
+    <RelativeLayout
+        android:id="@+id/group_search_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:background="@drawable/friendsearchbarbg" >
+
+        <EditText
+            android:id="@+id/group_search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dip"
+            android:layout_weight="1"
+            android:background="@drawable/edit_input_bg"
+            android:drawablePadding="8dip"
+            android:hint="输入群组邀请码,区分大小写"
+            android:textColor="@color/black"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignBottom="@id/group_search"
+            android:layout_alignRight="@id/group_search"
+            android:layout_alignTop="@id/group_search"
+            android:layout_marginBottom="2.0dip"
+            android:layout_marginRight="6.0dip"
+            android:layout_marginTop="3.0dip"
+            android:background="@color/white"
+            android:src="@drawable/globle_search_icon" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/selectgroups_display"
+            android:layout_width="fill_parent"
+            android:layout_height="60dip"
+            android:layout_weight="1"
+            android:cacheColorHint="#00000000"
+            android:divider="@drawable/list_line"
+            android:listSelector="#00000000" >
+        </ListView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:layout_gravity="center_vertical"
+        android:background="@color/color_dialog_list_line" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:layout_gravity="center" >
+
+        <TextView
+            android:id="@+id/add_info_commit"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/color_dialog_list_selector"
+            android:gravity="center"
+            android:text="@string/btn_confirm"
+            android:textColor="@color/list_item_title_color" />
+
+        <View
+            android:layout_width="1.0dip"
+            android:layout_height="45.0dip"
+            android:background="@color/color_dialog_list_line" />
+
+        <TextView
+            android:id="@+id/add_info_cancel"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/color_dialog_list_selector"
+            android:gravity="center"
+            android:text="@string/btn_cancel"
+            android:textColor="@color/list_item_title_color" />
+    </LinearLayout>
+
+</LinearLayout>

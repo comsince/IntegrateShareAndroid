@@ -4,16 +4,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.activity.JoinGroupDialogActivity;
 import com.comsince.phonebook.adapter.MGroupAdapter;
 import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
@@ -41,6 +47,9 @@ public class MGroup {
 	
 	private static final int MMAlertSelect_Get_Group  =  0;
 	private static final int MMAlertSelect_Create_Group  =  1;
+	private static final int MMAlertSelect_Join_Group  =  2;
+	public static final int SUCCESS = 0;
+	public static final int FAIL = 1;
 	
 	public MGroup(Context context,PhoneBookApplication application){
 		this.mContext = context;
@@ -109,13 +118,19 @@ public class MGroup {
 			public void onClick(int whichButton) {
 				switch (whichButton) {
 				case MMAlertSelect_Get_Group:
-					generalAsyncTask = new GeneralAsyncTask(mContext.getString(R.string.person_group_info_download), Constant.TASK_DOWNLOAD_PERSON_GROUP_INFO, mContext);
+					/**
+					 * 1,传递适配器对象
+					 * 2,利用handler传递消息
+					 * **/
+					generalAsyncTask = new GeneralAsyncTask(mContext.getString(R.string.person_group_info_download), Constant.TASK_DOWNLOAD_PERSON_GROUP_INFO, mContext,groupHandler);
 					generalAsyncTask.execute();
 					break;
 				case MMAlertSelect_Create_Group:
 					
 					break;
-
+				case MMAlertSelect_Join_Group:
+					joinGroup();
+					break;
 				default:
 					break;
 				}
@@ -123,6 +138,31 @@ public class MGroup {
 			
 		});
 	}
+	
+	public void joinGroup(){
+		Intent intent = new Intent();
+		intent.setClass(mContext, JoinGroupDialogActivity.class);
+		((Activity)mContext).startActivity(intent);
+	}
+	
+	Handler groupHandler = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case SUCCESS:
+				getGroupData();
+				mGroupAdapter.refreshData(mGroupResult);
+				break;
+			case FAIL:
+				Toast.makeText(mContext, "下载分组失败，请重试", Toast.LENGTH_SHORT).show();
+				break;
+			default:
+				break;
+			}
+		}
+		
+	};
 	
 	/**
 	 * 获取页面的view

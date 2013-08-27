@@ -2,35 +2,55 @@ package com.comsince.phonebook.asynctask;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.GeneralLoadingActivity;
+import com.comsince.phonebook.adapter.MGroupAdapter;
 import com.comsince.phonebook.constant.Constant;
-import com.comsince.phonebook.preference.PhoneBookPreference;
+import com.comsince.phonebook.entity.Group;
+import com.comsince.phonebook.entity.Groups;
+import com.comsince.phonebook.menu.MGroup;
 import com.comsince.phonebook.util.AndroidUtil;
 import com.comsince.phonebook.util.BaiduCloudSaveUtil;
-import com.comsince.phonebook.util.DataUtil;
 import com.comsince.phonebook.util.FileUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 import com.comsince.phonebook.util.baidupush.BaiduPush;
-
-import android.content.Context;
-import android.content.Intent;
-import android.database.DatabaseUtils;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
 public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
     private String loadingText;
     private int taskTag;
     private Context context;
+    private Handler mGroupHandler;
+    private String condition;
     
 	public GeneralAsyncTask(String loadingText, int taskTag, Context context) {
 		this.context = context;
 		this.loadingText = loadingText;
 		this.taskTag = taskTag;
+	}
+	
+	public GeneralAsyncTask(String loadingText, int taskTag, Context context,Handler mGroupHandler){
+		this.context = context;
+		this.loadingText = loadingText;
+		this.taskTag = taskTag;
+		this.mGroupHandler = mGroupHandler;
+	}
+	
+	public GeneralAsyncTask(String loadingText, int taskTag, String condition,Context context) {
+		this.context = context;
+		this.loadingText = loadingText;
+		this.taskTag = taskTag;
+		this.condition = condition;
 	}
 
 	@Override
@@ -82,6 +102,7 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 				flag = false;
 			}
 		}else if(taskTag == Constant.TASK_DOWNLOAD_PERSON_GROUP_INFO){
+			SimpleXmlReaderUtil xmlUtils = new SimpleXmlReaderUtil();
 			String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
 			String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord+"_"+Constant.FILE_GROUP_SUFFIX;
 			String downloadURL = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_INFO+"/"+fileName+".xml");
@@ -89,8 +110,10 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			if(in != null){
 				flag = true;
 				FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_PERSON_INFO, fileName+".xml", in);
+				mGroupHandler.sendEmptyMessage(MGroup.SUCCESS);
 			}else{
 				flag = false;
+				mGroupHandler.sendEmptyMessage(MGroup.FAIL);
 			}
 		}else if(taskTag == Constant.TASK_SEND_NOTIFICATION_TO_GROUP){
 			String title = PhoneBookApplication.phoneBookPreference.getUserName(context);
@@ -99,10 +122,26 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			String msg = "{\"title\":\""+title+"\",\"description\":\""+description+"\"}";
 			BaiduPush.pushMsgToGroup(groupTag,msg);
 			flag = true;
+		}else if(taskTag == Constant.TASK_GET_GROUP_BY_TAG){
+			flag = downLoadGroupInfo(condition);
 		}
 		return flag;
 	}
 	
-	
+	/**
+	 * 下载分组信息
+	 * */
+	public Boolean downLoadGroupInfo(String condition){
+		Boolean flag = false;
+		String downloadURL = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+condition+"/"+Constant.FILE_GROUP_INFO);
+		InputStream in = BaiduCloudSaveUtil.getObject(downloadURL);
+		if(in != null){
+			flag = true;
+			FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+condition, Constant.FILE_GROUP_INFO, in);
+		}else{
+			flag = false;
+		}
+		return flag;
+	}
 
 }
