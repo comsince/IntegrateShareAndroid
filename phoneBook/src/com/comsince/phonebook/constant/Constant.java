@@ -9,6 +9,9 @@ public class Constant {
     public static final int DOWN_LOAD_SUCCESS = 10000;
     public static final int DOWN_LOAD_FAIL = 10001;
     
+    public static final int DOWN_LOAD_GROUPPERSON_SUCCESS =10002;
+    public static final int DOWN_LOAD_GROUPPERSON_FAIL =10004;
+    public static final int UPLAOD_GROUPPERSON_SUCCESS = 10003;
   //百度开放平台通讯录key
   	public static final String BAIDU_APP_KEY = "RWg6F0aIW2tIxjonhScWE8j8";
   	
@@ -25,6 +28,7 @@ public class Constant {
   	public static final String FILE_GROUP_SUFFIX = "groupInfo";
   	public static final String FILE_GROUP_INFO = "groupDetail.xml";
   	public static final String FILE_GROUP_PERSON_INFO = "groupPerson";
+  	public static final String FILE_GROUP_PERSON_XML = "groupPerson.xml";
   	//loading activity 广播
   	public static final String ACTION_FINISH = "com.comsince.phonebook.loadingfinish";
   	public static final String ACTION_ADD_TAG = "com.comsince.phonebook.addtag";
@@ -35,7 +39,9 @@ public class Constant {
   	public static final int TASK_DOWNLOAD_PERSON_GROUP_INFO = 30003;
   	public static final int TASK_SEND_NOTIFICATION_TO_GROUP = 30004;
   	public static final int TASK_GET_GROUP_BY_TAG = 30005;
-  	
+  	public static final int TASK_UPLOAD_PERSON_GROUPINFO = 30006;
+  	public static final int TASK_UPLOAD_PERSON_GROUPPERSON = 30007;
+    public static final int TASK_DOWNLOAD_PERSON_GROUPPERSON = 30008;  	
   	//http msg
   	public static final String SUCCESS_MSG = "OK";
     

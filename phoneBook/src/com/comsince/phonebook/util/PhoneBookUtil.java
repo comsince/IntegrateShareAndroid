@@ -9,6 +9,7 @@ import android.content.Context;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Group;
+import com.comsince.phonebook.entity.GroupPerson;
 import com.comsince.phonebook.entity.GroupPersons;
 import com.comsince.phonebook.entity.Groups;
 import com.comsince.phonebook.entity.Person;
@@ -21,7 +22,9 @@ public class PhoneBookUtil {
     public static String getPersonInfoPath(){
     	return AndroidUtil.getSDCardRoot() + Constant.MAIN_DIR_PHONE_BOOK + File.separator + Constant.DIR_PERSON_INFO + File.separator;
     }
-    
+    /**
+     * 获取当前用户的分组信息
+     * */
     public static List<Group> getCurrentUserGroup(Context context){
     	List<Group> groups = new ArrayList<Group>();
     	String userName = PhoneBookApplication.phoneBookPreference.getPassWord(context);
@@ -37,6 +40,21 @@ public class PhoneBookUtil {
     	return groups;
     }
     
+    /**
+     * 获取当前加入的分组的人员信息
+     * */
+	public static List<GroupPerson> getCurrentJoinGroupPersonInfo(Context context, String groupTag) {
+		List<GroupPerson> groupPersons = new ArrayList<GroupPerson>();
+		String filePath = AndroidUtil.getSDCardRoot() + AndroidUtil.getSDCardRoot() + Constant.PHONE_BOOK_PATH + File.separator + groupTag + File.separator
+				+ Constant.FILE_GROUP_INFO;
+		try {
+			groupPersons = xmlUtil.readXml(filePath, GroupPersons.class).getGroupPersons();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return groupPersons;
+	}
+    
     public static String getGroupInfoFullPath(Context context){
     	List<Group> groups = new ArrayList<Group>();
     	String userName = PhoneBookApplication.phoneBookPreference.getUserName(context);
@@ -46,7 +64,7 @@ public class PhoneBookUtil {
 		return filePath;
     }
     /**
-     * 获取个人信息的文件名
+     * 获取个人分组信息的文件名
      * @return fileName 不带后缀名
      * **/
     public static String getPerosnGroupInfoFileName(Context context){

@@ -23,6 +23,7 @@ import com.comsince.phonebook.menu.MGroup;
 import com.comsince.phonebook.util.AndroidUtil;
 import com.comsince.phonebook.util.BaiduCloudSaveUtil;
 import com.comsince.phonebook.util.FileUtil;
+import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 import com.comsince.phonebook.util.baidupush.BaiduPush;
 
@@ -31,6 +32,9 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
     private int taskTag;
     private Context context;
     private Handler mGroupHandler;
+    /**
+     * 组标签
+     * */
     private String condition;
     
 	public GeneralAsyncTask(String loadingText, int taskTag, Context context) {
@@ -58,7 +62,7 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 		//关闭进度框
 		Log.d("text", String.valueOf(result));
 		if(!result){
-			Toast.makeText(context, "没有您的数据，请先编辑个人信息上传", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, loadingText+"任务失败", Toast.LENGTH_SHORT).show();
 		}
 		context.sendBroadcast(new Intent(Constant.ACTION_FINISH));
 	}
@@ -76,7 +80,7 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 		Boolean flag = false;
 		if(taskTag == Constant.TASK_UPLOAD){
 			Log.d("text", String.valueOf(taskTag));
-			//password在保持的时候就已经加密了
+			//password在保存的时候就已经加密了
 			String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
 			String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
 			String uploadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_INFO+"/"+fileName+".xml");
@@ -124,6 +128,39 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			flag = true;
 		}else if(taskTag == Constant.TASK_GET_GROUP_BY_TAG){
 			flag = downLoadGroupInfo(condition);
+		}else if(taskTag == Constant.TASK_DOWNLOAD_PERSON_GROUPPERSON){
+			condition = params[0];
+			String downloadURL = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+condition+"/"+Constant.FILE_GROUP_INFO);
+			InputStream in = BaiduCloudSaveUtil.getObject(downloadURL);
+			if(in != null){
+				flag = true;
+				FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+condition, Constant.FILE_GROUP_INFO, in);
+				mGroupHandler.sendEmptyMessage(Constant.DOWN_LOAD_GROUPPERSON_SUCCESS);
+			}else{
+				flag = false;
+				mGroupHandler.sendEmptyMessage(Constant.DOWN_LOAD_GROUPPERSON_FAIL);
+			}
+		}else if(taskTag == Constant.TASK_UPLOAD_PERSON_GROUPPERSON){
+			condition = params[0];
+			String uploadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+condition+"/"+Constant.FILE_GROUP_PERSON_XML);
+			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+condition+File.separator+Constant.FILE_GROUP_PERSON_XML;
+			String responeMsg = BaiduCloudSaveUtil.putObject(uploadURL, uploadXmlPath);
+			if(responeMsg.equals(Constant.SUCCESS_MSG)){
+				flag = true;
+				mGroupHandler.sendEmptyMessage(Constant.UPLAOD_GROUPPERSON_SUCCESS);
+			}else{
+				flag = false;
+				mGroupHandler.sendEmptyMessage(Constant.UPLAOD_GROUPPERSON_SUCCESS);
+			}
+		}else if(taskTag == Constant.TASK_UPLOAD_PERSON_GROUPINFO){
+			String uploadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_INFO+"/"+PhoneBookUtil.getPerosnGroupInfoFileName(context)+".xml");
+			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_PERSON_INFO+File.separator+PhoneBookUtil.getPerosnGroupInfoFileName(context)+".xml";
+			String responeMsg = BaiduCloudSaveUtil.putObject(uploadURL, uploadXmlPath);
+			if(responeMsg.equals(Constant.SUCCESS_MSG)){
+				flag = true;
+			}else{
+				flag = false;
+			}
 		}
 		return flag;
 	}

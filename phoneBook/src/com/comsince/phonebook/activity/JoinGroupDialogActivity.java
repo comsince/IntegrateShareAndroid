@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,13 +123,21 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
 		}else{
 			//建立个人已经加入的分组信息
 			createPersonGroupInfo();
-			//将个人信息加入群组
-			createGroupPerson();
+			//更新当前分组的人员信息
+			downLoadGroupPerson();
+			
 			Intent intent = new Intent(Constant.ACTION_ADD_TAG);
 			intent.putExtra("tag", groupTag);
 			sendBroadcast(intent);
 			finish();
 		}
+	}
+	/**
+	 * 更新当前分组的人员信息
+	 * */
+	public void downLoadGroupPerson(){
+		getGroupTask = new GeneralAsyncTask("更新当前分组的人员信息", Constant.TASK_DOWNLOAD_PERSON_GROUPPERSON, context, groupHandler);
+		getGroupTask.execute(groupTag);
 	}
 	
 	public void createPersonGroupInfo(){
@@ -173,7 +183,15 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
 		if(!TextUtils.isEmpty(personRealName)){
 			groupPerson.setPersonRealName(personRealName);
 		}
-		groupPersonList.add(groupPerson);
+		//获取当前最新的分组人员信息
+		groupPersonList = PhoneBookUtil.getCurrentJoinGroupPersonInfo(context, groupTag);
+		if(groupPersonList.size() != 0){
+			if(!groupPersonList.contains(groupPerson)){
+				groupPersonList.add(groupPerson);
+			}
+		}else{
+			groupPersonList.add(groupPerson);
+		}
 		groupPersons.setGroupPersons(groupPersonList);
 		PhoneBookUtil.writeGroupPersonToTargetGroup(groupTag, groupPersons);
 	}
@@ -190,6 +208,49 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
     	}
 	   
     }
+    
+    /**
+     * 上传分组人员信息
+     * */
+    public void upLoadGroupPerson(){
+    	getGroupTask = new GeneralAsyncTask("正在上传分组人员信息...",Constant.TASK_UPLOAD_PERSON_GROUPPERSON, context, groupHandler);
+    	getGroupTask.execute(groupTag);
+    }
+    
+    /**
+     * 上传个人的分组信息
+     * */
+    public void upLoadPersonGroupInfo(){
+    	getGroupTask = new GeneralAsyncTask("正在上传个人分组信息...", Constant.TASK_UPLOAD_PERSON_GROUPINFO, context, groupHandler);
+    	getGroupTask.execute();
+    }
+    
+    private Handler groupHandler = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case Constant.DOWN_LOAD_GROUPPERSON_SUCCESS:
+				//将个人信息加入群组
+				createGroupPerson();
+				//上传个人群组信息，与个人加入群组的信息
+				upLoadGroupPerson();
+				break;
+			case Constant.UPLAOD_GROUPPERSON_SUCCESS:
+				//不管成功与否都要在上出个人分组信息
+				upLoadPersonGroupInfo();
+				break;
+			case Constant.DOWN_LOAD_GROUPPERSON_FAIL:
+				//将个人信息加入群组
+				createGroupPerson();
+				upLoadGroupPerson();
+				break;
+			default:
+				break;
+			}
+		}
+    	
+    };
 	
 	private class searchGroupAdapter extends BaseAdapter{
 		@Override
