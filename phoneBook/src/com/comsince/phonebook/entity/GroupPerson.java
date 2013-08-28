@@ -8,6 +8,8 @@ public class GroupPerson {
 	@Element(required = false)
 	private String personAccount;
 	@Element(required = false)
+	private String personAccountPassword;
+	@Element(required = false)
 	private String personRealName;
 	@Element(required = false)
 	private String isAuthor;
@@ -44,6 +46,14 @@ public class GroupPerson {
 
 	public void setDetialInfoPath(String detialInfoPath) {
 		this.detialInfoPath = detialInfoPath;
+	}
+
+	public String getPersonAccountPassword() {
+		return personAccountPassword;
+	}
+
+	public void setPersonAccountPassword(String personAccountPassword) {
+		this.personAccountPassword = personAccountPassword;
 	}
 
 }

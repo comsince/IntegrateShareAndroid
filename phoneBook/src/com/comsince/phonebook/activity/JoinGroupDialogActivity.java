@@ -22,11 +22,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.GroupInfo;
+import com.comsince.phonebook.entity.GroupPerson;
+import com.comsince.phonebook.entity.GroupPersons;
 import com.comsince.phonebook.entity.Groups;
 import com.comsince.phonebook.util.AndroidUtil;
 import com.comsince.phonebook.util.PhoneBookUtil;
@@ -118,6 +121,8 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
 		}else{
 			//建立个人已经加入的分组信息
 			createPersonGroupInfo();
+			//将个人信息加入群组
+			createGroupPerson();
 			Intent intent = new Intent(Constant.ACTION_ADD_TAG);
 			intent.putExtra("tag", groupTag);
 			sendBroadcast(intent);
@@ -148,6 +153,29 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
     	groups.setGroups(groupsList);
     	PhoneBookUtil.writePersonGroupInfo(groups, PhoneBookUtil.getPerosnGroupInfoFileName(context));
 		
+	}
+	
+	/**
+	 * 将个人信息加入到你所要加入的群组中
+	 * */
+	public void createGroupPerson(){
+		GroupPersons groupPersons = new GroupPersons();
+		List<GroupPerson> groupPersonList = new ArrayList<GroupPerson>();
+		GroupPerson groupPerson = new GroupPerson();
+		String personAccount = PhoneBookApplication.phoneBookPreference.getUserName(context);
+		groupPerson.setPersonAccount(personAccount);
+		String personMd5password = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+		groupPerson.setPersonAccountPassword(personMd5password);
+		groupPerson.setIsAuthor("Y");
+		//设置个人信息的相对路径名
+		groupPerson.setDetialInfoPath(PhoneBookUtil.getCurrentDetialInfoPath(context));
+		String personRealName = PhoneBookUtil.getCurrrentPersonInfo(context).getName();
+		if(!TextUtils.isEmpty(personRealName)){
+			groupPerson.setPersonRealName(personRealName);
+		}
+		groupPersonList.add(groupPerson);
+		groupPersons.setGroupPersons(groupPersonList);
+		PhoneBookUtil.writeGroupPersonToTargetGroup(groupTag, groupPersons);
 	}
 	
     public void getGroupInfoFromFile(){

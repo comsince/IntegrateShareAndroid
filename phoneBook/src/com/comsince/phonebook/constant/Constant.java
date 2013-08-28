@@ -24,6 +24,7 @@ public class Constant {
   	public static final String DIR_LOGIN_INFO = "loginInfo";
   	public static final String FILE_GROUP_SUFFIX = "groupInfo";
   	public static final String FILE_GROUP_INFO = "groupDetail.xml";
+  	public static final String FILE_GROUP_PERSON_INFO = "groupPerson";
   	//loading activity 广播
   	public static final String ACTION_FINISH = "com.comsince.phonebook.loadingfinish";
   	public static final String ACTION_ADD_TAG = "com.comsince.phonebook.addtag";

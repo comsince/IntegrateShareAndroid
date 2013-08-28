@@ -9,7 +9,9 @@ import android.content.Context;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Group;
+import com.comsince.phonebook.entity.GroupPersons;
 import com.comsince.phonebook.entity.Groups;
+import com.comsince.phonebook.entity.Person;
 
 public class PhoneBookUtil {
 	public static SimpleXmlReaderUtil xmlUtil = new SimpleXmlReaderUtil();
@@ -57,5 +59,55 @@ public class PhoneBookUtil {
     public static void writePersonGroupInfo(Groups groups ,String fileName){
     	
     	xmlUtil.writeXml(groups, Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_PERSON_INFO, fileName);
+    }
+    
+    /**
+     * 向要加入的群组中登记个人信息
+     * **/
+     public static void writeGroupPersonToTargetGroup(String tag,GroupPersons groupPersons){
+    	 xmlUtil.writeXml(groupPersons, Constant.PHONE_BOOK_PATH+File.separator+tag, Constant.FILE_GROUP_PERSON_INFO);
+     }
+    /**
+     * 获取当前登录用户的个人信息的文件的路径
+     * */
+    public static String getCurrentPersonInfoFilePath(Context context){
+    	String userName = PhoneBookApplication.phoneBookPreference.getUserName(context);
+		String userPassword = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+		String fileName = userName+"_"+userPassword+".xml";
+		return AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_PERSON_INFO+File.separator+fileName;
+    }
+    
+    /**
+     * 获取当前登录用户的个人信息的文件全名
+     * 包括后缀名
+     * */
+    public static String getCurrentPersonFullFileName(Context context){
+    	String userName = PhoneBookApplication.phoneBookPreference.getUserName(context);
+		String userPassword = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+		String fileName = userName+"_"+userPassword+".xml";
+		return fileName;
+    }
+    
+    /**
+     * 获取当前用户的detialInfoPath
+     * */
+    public static String getCurrentDetialInfoPath(Context context){
+    	return File.separator+Constant.DIR_PERSON_INFO+File.separator+getCurrentPersonFullFileName(context);
+    }
+    
+    /**
+     * 获取当前登录用户的个人信息
+     * */
+    public static Person getCurrrentPersonInfo(Context context){
+    	Person person = new Person();
+		String filePath = getCurrentPersonInfoFilePath(context);
+		if(new File(filePath).exists()){
+			try {
+				 person = xmlUtil.readXml(filePath, Person.class);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return person;
     }
 }
