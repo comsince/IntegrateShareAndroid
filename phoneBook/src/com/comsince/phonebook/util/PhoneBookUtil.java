@@ -45,10 +45,12 @@ public class PhoneBookUtil {
      * */
 	public static List<GroupPerson> getCurrentJoinGroupPersonInfo(Context context, String groupTag) {
 		List<GroupPerson> groupPersons = new ArrayList<GroupPerson>();
-		String filePath = AndroidUtil.getSDCardRoot() + AndroidUtil.getSDCardRoot() + Constant.PHONE_BOOK_PATH + File.separator + groupTag + File.separator
-				+ Constant.FILE_GROUP_INFO;
+		//多写了一个根路径
+		String filePath = AndroidUtil.getSDCardRoot() + Constant.PHONE_BOOK_PATH + File.separator + groupTag + File.separator + Constant.FILE_GROUP_PERSON_XML;
 		try {
-			groupPersons = xmlUtil.readXml(filePath, GroupPersons.class).getGroupPersons();
+			if(new File(filePath).exists()){
+				groupPersons = xmlUtil.readXml(filePath, GroupPersons.class).getGroupPersons();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

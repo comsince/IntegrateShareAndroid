@@ -130,11 +130,11 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			flag = downLoadGroupInfo(condition);
 		}else if(taskTag == Constant.TASK_DOWNLOAD_PERSON_GROUPPERSON){
 			condition = params[0];
-			String downloadURL = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+condition+"/"+Constant.FILE_GROUP_INFO);
+			String downloadURL = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+condition+"/"+Constant.FILE_GROUP_PERSON_XML);
 			InputStream in = BaiduCloudSaveUtil.getObject(downloadURL);
 			if(in != null){
 				flag = true;
-				FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+condition, Constant.FILE_GROUP_INFO, in);
+				FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+condition, Constant.FILE_GROUP_PERSON_XML, in);
 				mGroupHandler.sendEmptyMessage(Constant.DOWN_LOAD_GROUPPERSON_SUCCESS);
 			}else{
 				flag = false;

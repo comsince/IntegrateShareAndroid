@@ -185,8 +185,18 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
 		}
 		//获取当前最新的分组人员信息
 		groupPersonList = PhoneBookUtil.getCurrentJoinGroupPersonInfo(context, groupTag);
+		String username = PhoneBookApplication.phoneBookPreference.getUserName(context);
+		String md5password = PhoneBookApplication.phoneBookPreference.getPassWord(context);
 		if(groupPersonList.size() != 0){
-			if(!groupPersonList.contains(groupPerson)){
+			int i = 0;
+			int size = groupPersonList.size();
+			for(GroupPerson gp : groupPersonList){
+				if(gp.getPersonAccount().equals(username)&&gp.getPersonAccountPassword().equals(md5password)){
+					break;
+				}
+				i++;
+			}
+			if(i == size){
 				groupPersonList.add(groupPerson);
 			}
 		}else{
