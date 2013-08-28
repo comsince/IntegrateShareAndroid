@@ -72,6 +72,8 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	private static final int MMAlertSelect_Send  =  2;
 	private static final int MMAlertSelect_DownLoad  =  3;
 	
+	private boolean isUploadPersonInfo = false;
+	
 	private boolean isUpdateData = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -354,6 +356,20 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	}
 	
 	/**
+	 * 检查必填项目，真实姓名，电话
+	 * */
+	public boolean validata(){
+		boolean flag = false;
+		String personRealName = person.getName();
+		String phoneName = person.getPhonesList().get(0).getPhones().get(0).getNumber();
+		if(!TextUtils.isEmpty(phoneName)&&!TextUtils.isEmpty(personRealName)){
+			flag = true;
+		}else{
+			flag = false;
+		}
+		return flag;
+	}
+	/**
 	 * 弹出功能选择框
 	 * */
 	public void selectDialog(){
@@ -367,9 +383,14 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 					break;
 				case MMAlertSelect_UpLoad:
 					subMitData();
-					//上传数据
-					generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.person_info_upload), Constant.TASK_UPLOAD, context);
-					generalAsyncTask.execute();
+					if(validata()){
+						isUploadPersonInfo = true;
+						//上传数据
+						generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.person_info_upload), Constant.TASK_UPLOAD, context);
+						generalAsyncTask.execute();
+					}else{
+						Toast.makeText(context, "请填写姓名和电话必填再上传", Toast.LENGTH_LONG).show();
+					}
 					break;
 				case MMAlertSelect_Send:
 					Intent intent = new Intent();

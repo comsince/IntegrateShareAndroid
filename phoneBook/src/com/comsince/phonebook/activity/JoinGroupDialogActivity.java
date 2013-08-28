@@ -33,6 +33,7 @@ import com.comsince.phonebook.entity.GroupInfo;
 import com.comsince.phonebook.entity.GroupPerson;
 import com.comsince.phonebook.entity.GroupPersons;
 import com.comsince.phonebook.entity.Groups;
+import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.util.AndroidUtil;
 import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
@@ -118,8 +119,12 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
 	}
 	
 	public void commitData(){
+		Person loginPerson = PhoneBookUtil.getCurrrentPersonInfo(context);
+		String personName = loginPerson.getName();
 		if(tags.size() == 0){
 			Toast.makeText(context, "请选择要加入的群组", Toast.LENGTH_SHORT).show();
+		}else if(TextUtils.isEmpty(personName)){
+			Toast.makeText(context, "请登记个人信息并上传", Toast.LENGTH_LONG).show();
 		}else{
 			//建立个人已经加入的分组信息
 			createPersonGroupInfo();

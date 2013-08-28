@@ -130,4 +130,21 @@ public class PhoneBookUtil {
 		}
 		return person;
     }
+    
+    /**
+     * 根据路劲获取其基本信息
+     * @param relativePath 相对路径phonebook/
+     * */
+    public static Person getPersonInfoByPath(String relativePath){
+    	Person person = new Person();
+    	String filePath = AndroidUtil.getSDCardRoot() + Constant.PHONE_BOOK_PATH + relativePath;
+    	if(new File(filePath).exists()){
+    		try {
+				person = xmlUtil.readXml(filePath, Person.class);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    	}
+    	return person;
+    }
 }

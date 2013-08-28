@@ -2,6 +2,7 @@ package com.comsince.phonebook.activity;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,8 +15,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.asynctask.GeneralAsyncTask;
+import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.entity.Phone;
+import com.comsince.phonebook.util.AndroidUtil;
+import com.comsince.phonebook.util.PhoneBookUtil;
 
 public class FriendInfoActivity extends Activity {
 	private Button mBack;
@@ -26,6 +31,7 @@ public class FriendInfoActivity extends Activity {
 	private TextView mName;
 	private TextView mSignature;
 	private TextView mContactName,mContactAttribution,mContactNumber;
+	private TextView mSex;
 	private TextView mEmail;
 	private TextView mBirthDay;
 	private TextView mRegion;
@@ -39,16 +45,37 @@ public class FriendInfoActivity extends Activity {
 	 * 用户资料
 	 * */
 	private Person mPerson;
+	/**
+	 * 用户网络资料相对路径
+	 * */
+	private String targetPersonInfoRelativePath;
+	private String downLoadPersonName;
+	private GeneralAsyncTask downLoadPersonInfo;
+	private Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_layout_person_info);
+		context = this;
+		downLoadPersonName = this.getIntent().getStringExtra("personName");
+		targetPersonInfoRelativePath = this.getIntent().getStringExtra("tagerPersonInfo");
 		findViewById();
 		setListener();
 		init();
+		downLoadPersonInfo();
 	}
 	
+	
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		init();
+	}
+
+
+
 	public void findViewById(){
 		mBack = (Button) findViewById(R.id.about_back);
 		mTitle = (TextView) findViewById(R.id.about_title);
@@ -60,6 +87,7 @@ public class FriendInfoActivity extends Activity {
 		mContactName = (TextView) findViewById(R.id.detail_contact_name);
 		mContactAttribution = (TextView) findViewById(R.id.detail_contact_attribution);
 		mContactNumber = (TextView) findViewById(R.id.detail_contact_number);
+        mSex = (TextView) findViewById(R.id.personal_card_sex_editable_tv);
 		mEmail = (TextView) findViewById(R.id.personal_card_email_editable_tv);
 		mBirthDay = (TextView) findViewById(R.id.personal_card_birthday_editable_tv);
 		mMarriage = (TextView) findViewById(R.id.personal_card_marriage_editable_tv);
@@ -103,8 +131,15 @@ public class FriendInfoActivity extends Activity {
 	
 	public void init(){
 		mPerson = (Person) getIntent().getSerializableExtra("person");
+		if(mPerson == null){
+			mPerson = PhoneBookUtil.getPersonInfoByPath(targetPersonInfoRelativePath);
+		}
 		if(mPerson != null){
-			mBack.setText("好友");
+			if(!TextUtils.isEmpty(targetPersonInfoRelativePath)){
+				mBack.setText("群组");
+			}else{
+				mBack.setText("好友");
+			}
 			mTitle.setText(mPerson.getName()+"个人资料");
 			mSubmit.setText("提交");
 			if(!TextUtils.isEmpty(mPerson.getName())){
@@ -125,6 +160,12 @@ public class FriendInfoActivity extends Activity {
 					mContactNumber.setText(contactNumber);
 				}
 			}
+			if(!TextUtils.isEmpty(mPerson.getSex())){
+				mSex.setText(mPerson.getSex());
+			}
+			if(!TextUtils.isEmpty(mPerson.getBirthDay())){
+				mBirthDay.setText(mPerson.getBirthDay());
+			}
 			if(!TextUtils.isEmpty(mPerson.getReigon())){
 				mRegion.setText(mPerson.getReigon());
 			}
@@ -134,6 +175,27 @@ public class FriendInfoActivity extends Activity {
 			if(!TextUtils.isEmpty(mPerson.getMarriage())){
 				mMarriage.setText(mPerson.getMarriage());
 			}
+			if(!TextUtils.isEmpty(mPerson.getEmail())){
+				mEmail.setText(mPerson.getEmail());
+			}
+			if(!TextUtils.isEmpty(mPerson.getMsn())){
+				mMsn.setText(mPerson.getMsn());
+			}
+		}
+	}
+	
+	
+	public void downLoadPersonInfo(){
+		if(AndroidUtil.getNetWorkStatus(context)&&!TextUtils.isEmpty(targetPersonInfoRelativePath)){
+			String downInfo;
+			if(TextUtils.isEmpty(downLoadPersonName)){
+				downInfo = "正在下载个人信息。。。";
+			}else{
+				downInfo = "正在下载"+downLoadPersonName+"的信息。。。";
+			}
+			
+			downLoadPersonInfo = new GeneralAsyncTask(downInfo, Constant.TASK_DOWNLOAD_TARTGET_PERONINFO, context);
+			downLoadPersonInfo.execute(targetPersonInfoRelativePath);
 		}
 	}
 

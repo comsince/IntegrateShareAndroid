@@ -161,6 +161,17 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			}else{
 				flag = false;
 			}
+		}else if(taskTag == Constant.TASK_DOWNLOAD_TARTGET_PERONINFO){
+			condition = params[0];
+			String fileName = condition.split("/")[2];
+			String downloadURL = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, condition);
+			InputStream in = BaiduCloudSaveUtil.getObject(downloadURL);
+			if(in != null){
+				flag = true;
+				FileUtil.write2SDFromInput(Constant.PHONE_BOOK_PATH+"/"+Constant.DIR_PERSON_INFO, fileName, in);
+			}else{
+				flag = false;
+			}
 		}
 		return flag;
 	}

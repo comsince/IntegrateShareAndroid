@@ -42,6 +42,7 @@ public class Constant {
   	public static final int TASK_UPLOAD_PERSON_GROUPINFO = 30006;
   	public static final int TASK_UPLOAD_PERSON_GROUPPERSON = 30007;
     public static final int TASK_DOWNLOAD_PERSON_GROUPPERSON = 30008;  	
+    public static final int TASK_DOWNLOAD_TARTGET_PERONINFO = 30009;
   	//http msg
   	public static final String SUCCESS_MSG = "OK";
     

@@ -59,6 +59,7 @@ public class GroupByLetterAdapter extends BaseAdapter {
 	
 	public void refreshData(List<GroupPerson> groupPersonList){
 		if(groupPersonList.size() > 0){
+			mMyFriendsResults.clear();
 			mMyFriendsResults = groupPersonList;
 			getFriendInfo(mMyFriendsResults);
 			this.notifyDataSetChanged();
@@ -117,6 +118,11 @@ public class GroupByLetterAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(context, FriendInfoActivity.class);
+				intent.putExtra("tagerPersonInfo", groupPerson.getDetialInfoPath());
+				String personName = groupPerson.getPersonRealName();
+				if(!TextUtils.isEmpty(personName)){
+					intent.putExtra("personName", personName);
+				}
 				context.startActivity(intent);
 			}
 		});
