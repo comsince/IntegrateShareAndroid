@@ -30,6 +30,7 @@
                 android:minWidth="48dip"
                 android:singleLine="true"
                 android:textColor="#FFFFFF"
+                android:text="群组"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

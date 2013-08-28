@@ -91,6 +91,12 @@
             android:name=".activity.PersonInfoActivity"
             android:screenOrientation="portrait">
         </activity>
+        <!-- 组内好友信息列表 -->
+          <activity
+            android:name=".activity.GroupFriendActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        
         
         <!-- push service client 用来接收push服务receiver -->
         <receiver android:name=".receiver.PushMessageReceiver" >

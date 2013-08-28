@@ -12,6 +12,8 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.activity.GroupFriendActivity;
 import com.comsince.phonebook.activity.JoinGroupDialogActivity;
 import com.comsince.phonebook.adapter.MGroupAdapter;
 import com.comsince.phonebook.asynctask.GeneralAsyncTask;
@@ -82,6 +85,16 @@ public class MGroup {
 			@Override
 			public void onClick(View v) {
 				selectDialog();
+			}
+		});
+        mDisplay.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				Intent intent = new Intent();
+				intent.putExtra("groupTag", mGroupResult.get(position).getGroupTag());
+				intent.setClass(mContext, GroupFriendActivity.class);
+				((Activity)mContext).startActivity(intent);
 			}
 		});
 	}
