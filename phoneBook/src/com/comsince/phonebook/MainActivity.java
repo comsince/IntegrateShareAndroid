@@ -113,6 +113,7 @@ public class MainActivity extends Activity implements OnOpenListener{
 					break;
 				case ViewUtil.GROUPS:
 					mRoot.close(mGroup.getView());
+					mGroup.refreshGroupData();
 					break;
 
 				default:

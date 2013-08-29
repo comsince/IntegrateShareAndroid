@@ -94,6 +94,7 @@
         <!-- 组内好友信息列表 -->
           <activity
             android:name=".activity.GroupFriendActivity"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
             android:screenOrientation="portrait">
         </activity>
         
