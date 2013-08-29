@@ -51,6 +51,7 @@ public class GroupFriendActivity extends Activity implements OnClickListener{
 	protected void onResume() {
 		super.onResume();
 		if(!AndroidUtil.getNetWorkStatus(context)){
+			groupPersonList = PhoneBookUtil.getCurrentJoinGroupPersonInfo(context,groupTag);
 			groupByLetterAdapter.refreshData(groupPersonList);
 		}
 	}
