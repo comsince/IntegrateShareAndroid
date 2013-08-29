@@ -136,7 +136,7 @@ public class FriendInfoActivity extends Activity {
 		}
 		if(mPerson != null){
 			if(!TextUtils.isEmpty(targetPersonInfoRelativePath)){
-				mBack.setText("群组");
+				mBack.setText("好友");
 			}else{
 				mBack.setText("好友");
 			}
@@ -189,9 +189,9 @@ public class FriendInfoActivity extends Activity {
 		if(AndroidUtil.getNetWorkStatus(context)&&!TextUtils.isEmpty(targetPersonInfoRelativePath)){
 			String downInfo;
 			if(TextUtils.isEmpty(downLoadPersonName)){
-				downInfo = "正在下载个人信息。。。";
+				downInfo = "正在下载个人信息...";
 			}else{
-				downInfo = "正在下载"+downLoadPersonName+"的信息。。。";
+				downInfo = "正在下载"+downLoadPersonName+"的信息...";
 			}
 			
 			downLoadPersonInfo = new GeneralAsyncTask(downInfo, Constant.TASK_DOWNLOAD_TARTGET_PERONINFO, context);

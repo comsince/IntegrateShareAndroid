@@ -91,6 +91,8 @@
                     android:drawablePadding="8dip"
                     android:hint="输入拼音首字母查找"
                     android:singleLine="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:textSize="14sp" />
             </LinearLayout>
 
