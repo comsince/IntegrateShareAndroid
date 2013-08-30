@@ -158,7 +158,15 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
 		}
 		groupsList = PhoneBookUtil.getCurrentUserGroup(context);
 		if(groupsList.size()!= 0){
-			if(!groupsList.contains(group)){
+			int i = 0;
+			int size = groupsList.size();
+			for(Group gr : groupsList){
+				if(gr.getGroupName().equals(groupName) && gr.getGroupTag().equals(groupTag)){
+					break;
+				}
+				i++;
+			}
+			if(i == size){
 				groupsList.add(group);
 			}
 		}else{
@@ -197,6 +205,9 @@ public class JoinGroupDialogActivity extends Activity implements OnClickListener
 			int size = groupPersonList.size();
 			for(GroupPerson gp : groupPersonList){
 				if(gp.getPersonAccount().equals(username)&&gp.getPersonAccountPassword().equals(md5password)){
+					if(!TextUtils.isEmpty(personRealName)){
+						gp.setPersonRealName(personRealName);
+					}
 					break;
 				}
 				i++;

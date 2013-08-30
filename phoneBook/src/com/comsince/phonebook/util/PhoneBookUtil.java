@@ -27,7 +27,7 @@ public class PhoneBookUtil {
      * */
     public static List<Group> getCurrentUserGroup(Context context){
     	List<Group> groups = new ArrayList<Group>();
-    	String userName = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+    	String userName = PhoneBookApplication.phoneBookPreference.getUserName(context);
 		String userPassword = PhoneBookApplication.phoneBookPreference.getPassWord(context);
 		String fileName = userName+"_"+userPassword+"_"+Constant.FILE_GROUP_SUFFIX+".xml";
 		String filePath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_PERSON_INFO+File.separator+fileName;
