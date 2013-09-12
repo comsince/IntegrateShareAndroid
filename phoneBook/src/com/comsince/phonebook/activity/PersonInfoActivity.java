@@ -63,6 +63,8 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	GeneralAsyncTask generalAsyncTask;
 	//发送群组标签
 	ArrayList<String> tags = new ArrayList<String>();
+	private Bitmap cropBitmap;	//保存裁剪后的图片
+	private File cameraFile;	//保存拍照后的图片文件
 	
 	public static final int  REQUEST_PERSON_NAME = 0;
 	public static final int  REQUEST_PHONE_NUMBER = 1;
@@ -251,14 +253,12 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 				generalAsyncTask.execute(tags.get(0));
 			}
 		}else if(requestCode == REQUEST_PERSON_AVATER){
-			Intent intent = null;
 			if(resultCode == FunctionSelectDialog.RESULT_FUNCTION_ONE){
 				//从手机相册中上传
-				intent = new Intent(Intent.ACTION_PICK, null); 
-				intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");  
-				startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_LOCATION);
+				upLoadFromAlbums();
 			}else if(resultCode == FunctionSelectDialog.RESULT_FUNCTION_TWO){
 				//拍照 上传
+				takePhotoUpLoad();
 			}
 		}else if(requestCode == ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_LOCATION){
 			Uri uri = null;
@@ -282,6 +282,16 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 				return;
 			} else {
 				saveCropPhoto(data);
+			}
+		}else if(requestCode == ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CAMERA){
+			if (resultCode == RESULT_OK) {
+				if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+					Toast.makeText(this, R.string.sd_noexit, Toast.LENGTH_SHORT).show();
+					return;
+				}
+				startPhotoZoom(Uri.fromFile(cameraFile));
+			} else {
+				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
 			}
 		}
 		
@@ -310,6 +320,37 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		intent.putExtra("sfunction2", "拍照上传");
 		intent.setClass(this, FunctionSelectDialog.class);
 		startActivityForResult(intent, REQUEST_PERSON_AVATER);
+	}
+	
+	/**
+	 * 从手机相册上传
+	 * */
+	public void upLoadFromAlbums(){
+		Intent intent = null;
+		intent = new Intent(Intent.ACTION_PICK, null); 
+		intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");  
+		startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_LOCATION);
+	}
+	
+	/**
+	 * 拍照上传
+	 * */
+	public void takePhotoUpLoad(){
+		Intent intent = null;
+		intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		File fileDir;
+		if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			fileDir = new File(Environment.getExternalStorageDirectory()+File.separator+Constant.MAIN_DIR_PHONE_BOOK+File.separator+Constant.DIR_PERSON_AVATER); 
+			if(!fileDir.exists()){  
+				fileDir.mkdirs();  
+			}  
+		}else{
+			Toast.makeText(this, R.string.sd_noexit, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		cameraFile = new File(fileDir.getAbsoluteFile()+"/"+System.currentTimeMillis()+".jpg");
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
+		startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CAMERA);
 	}
 	
 	/**

@@ -49,4 +49,6 @@
     
     <!-- send notification -->
     <string name="push_messge_content">亲,我的资料变化 ，请注意更新</string>
+    
+    <string name="sd_noexit">SD卡不存在</string>
 </resources>
