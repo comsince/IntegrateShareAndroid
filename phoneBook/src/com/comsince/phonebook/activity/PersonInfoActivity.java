@@ -10,7 +10,11 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +29,7 @@ import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.dialog.FunctionSelectDialog;
 import com.comsince.phonebook.asynctask.GeneralAsyncTask;
+import com.comsince.phonebook.constant.ActivityForResultUtil;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.entity.Phone;
@@ -32,6 +37,7 @@ import com.comsince.phonebook.entity.Phones;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.uikit.MMAlert;
 import com.comsince.phonebook.util.PhoneBookUtil;
+import com.comsince.phonebook.util.PhotoUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 
 /**
@@ -244,6 +250,39 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 				generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.send_notification_to_group), Constant.TASK_SEND_NOTIFICATION_TO_GROUP, context);
 				generalAsyncTask.execute(tags.get(0));
 			}
+		}else if(requestCode == REQUEST_PERSON_AVATER){
+			Intent intent = null;
+			if(resultCode == FunctionSelectDialog.RESULT_FUNCTION_ONE){
+				//从手机相册中上传
+				intent = new Intent(Intent.ACTION_PICK, null); 
+				intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");  
+				startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_LOCATION);
+			}else if(resultCode == FunctionSelectDialog.RESULT_FUNCTION_TWO){
+				//拍照 上传
+			}
+		}else if(requestCode == ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_LOCATION){
+			Uri uri = null;
+			if (data == null) {
+				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (resultCode == RESULT_OK) {
+				if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+					Toast.makeText(this, "SD不可用", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				uri = data.getData();
+				startPhotoZoom(uri);
+			} else {
+				Toast.makeText(this, "照片获取失败", Toast.LENGTH_SHORT).show();
+			}
+		}else if(requestCode == ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CROP){
+			if (data == null) {
+				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+				return;
+			} else {
+				saveCropPhoto(data);
+			}
 		}
 		
 	}
@@ -272,6 +311,44 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		intent.setClass(this, FunctionSelectDialog.class);
 		startActivityForResult(intent, REQUEST_PERSON_AVATER);
 	}
+	
+	/**
+	 * 系统裁剪照片
+	 * 
+	 * @param uri
+	 */
+	private void startPhotoZoom(Uri uri) {
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		intent.setDataAndType(uri, "image/*");
+		intent.putExtra("crop", "true");
+		intent.putExtra("aspectX", 1);
+		intent.putExtra("aspectY", 1);
+		intent.putExtra("outputX", 200);
+		intent.putExtra("outputY", 200);
+		intent.putExtra("scale", true);
+		intent.putExtra("noFaceDetection", true);
+		intent.putExtra("return-data", true);
+		startActivityForResult(intent,ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CROP);
+	}
+	
+	/**
+	 * 保存裁剪的照片
+	 * 
+	 * @param data
+	 */
+	private void saveCropPhoto(Intent data) {
+		Bundle extras = data.getExtras();
+		if (extras != null) {
+			Bitmap bitmap = extras.getParcelable("data");
+			bitmap = PhotoUtil.toRoundCorner(bitmap, 15);
+			if (bitmap != null) {
+				personalCardAvatar.setImageBitmap(bitmap);
+			}
+		} else {
+			Toast.makeText(this, "获取裁剪照片错误", Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	/**
 	 *加载个人资料到控件中
 	 * */
