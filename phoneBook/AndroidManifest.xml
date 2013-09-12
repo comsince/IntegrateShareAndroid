@@ -91,6 +91,12 @@
             android:name=".activity.PersonInfoActivity"
             android:screenOrientation="portrait">
         </activity>
+        <!-- 功能选择页面 -->
+        <activity
+            android:name=".activity.dialog.FunctionSelectDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle">
+        </activity>
         <!-- 组内好友信息列表 -->
           <activity
             android:name=".activity.GroupFriendActivity"

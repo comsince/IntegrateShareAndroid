@@ -16,12 +16,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.activity.dialog.FunctionSelectDialog;
 import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Person;
@@ -41,6 +43,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	private TextView personSex, personBirthDay, personRegion, personMarrige;
 	private TextView personQQ, personEmail, PersonMSN;
 	private Button btnBack , btnCommit;
+	private ImageButton personalCardAvatar;
 	private TextView title;
 	private RelativeLayout RpersonName;
 	private RelativeLayout RpersonPhone;
@@ -64,6 +67,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	public static final int  REQUEST_PERSON_QQ = 6;
 	public static final int  REQUEST_PERSON_EMAIL = 7;
 	public static final int  REQUEST_PERSON_MSN = 8;
+	public static final int  REQUEST_PERSON_AVATER = 9;
 	
 	public static final int REQUEST_SELECT_GROUP = 9;
 	
@@ -121,6 +125,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		title.setText("个人资料");
 		btnBack = (Button) findViewById(R.id.about_back);
 		btnCommit = (Button) findViewById(R.id.about_submit);
+		personalCardAvatar = (ImageButton) findViewById(R.id.personal_card_avatar);
 	}
 
 	/**
@@ -159,6 +164,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		RpersonQQ.setOnClickListener(this);
 		RpersonEmail.setOnClickListener(this);
 		RPersonMSN.setOnClickListener(this);
+		personalCardAvatar.setOnClickListener(this);
 	}
 	
 	@Override
@@ -198,6 +204,9 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 			break;
 		case R.id.personal_card_msn_editable_box:
 			startToAddInfoDialog("MSN",PersonMSN,REQUEST_PERSON_MSN);
+			break;
+		case R.id.personal_card_avatar:
+			functionSelection();
 			break;
 		default:
 			break;
@@ -251,6 +260,17 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		intent.putExtra("titleName", titleName);
 		intent.setClass(this, AddInfoDialogActivity.class);
 		startActivityForResult(intent, requestCode);
+	}
+	
+	/**
+	 * 弹出功能选择框
+	 * */
+	public void functionSelection(){
+		Intent intent = new Intent();
+		intent.putExtra("sfunction1", "从手机相册中选择");
+		intent.putExtra("sfunction2", "拍照上传");
+		intent.setClass(this, FunctionSelectDialog.class);
+		startActivityForResult(intent, REQUEST_PERSON_AVATER);
 	}
 	/**
 	 *加载个人资料到控件中
