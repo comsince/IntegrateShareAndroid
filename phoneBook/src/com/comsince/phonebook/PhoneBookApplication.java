@@ -11,6 +11,7 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 
 import com.comsince.phonebook.dbhelper.UserDB;
 import com.comsince.phonebook.entity.Group;
@@ -24,16 +25,22 @@ import com.google.gson.GsonBuilder;
 public class PhoneBookApplication extends Application {
     public static PhoneBookPreference phoneBookPreference;
     public static Context context;
+    public static PhoneBookApplication phoneBookApplication;
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		context = getApplicationContext();
+		phoneBookApplication = this;
 		try {
 			mAvatars = getAssets().list("avatar");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		phoneBookPreference = new PhoneBookPreference(context);
+	}
+	
+	public synchronized static PhoneBookApplication getInstance() {
+		return phoneBookApplication;
 	}
 
 	/**
@@ -86,6 +93,8 @@ public class PhoneBookApplication extends Application {
 	/**用户数据库**/
 	private UserDB mUserDB;
 	private Gson mGson;
+	
+	private MediaPlayer mMediaPlayer;
 
 	/**
 	 * 根据编号获取用户圆形头像
@@ -121,6 +130,12 @@ public class PhoneBookApplication extends Application {
 			mGson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
 					.create();
 		return mGson;
+	}
+	
+	public synchronized MediaPlayer getMediaPlayer() {
+		if (mMediaPlayer == null)
+			mMediaPlayer = MediaPlayer.create(this, R.raw.office);
+		return mMediaPlayer;
 	}
 
 }

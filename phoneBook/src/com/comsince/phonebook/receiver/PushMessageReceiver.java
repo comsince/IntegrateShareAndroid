@@ -9,16 +9,20 @@ import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.comsince.phonebook.MainActivity;
 import com.comsince.phonebook.PhoneBookApplication;
+import com.comsince.phonebook.asynctask.SendMsgAsyncTask;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Message;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.L;
+import com.google.gson.Gson;
+
 
 /**
  * Push消息处理receiver
@@ -28,6 +32,8 @@ public class PushMessageReceiver extends BroadcastReceiver {
 	public static final String TAG = PushMessageReceiver.class.getSimpleName();
 
 	AlertDialog.Builder builder;
+	/**其他在线用户接到发送来的消息就设置tag为此值，在发送给本身**/
+	public static final String RESPONSE = "response";
 	
 	public static abstract interface EventHandler {
 		
@@ -64,15 +70,14 @@ public class PushMessageReceiver extends BroadcastReceiver {
 					PushConstants.EXTRA_PUSH_MESSAGE_STRING);
 
 			//消息的用户自定义内容读取方式
-			Log.i(TAG, "onMessage: " + message);
+			L.i("onMessage: " + message);
 
 			//用户在此自定义处理消息,以下代码为demo界面展示用
-			/*Intent responseIntent = null;
-			responseIntent = new Intent(Utils.ACTION_MESSAGE);
-			responseIntent.putExtra(Utils.EXTRA_MESSAGE, message);
-			responseIntent.setClass(context, PushDemoActivity.class);
-			responseIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			context.startActivity(responseIntent);*/
+			try {
+				Message msgItem = PhoneBookApplication.getInstance().getGson().fromJson(message, Message.class);
+				parseMessage(msgItem);// 预处理，过滤一些消息，比如说新人问候或自己发送的
+			} catch (Exception e) {
+			}
 
 		} else if (intent.getAction().equals(PushConstants.ACTION_RECEIVE)) {
 			//处理绑定等方法的返回数据
@@ -138,6 +143,47 @@ public class PushMessageReceiver extends BroadcastReceiver {
 			phonebookPreference.saveAppId(appid);
 			phonebookPreference.saveChannelId(channelid);
 			phonebookPreference.saveUserId(userid);
+		}
+	}
+	
+	
+	/**
+	 * 解析广播的消息
+	 * **/
+	private void parseMessage(Message msg) {
+		Gson gson = PhoneBookApplication.getInstance().getGson();
+		L.i("gson ====" + msg.toString());
+		String tag = msg.getTag();
+		String userId = msg.getUser_id();
+		int headId = msg.getHead_id();
+		if (!TextUtils.isEmpty(tag)) {// 如果是带有tag的消息
+			if (userId.equals(PhoneBookApplication.getInstance().phoneBookPreference.getUserId()))
+				return;
+			User u = new User(userId, msg.getChannel_id(), msg.getNick(), headId, 0);
+			PhoneBookApplication.getInstance().getUserDB().addUser(u);// 存入或更新好友
+			for (EventHandler handler : ehList)
+				handler.onNewFriend(u);
+			if (!tag.equals(RESPONSE)) {
+				L.i("response start");
+				Message item = new Message(System.currentTimeMillis(), "hi", PushMessageReceiver.RESPONSE);
+				new SendMsgAsyncTask(gson.toJson(item), userId).send();// 同时也回一条消息给对方1
+				L.i("response end");
+			}
+		} else {// 聊天普通消息，
+			if (PhoneBookApplication.getInstance().phoneBookPreference.getMsgSound())// 如果用户开启播放声音
+				PhoneBookApplication.getInstance().getMediaPlayer().start();
+			if (ehList.size() > 0) {// 有监听的时候，传递下去
+				for (int i = 0; i < ehList.size(); i++)
+					((EventHandler) ehList.get(i)).onMessage(msg);
+			} else {
+				// 通知栏提醒，保存数据库
+				// show notify
+				/*showNotify(msg);
+				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msg.getNick(), System.currentTimeMillis(), msg.getMessage(), headId, true, 1);
+				RecentItem recentItem = new RecentItem(userId, headId, msg.getNick(), msg.getMessage(), 0, System.currentTimeMillis());
+				PushApplication.getInstance().getMessageDB().saveMsg(userId, item);
+				PushApplication.getInstance().getRecentDB().saveRecent(recentItem);*/
+			}
 		}
 	}
 

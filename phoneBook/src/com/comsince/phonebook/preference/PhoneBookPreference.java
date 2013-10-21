@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class PhoneBookPreference {
+   public static final String MESSAGE_SOUND_KEY = "message_sound";
    SharedPreferences phoneBookPreference;
    public PhoneBookPreference(Context context){
 	   phoneBookPreference = context.getSharedPreferences("phoneBook", Context.MODE_PRIVATE);
@@ -71,5 +72,10 @@ public class PhoneBookPreference {
    public String getUserId(){
 	   return phoneBookPreference.getString("userId", "userId");
    }
+   
+    // 新消息是否有声音
+	public boolean getMsgSound() {
+		return phoneBookPreference.getBoolean(MESSAGE_SOUND_KEY, true);
+	}
    
 }

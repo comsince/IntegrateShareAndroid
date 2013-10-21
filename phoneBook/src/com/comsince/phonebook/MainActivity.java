@@ -269,7 +269,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 					phonebookPreference.getUserName(), 0, 0);
 			mUserDB.addUser(u);// 把自己添加到数据库
 			//组装将要发送给其他在线用户的消息
-		com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), "hi", null);
+		com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), "hi", "phoneBook");
 			task = new SendMsgAsyncTask(mGson.toJson(msgItem), "");
 			task.setOnSendScuessListener(new OnSendScuessListener() {
 
