@@ -58,6 +58,14 @@ public class OnlineFriend {
 		mOnlineFriendAdapter = new OnlineFriendAdapter(mContext, mUser);
 		mRefreshListView.setAdapter(mOnlineFriendAdapter);
 	}
+	
+	/**
+	 * 刷新好友列表
+	 * **/
+	public void refreshOnLineFriendData(User user){
+		mUser.add(user);
+		mOnlineFriendAdapter.refreshData(mUser);
+	}
 
 	/**获取在线好友界面*/
 	public View getView(){

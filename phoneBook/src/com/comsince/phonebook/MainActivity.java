@@ -37,8 +37,11 @@ import com.comsince.phonebook.receiver.PushMessageReceiver.EventHandler;
 import com.comsince.phonebook.ui.base.FlipperLayout;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.util.BaiduPushUtil;
+import com.comsince.phonebook.util.L;
+import com.comsince.phonebook.util.T;
 import com.comsince.phonebook.util.ViewUtil;
 import com.google.gson.Gson;
+
 
 
 public class MainActivity extends Activity implements OnOpenListener,EventHandler{
@@ -296,9 +299,62 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 
 	@Override
 	public void onNewFriend(User u) {
-		// TODO Auto-generated method stub
-		
+		Message handlerMsg = handler.obtainMessage(Constant.NEW_FRIEND);
+		handlerMsg.obj = u;
+		handler.sendMessage(handlerMsg);
+		L.i(u.toString());
 	}
+	
+	
+	private Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case Constant.NEW_FRIEND:
+				User u = (User) msg.obj;
+				if (mOnlineFriend == null){
+					mOnlineFriend = new OnlineFriend(context, phoneBookApplication);
+				}
+				mOnlineFriend.refreshOnLineFriendData(u);// 更新
+				T.showShort(phoneBookApplication, "好友列表已更新!");
+				break;
+			case Constant.NEW_MESSAGE:
+				/*// String message = (String) msg.obj;
+				com.way.bean.Message msgItem = (com.way.bean.Message) msg.obj;
+				String userId = msgItem.getUser_id();
+				String nick = msgItem.getNick();
+				String content = msgItem.getMessage();
+				int headId = msgItem.getHead_id();
+				// try {
+				// headId = Integer
+				// .parseInt(JsonUtil.getFromUserHead(message));
+				// } catch (Exception e) {
+				// L.e("head is not integer  " + e);
+				// }
+				if (mUserDB.selectInfo(userId) == null) {// 如果不存在此好友，则添加到数据库
+					User user = new User(userId, msgItem.getChannel_id(), nick,
+							headId, 0);
+					mUserDB.addUser(user);
+					mLeftFragment = (LeftFragment) getSupportFragmentManager()
+							.findFragmentById(R.id.main_left_fragment);
+					mLeftFragment.updateAdapter();// 更新一下好友列表
+				}
+				// TODO Auto-generated method stub
+				MessageItem item = new MessageItem(
+						MessageItem.MESSAGE_TYPE_TEXT, nick,
+						System.currentTimeMillis(), content, headId, true, 1);
+				mMsgDB.saveMsg(userId, item);
+				// 保存到最近会话列表
+				RecentItem recentItem = new RecentItem(userId, headId, nick,
+						content, 0, System.currentTimeMillis());
+				mRecentDB.saveRecent(recentItem);
+				mAdapter.addFirst(recentItem);
+				T.showShort(mApplication, nick + ":" + content);*/
+				break;
+			default:
+				break;
+			}
+		}
+	};
 
 	
 }

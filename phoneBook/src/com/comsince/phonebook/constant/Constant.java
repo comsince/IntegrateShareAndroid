@@ -48,4 +48,8 @@ public class Constant {
   	//http msg
   	public static final String SUCCESS_MSG = "OK";
     
+  	
+  	//新朋友加入
+  	public static final int NEW_MESSAGE = 0x000;// 有新消息
+	public static final int NEW_FRIEND = 0x001;// 有好友加入
 }

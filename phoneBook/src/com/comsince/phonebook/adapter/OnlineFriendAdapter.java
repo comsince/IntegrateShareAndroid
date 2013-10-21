@@ -21,6 +21,13 @@ public class OnlineFriendAdapter extends BaseAdapter{
 			this.mUser = users;
 		}
 	}
+	
+	public void refreshData(List<User> users){
+		if(users != null){
+			this.mUser = users;
+			this.notifyDataSetChanged();
+		}
+	}
 
 	@Override
 	public int getCount() {
@@ -45,6 +52,8 @@ public class OnlineFriendAdapter extends BaseAdapter{
 			holder = new ViewHolder();
 			holder.niceName = (TextView) convertView.findViewById(R.id.contact_list_item_name);
 			holder.userId = (TextView) convertView.findViewById(R.id.cpntact_list_item_state);
+			//不要忘记设置tag
+			convertView.setTag(holder);
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}

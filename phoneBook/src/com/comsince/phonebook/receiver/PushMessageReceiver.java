@@ -44,7 +44,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 		public abstract void onNotify(String title, String content);
 
 		public abstract void onNetChange(boolean isNetConnected);
-
+        /**增加新的朋友**/
 		public void onNewFriend(User u);
 	}
 	
