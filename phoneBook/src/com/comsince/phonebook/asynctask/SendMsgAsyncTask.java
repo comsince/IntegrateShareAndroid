@@ -3,6 +3,7 @@ package com.comsince.phonebook.asynctask;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.util.L;
 import com.comsince.phonebook.util.NetUtil;
 import com.comsince.phonebook.util.T;
 import com.comsince.phonebook.util.baidupush.BaiduPush;
@@ -74,7 +75,7 @@ public class SendMsgAsyncTask {
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			Log.i("send","send msg result:"+result);
+			L.i("send msg result:"+result);
 			if (result.contains(BaiduPush.SEND_MSG_ERROR)) {// 如果消息发送失败，则100ms后重发
 				mHandler.postDelayed(reSend, 100);
 			} else {

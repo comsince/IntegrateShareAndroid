@@ -18,6 +18,7 @@ import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Message;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.preference.PhoneBookPreference;
+import com.comsince.phonebook.util.L;
 
 /**
  * Push消息处理receiver
@@ -89,6 +90,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 
 			// 用户在此自定义处理消息,以下代码为demo界面展示用
 			paraseContent(context, errorCode, content);// 处理消息
+			L.i(content);
 
 			// 回调函数
 			for (int i = 0; i < ehList.size(); i++)

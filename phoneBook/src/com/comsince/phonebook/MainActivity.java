@@ -32,6 +32,7 @@ import com.comsince.phonebook.menu.Home;
 import com.comsince.phonebook.menu.MGroup;
 import com.comsince.phonebook.menu.OnlineFriend;
 import com.comsince.phonebook.preference.PhoneBookPreference;
+import com.comsince.phonebook.receiver.PushMessageReceiver;
 import com.comsince.phonebook.receiver.PushMessageReceiver.EventHandler;
 import com.comsince.phonebook.ui.base.FlipperLayout;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
@@ -154,6 +155,8 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 	private void initData(){
 		mUserDB = phoneBookApplication.getUserDB();
 		mGson = phoneBookApplication.getGson();
+		//回调监听,用户第一次登陆时回调用
+		PushMessageReceiver.ehList.add(this);
 	}
 
 	@Override
@@ -266,7 +269,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 					phonebookPreference.getUserName(), 0, 0);
 			mUserDB.addUser(u);// 把自己添加到数据库
 			//组装将要发送给其他在线用户的消息
-		com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), "hi", phoneBookApplication.tags.get(0));
+		com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), "hi", null);
 			task = new SendMsgAsyncTask(mGson.toJson(msgItem), "");
 			task.setOnSendScuessListener(new OnSendScuessListener() {
 
