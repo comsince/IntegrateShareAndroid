@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.util.MonthDisplayHelper;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.ViewGroup.LayoutParams;
@@ -26,6 +27,7 @@ import com.comsince.phonebook.menu.Desktop.onChangeViewListener;
 import com.comsince.phonebook.menu.Friends;
 import com.comsince.phonebook.menu.Home;
 import com.comsince.phonebook.menu.MGroup;
+import com.comsince.phonebook.menu.OnlineFriend;
 import com.comsince.phonebook.ui.base.FlipperLayout;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.util.BaiduPushUtil;
@@ -43,6 +45,8 @@ public class MainActivity extends Activity implements OnOpenListener{
 	private Friends mFriends;
 	
 	private MGroup mGroup;
+	/**在线好友页面**/
+	private OnlineFriend mOnlineFriend;
 	/**
 	 * 当前显示的View的编号
 	 */
@@ -114,6 +118,14 @@ public class MainActivity extends Activity implements OnOpenListener{
 				case ViewUtil.GROUPS:
 					mRoot.close(mGroup.getView());
 					mGroup.refreshGroupData();
+					break;
+					
+				case ViewUtil.ONLINE_PERSON:
+					if(mOnlineFriend == null){
+						mOnlineFriend = new OnlineFriend(context, phoneBookApplication);
+						mOnlineFriend.setOnOpenListener(MainActivity.this);
+					}
+					mRoot.close(mOnlineFriend.getView());
 					break;
 
 				default:

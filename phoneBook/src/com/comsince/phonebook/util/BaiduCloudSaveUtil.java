@@ -27,7 +27,8 @@ public class BaiduCloudSaveUtil {
 	private static final int HTTP_CONNECT_TIMEOUT = 100000;
 	private static final int HTTP_READ_TIMEOUT = 100000;
 	
-	
+	static String accessKey = "9ab8af408f719b4961bbd16f9bac9f16";
+	static String secretKey = "99fc6b05f8c44160e6bc7e1efe097e9a";
 	static String host = "bcs.duapp.com";
 	
 	/**

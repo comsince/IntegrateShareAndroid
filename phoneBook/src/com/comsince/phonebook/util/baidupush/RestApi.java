@@ -64,7 +64,8 @@ public class RestApi extends TreeMap<String, String> {
 	public final static String MESSAGE_TYPE_MESSAGE = "0";
 	public final static String MESSAGE_TYPE_NOTIFY = "1";
 
-	
+	public static String mApiKey = "RWg6F0aIW2tIxjonhScWE8j8";
+	public static String mSecretKey = "yuMglNdOd7WkoD8GfTeFVsOe30BK5Qrb";
 
 	public RestApi(String method) {
 		put(_METHOD, method);

@@ -53,5 +53,8 @@
     
     <!-- mm -->
     <color name="black">#121211</color>
+    
+    <!-- online friend -->
+    <color name="dropbar_text_color">#ff434343</color>
 
 </resources>
