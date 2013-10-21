@@ -313,6 +313,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 				User u = (User) msg.obj;
 				if (mOnlineFriend == null){
 					mOnlineFriend = new OnlineFriend(context, phoneBookApplication);
+					mOnlineFriend.setOnOpenListener(MainActivity.this);
 				}
 				mOnlineFriend.refreshOnLineFriendData(u);// 更新
 				T.showShort(phoneBookApplication, "好友列表已更新!");
