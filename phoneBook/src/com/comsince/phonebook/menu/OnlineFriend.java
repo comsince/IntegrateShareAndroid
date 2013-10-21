@@ -63,7 +63,16 @@ public class OnlineFriend {
 	 * 刷新好友列表
 	 * **/
 	public void refreshOnLineFriendData(User user){
-		mUser.add(user);
+		int i = 0;
+		for(User u : mUser){
+		   if(u.getUserId().equals(user.getUserId())){
+			   break;
+		   }	
+		   i++;
+		}
+		if(i == mUser.size()){
+			mUser.add(user);
+		}
 		mOnlineFriendAdapter.refreshData(mUser);
 	}
 
