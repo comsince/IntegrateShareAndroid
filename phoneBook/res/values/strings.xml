@@ -51,4 +51,6 @@
     <string name="push_messge_content">亲,我的资料变化 ，请注意更新</string>
     
     <string name="sd_noexit">SD卡不存在</string>
+    
+    <string name="net_error_tip">当前网络不可用，请检查你的网络设置</string>
 </resources>

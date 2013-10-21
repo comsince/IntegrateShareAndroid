@@ -18,6 +18,9 @@ public class PhoneBookPreference {
    public String getUserName(Context context){
 	   return phoneBookPreference.getString("userName", "admin");
    }
+   public String getUserName(){
+	   return phoneBookPreference.getString("userName", "admin");
+   }
    /**
     * 保存用戶手機號
     * */
@@ -36,4 +39,37 @@ public class PhoneBookPreference {
    public String getPassWord(Context context){
 	   return phoneBookPreference.getString("passWord", "admin");
    }
+   
+   /**
+    * set appid
+    * */
+   public void saveAppId(String appId){
+	   phoneBookPreference.edit().putString("appId", appId).commit();
+   }
+   
+   public String getAppId(){
+	   return phoneBookPreference.getString("appId", "appId");
+   }
+   
+   /**
+    * 保存channelId
+    * **/
+   public void saveChannelId(String channelId){
+	   phoneBookPreference.edit().putString("channelId", channelId).commit();
+   }
+   
+   public String getChannelId(){
+	   return phoneBookPreference.getString("channelId", "channelId");
+   }
+   /**
+    * 
+    * **/
+   public void saveUserId(String userId){
+	   phoneBookPreference.edit().putString("userId", userId).commit();
+   }  
+   
+   public String getUserId(){
+	   return phoneBookPreference.getString("userId", "userId");
+   }
+   
 }

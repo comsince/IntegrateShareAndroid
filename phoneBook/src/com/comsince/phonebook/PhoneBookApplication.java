@@ -12,11 +12,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.comsince.phonebook.dbhelper.UserDB;
 import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.PhotoUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class PhoneBookApplication extends Application {
     public static PhoneBookPreference phoneBookPreference;
@@ -79,6 +82,10 @@ public class PhoneBookApplication extends Application {
 	 * 默认头像
 	 */
 	public Bitmap mDefault_Avatar;
+	
+	/**用户数据库**/
+	private UserDB mUserDB;
+	private Gson mGson;
 
 	/**
 	 * 根据编号获取用户圆形头像
@@ -100,6 +107,20 @@ public class PhoneBookApplication extends Application {
 		} catch (Exception e) {
 			return mDefault_Avatar;
 		}
+	}
+	
+	public synchronized UserDB getUserDB() {
+		if (mUserDB == null)
+			mUserDB = new UserDB(this);
+		return mUserDB;
+	}
+	
+	public synchronized Gson getGson() {
+		if (mGson == null)
+			// 不转换没有 @Expose 注解的字段
+			mGson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+					.create();
+		return mGson;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.comsince.phonebook.PhoneBookApplication;
@@ -42,7 +43,14 @@ public class OnlineFriend {
 	}
 	
 	private void setListener(){
-		
+		mMenu.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mOnOpenListener != null) {
+					mOnOpenListener.open();
+				}
+			}
+		});
 	}
 	
 	private void initData(){

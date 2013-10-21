@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.util.MonthDisplayHelper;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.ViewGroup.LayoutParams;
@@ -21,20 +20,29 @@ import android.widget.Toast;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.comsince.phonebook.asynctask.SendMsgAsyncTask;
+import com.comsince.phonebook.asynctask.SendMsgAsyncTask.OnSendScuessListener;
 import com.comsince.phonebook.constant.Constant;
+import com.comsince.phonebook.dbhelper.UserDB;
+import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.menu.Desktop;
 import com.comsince.phonebook.menu.Desktop.onChangeViewListener;
 import com.comsince.phonebook.menu.Friends;
 import com.comsince.phonebook.menu.Home;
 import com.comsince.phonebook.menu.MGroup;
 import com.comsince.phonebook.menu.OnlineFriend;
+import com.comsince.phonebook.preference.PhoneBookPreference;
+import com.comsince.phonebook.receiver.PushMessageReceiver.EventHandler;
 import com.comsince.phonebook.ui.base.FlipperLayout;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.util.BaiduPushUtil;
 import com.comsince.phonebook.util.ViewUtil;
+import com.google.gson.Gson;
 
-public class MainActivity extends Activity implements OnOpenListener{
+
+public class MainActivity extends Activity implements OnOpenListener,EventHandler{
 	protected PhoneBookApplication phoneBookApplication;
+	private PhoneBookPreference phonebookPreference;
 	
 	private FlipperLayout mRoot;
 	
@@ -54,6 +62,12 @@ public class MainActivity extends Activity implements OnOpenListener{
 	
 	private Context context;
 	
+	private UserDB mUserDB;
+	//private MessageDB mMsgDB;
+	private Gson mGson;
+	/**发送消息**/
+	private SendMsgAsyncTask task;
+	
 	/**
 	 * 接收加入群组tag的广播
 	 * */
@@ -67,6 +81,7 @@ public class MainActivity extends Activity implements OnOpenListener{
 	    initBaiduPushService();
 		//在manifest中声明
 		phoneBookApplication = (PhoneBookApplication) getApplication();
+		phonebookPreference = PhoneBookApplication.phoneBookPreference;
 		//建立并注册广播
 		addTagReceiver = new AddTagBroadcastReceiber();
 		IntentFilter tagFilter = new IntentFilter();
@@ -89,6 +104,7 @@ public class MainActivity extends Activity implements OnOpenListener{
 		mRoot.addView(mGroup.getView(),params);
 		setContentView(mRoot);
 		setListener();
+		initData();
 		Log.i("download", "notification !");
 	}
 	
@@ -133,6 +149,11 @@ public class MainActivity extends Activity implements OnOpenListener{
 				}
 			}
 		});
+	}
+	
+	private void initData(){
+		mUserDB = phoneBookApplication.getUserDB();
+		mGson = phoneBookApplication.getGson();
 	}
 
 	@Override
@@ -229,6 +250,50 @@ public class MainActivity extends Activity implements OnOpenListener{
 				}
 			}
 		}
+		
+	}
+
+	@Override
+	public void onMessage(com.comsince.phonebook.entity.Message message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBind(String method, int errorCode, String content) {
+		if (errorCode == 0) {// 如果绑定账号成功，由于第一次运行，给同一tag的人推送一条新人消息
+			User u = new User(phonebookPreference.getUserId(), phonebookPreference.getChannelId(),
+					phonebookPreference.getUserName(), 0, 0);
+			mUserDB.addUser(u);// 把自己添加到数据库
+			//组装将要发送给其他在线用户的消息
+		com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), "hi", phoneBookApplication.tags.get(0));
+			task = new SendMsgAsyncTask(mGson.toJson(msgItem), "");
+			task.setOnSendScuessListener(new OnSendScuessListener() {
+
+				@Override
+				public void sendScuess() {
+					
+				}
+			});
+			task.send();
+		}
+	}
+
+	@Override
+	public void onNotify(String title, String content) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNetChange(boolean isNetConnected) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onNewFriend(User u) {
+		// TODO Auto-generated method stub
 		
 	}
 

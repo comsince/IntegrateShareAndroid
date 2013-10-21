@@ -12,6 +12,7 @@ import java.security.MessageDigest;
 import java.util.Map;
 
 
+
 import android.util.Log;
 
 
@@ -35,6 +36,38 @@ public class BaiduPush {
 		ra.put(RestApi._MESSAGE_KEYS, MSGKEY);
 		ra.put(RestApi._PUSH_TYPE, RestApi.PUSH_TYPE_TAG);
 		ra.put(RestApi._TAG, tag);
+		return PostHttpRequest(ra);
+	}
+	
+	/**
+	 * 给所有用户推送消息
+	 * 
+	 * @param message
+	 * @return
+	 */
+	public static String PushMessage(String message) {
+		RestApi ra = new RestApi(RestApi.METHOD_PUSH_MESSAGE);
+		ra.put(RestApi._MESSAGE_TYPE, RestApi.MESSAGE_TYPE_MESSAGE);
+		ra.put(RestApi._MESSAGES, message);
+		ra.put(RestApi._MESSAGE_KEYS, MSGKEY);
+		ra.put(RestApi._PUSH_TYPE, RestApi.PUSH_TYPE_ALL);
+		return PostHttpRequest(ra);
+	}
+	
+	/**
+	 * 给指定用户推送消息
+	 * 
+	 * @param message
+	 * @param userid
+	 * @return
+	 */
+	public static String PushMessage(String message, String userid) {
+		RestApi ra = new RestApi(RestApi.METHOD_PUSH_MESSAGE);
+		ra.put(RestApi._MESSAGE_TYPE, RestApi.MESSAGE_TYPE_MESSAGE);
+		ra.put(RestApi._MESSAGES, message);
+		ra.put(RestApi._MESSAGE_KEYS, MSGKEY);
+		ra.put(RestApi._PUSH_TYPE, RestApi.PUSH_TYPE_USER);
+		ra.put(RestApi._USER_ID, userid);
 		return PostHttpRequest(ra);
 	}
 	
