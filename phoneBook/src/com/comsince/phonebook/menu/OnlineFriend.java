@@ -4,19 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.adapter.OnlineFriendAdapter;
+import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView;
+import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnCancelListener;
+import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnRefreshListener;
 
-public class OnlineFriend {
+public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 	
 	private Context mContext;
 	private PhoneBookApplication phoneBookApplication;
@@ -51,6 +57,8 @@ public class OnlineFriend {
 				}
 			}
 		});
+		mRefreshListView.setOnCancelListener(this);
+		mRefreshListView.setOnRefreshListener(this);
 	}
 	
 	private void initData(){
@@ -87,5 +95,33 @@ public class OnlineFriend {
 	 * */
 	public void setOnOpenListener(OnOpenListener onOpenListener) {
 		mOnOpenListener = onOpenListener;
+	}
+
+	@Override
+	public void onCancel() {
+		mRefreshListView.onRefreshComplete();
+	}
+
+	@Override
+	public void onRefresh() {
+		PushManager.startWork(mContext, PushConstants.LOGIN_TYPE_API_KEY, Constant.BAIDU_APP_KEY);
+		new AsyncTask<Void, Void, Boolean>() {
+
+			@Override
+			protected Boolean doInBackground(Void... params) {
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Boolean result) {
+				super.onPostExecute(result);
+				mRefreshListView.onRefreshComplete();
+			}
+		}.execute();
 	}
 }
