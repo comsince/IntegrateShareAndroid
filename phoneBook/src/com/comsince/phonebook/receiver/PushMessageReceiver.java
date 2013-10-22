@@ -21,6 +21,7 @@ import com.comsince.phonebook.entity.Message;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.L;
+import com.comsince.phonebook.util.T;
 import com.google.gson.Gson;
 
 
@@ -71,7 +72,8 @@ public class PushMessageReceiver extends BroadcastReceiver {
 
 			//消息的用户自定义内容读取方式
 			L.i("onMessage: " + message);
-
+            T.showShort(context, message);
+            PhoneBookApplication.getInstance().getMediaPlayer().start();
 			//用户在此自定义处理消息,以下代码为demo界面展示用
 			try {
 				Message msgItem = PhoneBookApplication.getInstance().getGson().fromJson(message, Message.class);

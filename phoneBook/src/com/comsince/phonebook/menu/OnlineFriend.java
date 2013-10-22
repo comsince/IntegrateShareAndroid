@@ -22,6 +22,7 @@ import com.comsince.phonebook.adapter.OnlineFriendAdapter;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
+import com.comsince.phonebook.util.T;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnCancelListener;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnRefreshListener;
@@ -66,10 +67,9 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long args) {
-				int position2 = (int)args;
-				if(position2 != -1){
+				if(position != 0){
 					Intent toChatIntent = new Intent(mContext,ChatActivity.class);
-					toChatIntent.putExtra("user", mUser.get(position2));
+					toChatIntent.putExtra("user", mUser.get(position-1));
 					mContext.startActivity(toChatIntent);
 				}
 			}

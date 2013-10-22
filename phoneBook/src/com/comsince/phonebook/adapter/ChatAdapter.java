@@ -52,7 +52,7 @@ public class ChatAdapter extends BaseAdapter {
 		MessageItem item = mMsgList.get(position);
 		boolean isComMsg = item.isComMeg();
 		ViewHolder holder;
-		if (convertView == null || convertView.getTag(R.drawable.ic_launcher + position) == null) {
+		if (convertView == null || convertView.getTag(R.drawable.phonebook + position) == null) {
 			holder = new ViewHolder();
 			if (isComMsg) {
 				convertView = mInflater.inflate(R.layout.chat_item_left, null);
@@ -63,9 +63,9 @@ public class ChatAdapter extends BaseAdapter {
 			holder.time = (TextView) convertView.findViewById(R.id.datetime);
 			holder.msg = (TextView) convertView.findViewById(R.id.textView2);
 			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.progressBar1);
-			convertView.setTag(R.drawable.ic_launcher + position);
+			convertView.setTag(R.drawable.phonebook + position);
 		} else {
-			holder = (ViewHolder) convertView.getTag(R.drawable.ic_launcher + position);
+			holder = (ViewHolder) convertView.getTag(R.drawable.phonebook + position);
 		}
 		holder.time.setText(TimeUtil.getChatTime(item.getDate()));
 		holder.time.setVisibility(View.VISIBLE);

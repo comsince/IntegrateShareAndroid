@@ -3,6 +3,7 @@ package com.comsince.phonebook.activity.message;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +14,9 @@ import android.widget.TextView;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.adapter.ChatAdapter;
 import com.comsince.phonebook.asynctask.SendMsgAsyncTask;
-import com.comsince.phonebook.entity.Message;
 import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
+import com.comsince.phonebook.receiver.PushMessageReceiver;
 import com.comsince.phonebook.util.L;
 import com.comsince.phonebook.view.extendlistview.MsgListView;
 
@@ -24,6 +25,12 @@ public class ChatActivity extends BaseMessageActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		PushMessageReceiver.ehList.add(this);
 	}
 	
 	@Override
@@ -93,10 +100,38 @@ public class ChatActivity extends BaseMessageActivity {
 			//mMsgDB.saveMsg(mFromUser.getUserId(), item);
 			msgEt.setText("");
 			//发送消息
-			Message msgItem = new Message(System.currentTimeMillis(), msg, "");
+			com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, "");
 			new SendMsgAsyncTask(mGson.toJson(msgItem), mFromUser.getUserId()).send();
+			//new SendMsgAsyncTask(mGson.toJson(msgItem), null).send();
 			break;
 	  }
+	}
+
+	@Override
+	public void onMessage(com.comsince.phonebook.entity.Message message) {
+		Message handlerMsg = handler.obtainMessage(NEW_MESSAGE);
+		handlerMsg.obj = message;
+		handler.sendMessage(handlerMsg);
+	}
+
+	@Override
+	public void onBind(String method, int errorCode, String content) {
+		
+	}
+
+	@Override
+	public void onNotify(String title, String content) {
+		
+	}
+
+	@Override
+	public void onNetChange(boolean isNetConnected) {
+		
+	}
+
+	@Override
+	public void onNewFriend(User u) {
+		
 	}
 
 }
