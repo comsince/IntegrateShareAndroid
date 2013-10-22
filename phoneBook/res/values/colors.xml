@@ -56,5 +56,7 @@
     
     <!-- online friend -->
     <color name="dropbar_text_color">#ff434343</color>
+    
+    <color name="semi_transparent_w">#7fffffff</color>
 
 </resources>

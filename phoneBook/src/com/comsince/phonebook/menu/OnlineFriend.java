@@ -80,6 +80,13 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 	
 	private void initData(){
 		mUser = new ArrayList<User>();
+		/**测试好用**/
+		User user = new User();
+		user.setChannelId("1234567890");
+		user.setUserId("1234567890");
+		user.setNick("comsince");
+		user.setHeadIcon(0);
+		mUser.add(user);
 		mOnlineFriendAdapter = new OnlineFriendAdapter(mContext, mUser);
 		mRefreshListView.setAdapter(mOnlineFriendAdapter);
 	}
