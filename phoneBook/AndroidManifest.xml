@@ -98,12 +98,17 @@
             android:theme="@style/MyDialogStyle">
         </activity>
         <!-- 组内好友信息列表 -->
-          <activity
+        <activity
             android:name=".activity.GroupFriendActivity"
             android:windowSoftInputMode="stateHidden|adjustUnspecified"
             android:screenOrientation="portrait">
         </activity>
-        
+        <!-- 聊天界面 -->
+        <activity
+            android:name=".activity.message.ChatActivity"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            android:screenOrientation="portrait">
+        </activity>
         
         <!-- push service client 用来接收push服务receiver -->
         <receiver android:name=".receiver.PushMessageReceiver" >

@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
+import com.comsince.phonebook.activity.message.ChatActivity;
 import com.comsince.phonebook.adapter.OnlineFriendAdapter;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.User;
@@ -54,6 +58,19 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 			public void onClick(View v) {
 				if (mOnOpenListener != null) {
 					mOnOpenListener.open();
+				}
+			}
+		});
+		
+		mRefreshListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long args) {
+				int position2 = (int)args;
+				if(position2 != -1){
+					Intent toChatIntent = new Intent(mContext,ChatActivity.class);
+					toChatIntent.putExtra("user", mUser.get(position2));
+					mContext.startActivity(toChatIntent);
 				}
 			}
 		});
@@ -104,6 +121,7 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 
 	@Override
 	public void onRefresh() {
+		PushManager.stopWork(mContext);
 		PushManager.startWork(mContext, PushConstants.LOGIN_TYPE_API_KEY, Constant.BAIDU_APP_KEY);
 		new AsyncTask<Void, Void, Boolean>() {
 
