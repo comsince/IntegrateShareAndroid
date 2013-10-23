@@ -1,6 +1,6 @@
 package com.comsince.phonebook.activity.message;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.os.Message;
@@ -50,6 +50,7 @@ public class ChatActivity extends BaseMessageActivity {
 		sendBtn.setOnClickListener(this);
 		msgEt.addTextChangedListener(this);
 		faceBtn.setOnClickListener(this);
+		mMsgListView.setXListViewListener(this);
 	}
 
 	@Override
@@ -136,6 +137,21 @@ public class ChatActivity extends BaseMessageActivity {
 
 	@Override
 	public void onNewFriend(User u) {
+		
+	}
+
+	@Override
+	public void onRefresh() {
+		MsgPagerNum++;
+		List<MessageItem> msgList = initMsgData();
+		int position = msgAdapter.getCount();
+		msgAdapter.refreshMsg(msgList);
+		mMsgListView.stopRefresh();
+		mMsgListView.setSelection(msgAdapter.getCount() - position - 1);
+	}
+
+	@Override
+	public void onLoadMore() {
 		
 	}
 

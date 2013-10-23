@@ -24,10 +24,11 @@ import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.receiver.PushMessageReceiver.EventHandler;
 import com.comsince.phonebook.view.extendlistview.MsgListView;
+import com.comsince.phonebook.view.extendlistview.MsgListView.IXListViewListener;
 import com.google.gson.Gson;
 
 public abstract class BaseMessageActivity extends Activity 
-       implements TextWatcher,OnClickListener,EventHandler{
+       implements TextWatcher,OnClickListener,EventHandler,IXListViewListener{
     /**基本组件**/
 	protected MsgListView mMsgListView;
 	protected TextView chatFriendName;

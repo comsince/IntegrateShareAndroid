@@ -31,6 +31,13 @@ public class ChatAdapter extends BaseAdapter {
 		mMsgList.add(msg);
 		notifyDataSetChanged();
 	}
+	
+	public void refreshMsg(List<MessageItem> msgItems){
+		if(msgItems != null){
+			mMsgList = msgItems;
+		}
+		notifyDataSetChanged();
+	}
 
 	@Override
 	public int getCount() {
