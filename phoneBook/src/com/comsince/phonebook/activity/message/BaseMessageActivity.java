@@ -115,6 +115,7 @@ public abstract class BaseMessageActivity extends Activity
 				int headId = 0;
 				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0);
 				msgAdapter.upDateMsg(item);
+				mMsgListView.setSelection(msgAdapter.getCount() - 1);
 				mMsgDB.saveMsg(msgItem.getUser_id(), item);
 				//RecentItem recentItem = new RecentItem(userId, headId, msgItem.getNick(), msgItem.getMessage(), 0, System.currentTimeMillis());
 				//mRecentDB.saveRecent(recentItem);
