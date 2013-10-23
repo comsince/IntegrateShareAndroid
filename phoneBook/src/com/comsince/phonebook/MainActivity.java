@@ -315,7 +315,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 					mOnlineFriend = new OnlineFriend(context, phoneBookApplication);
 					mOnlineFriend.setOnOpenListener(MainActivity.this);
 				}
-				mOnlineFriend.refreshOnLineFriendData(u);// 更新
+				mOnlineFriend.refreshOnLineFriendData();// 更新
 				T.showShort(phoneBookApplication, "好友列表已更新!");
 				break;
 			case Constant.NEW_MESSAGE:

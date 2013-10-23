@@ -1,6 +1,5 @@
 package com.comsince.phonebook.menu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -20,9 +19,9 @@ import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.message.ChatActivity;
 import com.comsince.phonebook.adapter.OnlineFriendAdapter;
 import com.comsince.phonebook.constant.Constant;
+import com.comsince.phonebook.dbhelper.UserDB;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
-import com.comsince.phonebook.util.T;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnCancelListener;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnRefreshListener;
@@ -36,6 +35,7 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 	private RefreshListView mRefreshListView;
 	private OnlineFriendAdapter mOnlineFriendAdapter;
 	private List<User> mUser;
+	private UserDB mUserDB;
 	
 	private OnOpenListener mOnOpenListener;
 	
@@ -79,14 +79,8 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 	}
 	
 	private void initData(){
-		mUser = new ArrayList<User>();
-		/**测试好用**/
-		User user = new User();
-		user.setChannelId("1234567890");
-		user.setUserId("1234567890");
-		user.setNick("comsince");
-		user.setHeadIcon(0);
-		mUser.add(user);
+		mUserDB = phoneBookApplication.getUserDB();
+		mUser = mUserDB.getUser();
 		mOnlineFriendAdapter = new OnlineFriendAdapter(mContext, mUser);
 		mRefreshListView.setAdapter(mOnlineFriendAdapter);
 	}
@@ -105,6 +99,11 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 		if(i == mUser.size()){
 			mUser.add(user);
 		}
+		mOnlineFriendAdapter.refreshData(mUser);
+	}
+	
+	public void refreshOnLineFriendData(){
+		mUser = mUserDB.getUser();
 		mOnlineFriendAdapter.refreshData(mUser);
 	}
 
