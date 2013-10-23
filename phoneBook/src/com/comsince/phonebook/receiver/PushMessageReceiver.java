@@ -140,12 +140,13 @@ public class PushMessageReceiver extends BroadcastReceiver {
 			} catch (JSONException e) {
 				Log.e(TAG, "Parse bind json infos error: " + e);
 			}
-			PhoneBookPreference phonebookPreference = PhoneBookApplication.phoneBookPreference;
+			PhoneBookPreference phonebookPreference = PhoneBookApplication.getInstance().phoneBookPreference;
 			phonebookPreference.saveAppId(appid);
 			phonebookPreference.saveChannelId(channelid);
 			phonebookPreference.saveUserId(userid);
 			
 			L.i("userId : "+ phonebookPreference.getUserId());
+			//T.showLong(context, "userId:"+phonebookPreference.getUserId()+"userName: "+phonebookPreference.getUserName());
 		}
 	}
 	
@@ -160,7 +161,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 		String userId = msg.getUser_id();
 		int headId = msg.getHead_id();
 		if (!TextUtils.isEmpty(tag)) {// 如果是带有tag的消息
-			if (userId.equals(PhoneBookApplication.phoneBookPreference.getUserId()))
+			if (userId.equals(PhoneBookApplication.getInstance().phoneBookPreference.getUserId()))
 				return;
 			User u = new User(userId, msg.getChannel_id(), msg.getNick(), headId, 0);
 			PhoneBookApplication.getInstance().getUserDB().addUser(u);// 存入或更新好友
@@ -173,8 +174,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 				L.i("response end");
 			}
 		} else {// 聊天普通消息，
-			PhoneBookApplication.getInstance();
-			if (PhoneBookApplication.phoneBookPreference.getMsgSound())// 如果用户开启播放声音
+			if (PhoneBookApplication.getInstance().phoneBookPreference.getMsgSound())// 如果用户开启播放声音
 				PhoneBookApplication.getInstance().getMediaPlayer().start();
 			if (ehList.size() > 0) {// 有监听的时候，传递下去
 				for (int i = 0; i < ehList.size(); i++)
