@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 
+import com.comsince.phonebook.dbhelper.MessageDB;
 import com.comsince.phonebook.dbhelper.UserDB;
 import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.Person;
@@ -93,7 +94,7 @@ public class PhoneBookApplication extends Application {
 	/**用户数据库**/
 	private UserDB mUserDB;
 	private Gson mGson;
-	
+	private MessageDB mMsgDB;
 	private MediaPlayer mMediaPlayer;
 
 	/**
@@ -122,6 +123,12 @@ public class PhoneBookApplication extends Application {
 		if (mUserDB == null)
 			mUserDB = new UserDB(this);
 		return mUserDB;
+	}
+	
+	public synchronized MessageDB getMessageDB() {
+		if (mMsgDB == null)
+			mMsgDB = new MessageDB(this);
+		return mMsgDB;
 	}
 	
 	public synchronized Gson getGson() {

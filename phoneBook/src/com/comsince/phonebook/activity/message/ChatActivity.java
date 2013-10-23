@@ -56,7 +56,10 @@ public class ChatActivity extends BaseMessageActivity {
 	protected void initData() {
 		mFromUser = (User) getIntent().getSerializableExtra("user");
 		chatFriendName.setText(mFromUser.getNick());
-		msgList = new ArrayList<MessageItem>();
+		//初始化消息加载页数
+		MsgPagerNum = 0;
+		mMsgDB = phoneBookApplication.getMessageDB();
+		msgList = initMsgData();
 		msgAdapter = new ChatAdapter(context, msgList);
 		mMsgListView.setAdapter(msgAdapter);
 		mMsgListView.setPullLoadEnable(false);
@@ -100,12 +103,11 @@ public class ChatActivity extends BaseMessageActivity {
 			L.i("发送消息： "+item.getName());
 			msgAdapter.upDateMsg(item);
 			mMsgListView.setSelection(msgAdapter.getCount() - 1);
-			//mMsgDB.saveMsg(mFromUser.getUserId(), item);
+			mMsgDB.saveMsg(mFromUser.getUserId(), item);
 			msgEt.setText("");
 			//发送消息
 			com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, "");
 			new SendMsgAsyncTask(mGson.toJson(msgItem), mFromUser.getUserId()).send();
-			//new SendMsgAsyncTask(mGson.toJson(msgItem), null).send();
 			break;
 	  }
 	}

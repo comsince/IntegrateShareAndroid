@@ -1,6 +1,7 @@
 package com.comsince.phonebook.activity.message;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.adapter.ChatAdapter;
+import com.comsince.phonebook.dbhelper.MessageDB;
 import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.preference.PhoneBookPreference;
@@ -45,6 +47,9 @@ public abstract class BaseMessageActivity extends Activity
 	
 	//消息传递对象，即是发给谁
 	protected User mFromUser;
+	protected MessageDB mMsgDB;
+	/**消息一次加载的页数**/
+	protected static int MsgPagerNum;
 	
 	public static final int NEW_MESSAGE = 0x001;// 收到消息
 	
@@ -77,6 +82,27 @@ public abstract class BaseMessageActivity extends Activity
 	 * **/
 	protected abstract void initData();
 	
+	/**
+	 * 加载消息历史，从数据库中读出
+	 */
+	protected List<MessageItem> initMsgData() {
+		List<MessageItem> list = mMsgDB.getMsg(mFromUser.getUserId(),MsgPagerNum);
+		List<MessageItem> msgList = new ArrayList<MessageItem>();// 消息对象数组
+		if (list.size() > 0) {
+			for (MessageItem entity : list) {
+				if (entity.getName().equals("")) {
+					entity.setName(mFromUser.getNick());
+				}
+				if (entity.getHeadImg() < 0) {
+					entity.setHeadImg(mFromUser.getHeadIcon());
+				}
+				msgList.add(entity);
+			}
+		}
+		return msgList;
+
+	}
+	
 	protected Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == NEW_MESSAGE) {
@@ -88,7 +114,7 @@ public abstract class BaseMessageActivity extends Activity
 				int headId = 0;
 				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0);
 				msgAdapter.upDateMsg(item);
-				// mMsgDB.saveMsg(msgItem.getUser_id(), item);
+				mMsgDB.saveMsg(msgItem.getUser_id(), item);
 				//RecentItem recentItem = new RecentItem(userId, headId, msgItem.getNick(), msgItem.getMessage(), 0, System.currentTimeMillis());
 				//mRecentDB.saveRecent(recentItem);
 			}
