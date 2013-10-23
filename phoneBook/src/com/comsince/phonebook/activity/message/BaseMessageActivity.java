@@ -33,6 +33,7 @@ public abstract class BaseMessageActivity extends Activity
 	protected Button sendBtn;
 	protected ImageButton faceBtn;
 	protected EditText msgEt;
+	protected Button aboutFriend;
 	
 	protected Context context;
 	protected List<MessageItem>	msgList;

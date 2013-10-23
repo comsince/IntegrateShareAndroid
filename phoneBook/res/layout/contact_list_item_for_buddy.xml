@@ -14,7 +14,7 @@
         android:layout_centerVertical="true"
         android:duplicateParentState="true"
         android:layout_marginLeft="10.0dip"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/phonebook" />
 
     <ImageView
         android:id="@+id/stateicon"

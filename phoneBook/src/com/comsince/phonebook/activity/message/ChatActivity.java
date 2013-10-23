@@ -41,6 +41,7 @@ public class ChatActivity extends BaseMessageActivity {
 		faceBtn = (ImageButton) findViewById(R.id.face_btn);
 		msgEt = (EditText) findViewById(R.id.msg_et);
 		sendBtn = (Button) findViewById(R.id.send_btn);
+		aboutFriend = (Button) findViewById(R.id.about_friend);
 	}
 
 	@Override
@@ -54,6 +55,7 @@ public class ChatActivity extends BaseMessageActivity {
 	@Override
 	protected void initData() {
 		mFromUser = (User) getIntent().getSerializableExtra("user");
+		chatFriendName.setText(mFromUser.getNick());
 		msgList = new ArrayList<MessageItem>();
 		msgAdapter = new ChatAdapter(context, msgList);
 		mMsgListView.setAdapter(msgAdapter);
