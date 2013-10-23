@@ -173,7 +173,8 @@ public class PushMessageReceiver extends BroadcastReceiver {
 				L.i("response end");
 			}
 		} else {// 聊天普通消息，
-			if (PhoneBookApplication.getInstance().phoneBookPreference.getMsgSound())// 如果用户开启播放声音
+			PhoneBookApplication.getInstance();
+			if (PhoneBookApplication.phoneBookPreference.getMsgSound())// 如果用户开启播放声音
 				PhoneBookApplication.getInstance().getMediaPlayer().start();
 			if (ehList.size() > 0) {// 有监听的时候，传递下去
 				for (int i = 0; i < ehList.size(); i++)
