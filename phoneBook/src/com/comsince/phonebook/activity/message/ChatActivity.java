@@ -57,6 +57,7 @@ public class ChatActivity extends BaseMessageActivity {
 		msgList = new ArrayList<MessageItem>();
 		msgAdapter = new ChatAdapter(context, msgList);
 		mMsgListView.setAdapter(msgAdapter);
+		mMsgListView.setPullLoadEnable(false);
 	}
 
 	@Override

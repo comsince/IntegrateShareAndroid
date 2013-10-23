@@ -72,8 +72,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 
 			//消息的用户自定义内容读取方式
 			L.i("onMessage: " + message);
-            T.showShort(context, message);
-            PhoneBookApplication.getInstance().getMediaPlayer().start();
+           // T.showShort(context, message);
 			//用户在此自定义处理消息,以下代码为demo界面展示用
 			try {
 				Message msgItem = PhoneBookApplication.getInstance().getGson().fromJson(message, Message.class);
