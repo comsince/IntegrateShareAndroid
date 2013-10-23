@@ -163,7 +163,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 		if (!TextUtils.isEmpty(tag)) {// 如果是带有tag的消息
 			if (userId.equals(PhoneBookApplication.getInstance().phoneBookPreference.getUserId()))
 				return;
-			User u = new User(userId, msg.getChannel_id(), msg.getNick(), headId, 0);
+			User u = new User(userId, msg.getChannel_id(), msg.getNick(), headId, 0,"");
 			PhoneBookApplication.getInstance().getUserDB().addUser(u);// 存入或更新好友
 			for (EventHandler handler : ehList)
 				handler.onNewFriend(u);

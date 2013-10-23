@@ -270,7 +270,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 	public void onBind(String method, int errorCode, String content) {
 		if (errorCode == 0 && !TextUtils.isEmpty(phonebookPreference.getUserId()) && !phonebookPreference.getUserId().equals("userId")) {// 如果绑定账号成功，由于第一次运行，给同一tag的人推送一条新人消息
 			User u = new User(phonebookPreference.getUserId(), phonebookPreference.getChannelId(),
-					phonebookPreference.getUserName(), 0, 0);
+					phonebookPreference.getUserName(), 0, 0,"");
 			mUserDB.addUser(u);// 把自己添加到数据库
 			//组装将要发送给其他在线用户的消息
 		    com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), "hi", "phoneBook");

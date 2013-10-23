@@ -12,13 +12,15 @@ public class User implements Serializable {
 	private String nick;//
 	private int headIcon;//
 	private int group;
+	private String msg;
 
-	public User(String UserId, String channelId, String nick, int headIcon, int group) {
+	public User(String UserId, String channelId, String nick, int headIcon, int group,String msg) {
 		this.UserId = UserId;
 		this.channelId = channelId;
 		this.nick = nick;
 		this.headIcon = headIcon;
 		this.group = group;
+		this.msg = msg;
 	}
 
 	public User() {
@@ -63,6 +65,15 @@ public class User implements Serializable {
 
 	public void setGroup(int group) {
 		this.group = group;
+	}
+
+	
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 	@Override

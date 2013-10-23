@@ -5,6 +5,8 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,13 +22,18 @@ import com.comsince.phonebook.activity.message.ChatActivity;
 import com.comsince.phonebook.adapter.OnlineFriendAdapter;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.dbhelper.UserDB;
+import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
+import com.comsince.phonebook.receiver.PushMessageReceiver;
+import com.comsince.phonebook.receiver.PushMessageReceiver.EventHandler;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
+import com.comsince.phonebook.util.T;
+import com.comsince.phonebook.util.TimeUtil;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnCancelListener;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnRefreshListener;
 
-public class OnlineFriend implements OnRefreshListener,OnCancelListener{
+public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHandler{
 	
 	private Context mContext;
 	private PhoneBookApplication phoneBookApplication;
@@ -36,6 +43,8 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 	private OnlineFriendAdapter mOnlineFriendAdapter;
 	private List<User> mUser;
 	private UserDB mUserDB;
+	
+	public static final int NEW_MESSAGE = 0x001;// 收到消息
 	
 	private OnOpenListener mOnOpenListener;
 	
@@ -79,6 +88,7 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 	}
 	
 	private void initData(){
+		PushMessageReceiver.ehList.add(this);
 		mUserDB = phoneBookApplication.getUserDB();
 		mUser = mUserDB.getUser();
 		mOnlineFriendAdapter = new OnlineFriendAdapter(mContext, mUser);
@@ -148,4 +158,57 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener{
 			}
 		}.execute();
 	}
+
+	@Override
+	public void onMessage(com.comsince.phonebook.entity.Message message) {
+		Message handlerMsg = handler.obtainMessage(NEW_MESSAGE);
+		handlerMsg.obj = message;
+		handler.sendMessage(handlerMsg);
+	}
+
+	@Override
+	public void onBind(String method, int errorCode, String content) {
+		
+	}
+
+	@Override
+	public void onNotify(String title, String content) {
+		
+	}
+
+	@Override
+	public void onNetChange(boolean isNetConnected) {
+		
+	}
+
+	@Override
+	public void onNewFriend(User u) {
+		
+	}
+	
+	protected Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			if (msg.what == NEW_MESSAGE) {
+				com.comsince.phonebook.entity.Message msgItem = (com.comsince.phonebook.entity.Message) msg.obj;
+				String userId = msgItem.getUser_id();
+				//查找需要更新消息的用户
+				for(User user : mUser){
+					if(user.getUserId().equals(userId)){
+						user.setMsg("["+TimeUtil.getChatTime(System.currentTimeMillis())+"] "+msgItem.getMessage());
+						break;
+					}
+				}
+				//刷新adapter
+				mOnlineFriendAdapter.refreshData(mUser);
+				int headId = 0;
+				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0);
+				//msgAdapter.upDateMsg(item);
+				//mMsgListView.setSelection(msgAdapter.getCount() - 1);
+				//mMsgDB.saveMsg(msgItem.getUser_id(), item);
+				//RecentItem recentItem = new RecentItem(userId, headId, msgItem.getNick(), msgItem.getMessage(), 0, System.currentTimeMillis());
+				//mRecentDB.saveRecent(recentItem);
+			}
+		}
+	};
+	
 }

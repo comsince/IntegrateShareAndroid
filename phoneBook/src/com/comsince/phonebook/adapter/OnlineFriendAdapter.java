@@ -59,7 +59,8 @@ public class OnlineFriendAdapter extends BaseAdapter{
 		}
 		User user = mUser.get(position);
 		holder.niceName.setText(user.getNick());
-		holder.userId.setText(user.getUserId());
+		//holder.userId.setText(user.getUserId());
+		holder.userId.setText(user.getMsg());
 		return convertView;
 	}
 	
