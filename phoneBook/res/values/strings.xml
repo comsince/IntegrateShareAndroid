@@ -46,6 +46,7 @@
     <string name="person_info_download">正在下载数据，请稍候...</string>
     <string name="person_group_info_download">正在下载群组数据，请稍候...</string>
     <string name="send_notification_to_group">正在向群组发送通知，请稍候...</string>
+    <string name="person_info_avatar_upload">正在上传个人头像,请稍候...</string>
     
     <!-- send notification -->
     <string name="push_messge_content">亲,我的资料变化 ，请注意更新</string>

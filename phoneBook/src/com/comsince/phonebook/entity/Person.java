@@ -30,6 +30,8 @@ public class Person implements Serializable{
 	private String email;
 	@Element(required = false)
 	private String msn;
+	@Element(required = false)
+	private String avatar;
 	@ElementList(required = false,inline=true)
 	private List<Phones> phonesList;
 	/**
@@ -151,6 +153,14 @@ public class Person implements Serializable{
 
 	public void setMsn(String msn) {
 		this.msn = msn;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	
 

@@ -82,13 +82,32 @@ public class FileUtil {
 		file.createNewFile();
 		return file;
 	}
+	
+	/**
+	 * 创建文件
+	 * 
+	 * @param path
+	 *            文件完整路径
+	 * @return 创建的文件
+	 */
+	public static File createNewFile(String path) {
+		File file = new File(path);
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				return null;
+			}
+		}
+		return file;
+	}
 
 	/**
 	 * 在SD卡上创建目录
 	 * 
 	 * @author comsince
 	 * @param dir
-	 *            目录名
+	 *            目录名,可以是如下xxx/ss/ss
 	 */
 	public static File creatSDDir(String dir) {
 		File dirFile = new File(AndroidUtil.getSDCardRoot() + dir + File.separator);

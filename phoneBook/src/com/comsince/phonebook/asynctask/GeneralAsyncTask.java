@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.GeneralLoadingActivity;
+import com.comsince.phonebook.activity.PersonInfoActivity;
 import com.comsince.phonebook.adapter.MGroupAdapter;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Group;
@@ -64,6 +65,11 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 		if(!result){
 			Toast.makeText(context, loadingText+"任务失败", Toast.LENGTH_SHORT).show();
 		}
+		if(taskTag == Constant.TASK_UPLOAD){
+			if(mGroupHandler != null){
+				mGroupHandler.sendEmptyMessage(PersonInfoActivity.UPLOAD_PERSON_INFO_SUCCESS);
+			}
+		}
 		context.sendBroadcast(new Intent(Constant.ACTION_FINISH));
 	}
 
@@ -85,6 +91,19 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
 			String uploadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_INFO+"/"+fileName+".xml");
 			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_PERSON_INFO+File.separator+fileName+".xml";
+			String responeMsg = BaiduCloudSaveUtil.putObject(uploadURL, uploadXmlPath);
+			Log.d("text", uploadURL);
+			Log.d("text", responeMsg);
+			if(responeMsg.equals("OK")){
+				flag = true;
+			}else{
+				flag = false;
+			}
+		}else if(taskTag == Constant.TASK_UPLOAD_PRESON_AVATAR){
+			String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+			String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
+			String uploadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_AVATAR+"/"+fileName+".jpg");
+			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_PERSON_AVATAR+File.separator+fileName+".jpg";
 			String responeMsg = BaiduCloudSaveUtil.putObject(uploadURL, uploadXmlPath);
 			Log.d("text", uploadURL);
 			Log.d("text", responeMsg);

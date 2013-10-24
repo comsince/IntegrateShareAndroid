@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -83,6 +84,9 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	private static final int MMAlertSelect_UpLoad  =  1;
 	private static final int MMAlertSelect_Send  =  2;
 	private static final int MMAlertSelect_DownLoad  =  3;
+	
+	public static final int UPLOAD_PERSON_INFO_SUCCESS = 10;
+	public static final int UPLOAD_PERSON_INFO_FAIL = 11;
 	
 	private boolean isUploadPersonInfo = false;
 	
@@ -381,6 +385,8 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		Bundle extras = data.getExtras();
 		if (extras != null) {
 			Bitmap bitmap = extras.getParcelable("data");
+			//保存图片
+			savePersonAvatarToSDcard(bitmap);
 			bitmap = PhotoUtil.toRoundCorner(bitmap, 15);
 			if (bitmap != null) {
 				personalCardAvatar.setImageBitmap(bitmap);
@@ -388,6 +394,14 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		} else {
 			Toast.makeText(this, "获取裁剪照片错误", Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	/**
+	 * 将个人头像保存到本地
+	 * **/
+	private void savePersonAvatarToSDcard(Bitmap bitmap){
+		String avatarFileName = phoneBookPreference.getUserName(this) + "_" + phoneBookPreference.getPassWord(this);
+		PhotoUtil.savePhotoToSDCard(bitmap, avatarFileName);
 	}
 
 	/**
@@ -489,6 +503,9 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		
 		String personInfoDir = Constant.MAIN_DIR_PHONE_BOOK +"/"+Constant.DIR_PERSON_INFO;
 		String personInfoName = phoneBookPreference.getUserName(this) + "_" + phoneBookPreference.getPassWord(this);
+		//个人头像地址
+	    String avatarpath = File.separator + Constant.DIR_PERSON_AVATAR + File.separator + personInfoName +".jpg";
+		person.setAvatar(avatarpath);
 		xmlUtil.writeXml(person,personInfoDir, personInfoName);
 		Toast.makeText(this, "保存本地成功", Toast.LENGTH_SHORT).show();
 	}
@@ -524,7 +541,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 					if(validata()){
 						isUploadPersonInfo = true;
 						//上传数据
-						generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.person_info_upload), Constant.TASK_UPLOAD, context);
+						generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.person_info_upload), Constant.TASK_UPLOAD, context ,personHandler);
 						generalAsyncTask.execute();
 					}else{
 						Toast.makeText(context, "请填写姓名和电话必填再上传", Toast.LENGTH_LONG).show();
@@ -548,5 +565,21 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 			
 		});
 	}
+	
+	Handler personHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case UPLOAD_PERSON_INFO_SUCCESS:
+				generalAsyncTask = new GeneralAsyncTask(context.getString(R.string.person_info_avatar_upload), Constant.TASK_UPLOAD_PRESON_AVATAR, context);
+				generalAsyncTask.execute();
+				break;
+ 
+			case UPLOAD_PERSON_INFO_FAIL:
+				
+				break;
+			
+			}
+		};
+	};
 
 }

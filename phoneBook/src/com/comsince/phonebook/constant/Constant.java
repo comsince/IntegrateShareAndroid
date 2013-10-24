@@ -29,6 +29,8 @@ public class Constant {
   	public static final String FILE_GROUP_INFO = "groupDetail.xml";
   	public static final String FILE_GROUP_PERSON_INFO = "groupPerson";
   	public static final String FILE_GROUP_PERSON_XML = "groupPerson.xml";
+  	//存放用户头像目录
+  	public static final String DIR_PERSON_AVATAR = "personavatar";
   	//存放用户头像信息
   	public static final String DIR_PERSON_AVATER = "userAvater";
   	//loading activity 广播
@@ -37,6 +39,7 @@ public class Constant {
   	
   	//general task type
   	public static final int TASK_UPLOAD = 30001;
+  	public static final int TASK_UPLOAD_PRESON_AVATAR = 300010;
   	public static final int TASK_DOWNLOAD = 30002;
   	public static final int TASK_DOWNLOAD_PERSON_GROUP_INFO = 30003;
   	public static final int TASK_SEND_NOTIFICATION_TO_GROUP = 30004;

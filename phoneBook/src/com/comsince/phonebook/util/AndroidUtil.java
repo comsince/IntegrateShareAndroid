@@ -64,5 +64,18 @@ public class AndroidUtil {
 	public static String getSDCardRoot(){
 		return Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator;
 	}
+	
+	/**
+	 * 判断SD是否可以
+	 * 
+	 * @return
+	 */
+	public static boolean isSdcardExist() {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			return true;
+		}
+		return false;
+	}
 
 }
