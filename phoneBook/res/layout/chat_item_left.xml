@@ -33,8 +33,7 @@
         android:background="@drawable/chat_tool_camera"
         android:clickable="true"
         android:scaleType="fitXY"
-        android:focusable="true"
-        android:src="@drawable/chat_tool_camera" />
+        android:focusable="true"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"

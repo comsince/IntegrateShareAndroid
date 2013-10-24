@@ -25,59 +25,54 @@
         android:textSize="10.0sp"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_below="@id/datetime"
-        android:gravity="right"
-        android:orientation="horizontal" >
+        android:layout_marginRight="5dip"
+        android:layout_toLeftOf="@id/icon"
+        android:background="@drawable/balloon_r_selector"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:minHeight="44.0dip" >
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout1"
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/B5_Font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dip"
-            android:layout_gravity="bottom"
-            android:background="@drawable/balloon_r_selector"
-            android:clickable="true"
-            android:minHeight="44.0dip" >
+            android:layout_alignRight="@id/relativeLayout1"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:textSize="16.0sp" />
 
-            <TextView
-                android:id="@+id/textView2"
-                style="@style/B5_Font"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:focusable="true"
-                android:textColor="@color/black"
-                android:textSize="16.0sp" />
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="7.0dip"
+            android:layout_alignBottom="@id/textView2"
+            android:layout_alignLeft="@id/textView2"
+            android:layout_alignRight="@id/textView2"
+            android:layout_marginBottom="3.0dip"
+            android:layout_marginLeft="4.0dip"
+            android:layout_marginRight="4.0dip"
+            android:max="100"
+            android:progressDrawable="@drawable/progress_receivepic" />
+    </RelativeLayout>
 
-            <ProgressBar
-                android:id="@+id/progressBar1"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="7.0dip"
-                android:layout_alignBottom="@id/textView2"
-                android:layout_alignLeft="@id/textView2"
-                android:layout_alignRight="@id/textView2"
-                android:layout_marginBottom="3.0dip"
-                android:layout_marginLeft="4.0dip"
-                android:layout_marginRight="4.0dip"
-                android:max="100"
-                android:progressDrawable="@drawable/progress_receivepic" />
-        </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="40.0dip"
-            android:layout_height="40.0dip"
-            android:layout_gravity="top"
-            android:background="@drawable/chat_tool_camera"
-            android:clickable="true"
-            android:focusable="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/chat_tool_camera" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="40.0dip"
+        android:layout_height="40.0dip"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/datetime"
+        android:layout_gravity="top"
+        android:background="@drawable/chat_tool_camera"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/chat_tool_camera" />
 
 </RelativeLayout>
