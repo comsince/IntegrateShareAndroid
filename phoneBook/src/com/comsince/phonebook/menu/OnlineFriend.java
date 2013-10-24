@@ -95,6 +95,12 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 		mRefreshListView.setAdapter(mOnlineFriendAdapter);
 	}
 	
+	public void invilidateListView(){
+		if(mRefreshListView != null){
+			mRefreshListView.invalidateViews();
+		}
+	}
+	
 	/**
 	 * 刷新好友列表
 	 * **/

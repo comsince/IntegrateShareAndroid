@@ -136,5 +136,62 @@
                 android:textSize="14.0sp" />
         </LinearLayout>
     </LinearLayout>
+    
+   <!--  <FrameLayout
+        android:id="@+id/panelLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="204.0dip"
+        android:background="#ff34373c"
+        android:visibility="gone" >
+
+        <GridView
+            android:id="@+id/panel"
+            android:layout_width="fill_parent"
+            android:layout_height="204.0dip"
+            android:gravity="center"
+            android:listSelector="#ff34373c"
+            android:numColumns="4"
+            android:paddingLeft="11.0dip"
+            android:paddingRight="11.0dip"
+            android:paddingTop="14.0dip"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="14.0dip" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chat_plugin_shadow" />
+    </FrameLayout> -->
+
+    <LinearLayout
+        android:id="@+id/face_ll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff0f0f0"
+        android:orientation="vertical"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:visibility="gone" >
+
+        <com.comsince.phonebook.view.viewpager.JazzyViewPager
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/face_pager"
+            app:style="cubeout"
+            android:layout_width="fill_parent"
+            android:layout_height="120.0dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:background="#0000"
+            android:flipInterval="30"
+            android:persistentDrawingCache="animation" />
+
+        <com.comsince.phonebook.view.viewpager.CirclePageIndicator
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/indicator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dip" />
+    </LinearLayout>
 
 </LinearLayout>

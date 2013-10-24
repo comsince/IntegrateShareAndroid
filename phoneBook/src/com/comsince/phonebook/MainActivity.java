@@ -145,7 +145,9 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 					if(mOnlineFriend == null){
 						mOnlineFriend = new OnlineFriend(context, phoneBookApplication);
 						mOnlineFriend.setOnOpenListener(MainActivity.this);
+						mOnlineFriend.invilidateListView();
 					}
+					mOnlineFriend.invilidateListView();
 					mRoot.close(mOnlineFriend.getView());
 					break;
 

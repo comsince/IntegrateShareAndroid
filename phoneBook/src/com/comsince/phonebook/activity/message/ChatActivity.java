@@ -1,24 +1,32 @@
 package com.comsince.phonebook.activity.message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.adapter.ChatAdapter;
+import com.comsince.phonebook.adapter.FacePageAdeapter;
 import com.comsince.phonebook.asynctask.SendMsgAsyncTask;
 import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.receiver.PushMessageReceiver;
 import com.comsince.phonebook.util.L;
 import com.comsince.phonebook.view.extendlistview.MsgListView;
+import com.comsince.phonebook.view.viewpager.CirclePageIndicator;
+import com.comsince.phonebook.view.viewpager.JazzyViewPager;
+import com.comsince.phonebook.view.viewpager.JazzyViewPager.TransitionEffect;
 
 public class ChatActivity extends BaseMessageActivity {
 
@@ -35,6 +43,7 @@ public class ChatActivity extends BaseMessageActivity {
 	
 	@Override
 	protected void initViews() {
+		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 		chatFriendName = (TextView) findViewById(R.id.chat_friend_name);
 		backBtn = (Button) findViewById(R.id.chat_back);
 		mMsgListView = (MsgListView) findViewById(R.id.msg_listView);
@@ -42,6 +51,11 @@ public class ChatActivity extends BaseMessageActivity {
 		msgEt = (EditText) findViewById(R.id.msg_et);
 		sendBtn = (Button) findViewById(R.id.send_btn);
 		aboutFriend = (Button) findViewById(R.id.about_friend);
+		
+		//底部表情输入
+		faceLinearLayout = (LinearLayout) findViewById(R.id.face_ll);
+		faceViewPager = (JazzyViewPager) findViewById(R.id.face_pager);
+		indicator = (CirclePageIndicator) findViewById(R.id.indicator);
 	}
 
 	@Override
@@ -93,7 +107,19 @@ public class ChatActivity extends BaseMessageActivity {
 			break;
 			
 		case R.id.face_btn:
-			
+			if (!isFaceShow) {
+				imm.hideSoftInputFromWindow(msgEt.getWindowToken(), 0);
+				try {
+					Thread.sleep(80);// 解决此时会黑一下屏幕的问题
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				faceLinearLayout.setVisibility(View.VISIBLE);
+				isFaceShow = true;
+			} else {
+				faceLinearLayout.setVisibility(View.GONE);
+				isFaceShow = false;
+			}
 			break;
 			
 		case R.id.send_btn:
@@ -153,6 +179,21 @@ public class ChatActivity extends BaseMessageActivity {
 	@Override
 	public void onLoadMore() {
 		
+	}
+
+	@Override
+	protected void initFacePage() {
+		List<View> lv = new ArrayList<View>();
+		for (int i = 0; i < PhoneBookApplication.NUM_PAGE; ++i)
+			lv.add(getGridView(i));
+		FacePageAdeapter adapter = new FacePageAdeapter(lv, faceViewPager);
+		faceViewPager.setAdapter(adapter);
+		faceViewPager.setCurrentItem(currentPage);
+		//faceViewPager.setTransitionEffect(mEffects[mSpUtil.getFaceEffect()]);
+		faceViewPager.setTransitionEffect(TransitionEffect.Standard);
+		indicator.setViewPager(faceViewPager);
+		adapter.notifyDataSetChanged();
+		faceLinearLayout.setVisibility(View.GONE);
 	}
 
 }
