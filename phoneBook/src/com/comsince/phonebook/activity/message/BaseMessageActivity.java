@@ -19,6 +19,7 @@ import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
@@ -66,6 +67,7 @@ public abstract class BaseMessageActivity extends Activity
 	protected List<String> keys;
 	protected boolean isFaceShow = false;
 	protected InputMethodManager imm;
+	protected WindowManager.LayoutParams params;
 	
 	protected Context context;
 	protected List<MessageItem>	msgList;

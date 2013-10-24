@@ -6,9 +6,12 @@ import java.util.Set;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,8 +47,19 @@ public class ChatActivity extends BaseMessageActivity {
 	}
 	
 	@Override
+	public void onBackPressed() {
+		if (params.softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE || isFaceShow) {
+			faceLinearLayout.setVisibility(View.GONE);
+			isFaceShow = false;
+		}else{
+			finish();
+		}
+	}
+	
+	@Override
 	protected void initViews() {
 		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+		params = getWindow().getAttributes();
 		chatFriendName = (TextView) findViewById(R.id.chat_friend_name);
 		backBtn = (Button) findViewById(R.id.chat_back);
 		mMsgListView = (MsgListView) findViewById(R.id.msg_listView);
@@ -201,6 +215,21 @@ public class ChatActivity extends BaseMessageActivity {
 		indicator.setViewPager(faceViewPager);
 		adapter.notifyDataSetChanged();
 		faceLinearLayout.setVisibility(View.GONE);
+		indicator.setOnPageChangeListener(new OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int arg0) {
+				currentPage = arg0;
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+			}
+		});
 	}
 
 	@Override
