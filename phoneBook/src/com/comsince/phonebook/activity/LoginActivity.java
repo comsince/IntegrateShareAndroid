@@ -22,6 +22,7 @@ public class LoginActivity extends Activity implements OnClickListener{
     private Button loginBtn;
     private TextView registration;
     private TextView title;
+    private String username;
     
     private static PhoneBookPreference phoneBookPreference;
     
@@ -31,6 +32,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		phoneBookPreference = PhoneBookApplication.phoneBookPreference;
+		goToMain();
 		setContentView(R.layout.login_activity);
 		findViewById();
 		setupListener();
@@ -86,6 +88,17 @@ public class LoginActivity extends Activity implements OnClickListener{
 			startActivityForResult(intent, LOGIN_REQUEST);
 		}
 	}
+	
+	public void goToMain(){
+		username = phoneBookPreference.getUserName();
+		if(username.equals("admin")){
+			return;
+		}else{
+			startActivity(new Intent(this,MainActivity.class));
+			finish();
+		}
+	}
+	
 	/*
 	 * 注册
 	 * **/
