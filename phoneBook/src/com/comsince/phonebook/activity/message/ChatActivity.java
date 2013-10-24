@@ -2,6 +2,7 @@ package com.comsince.phonebook.activity.message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import android.os.Bundle;
 import android.os.Message;
@@ -81,6 +82,10 @@ public class ChatActivity extends BaseMessageActivity {
 		msgAdapter = new ChatAdapter(context, msgList);
 		mMsgListView.setAdapter(msgAdapter);
 		mMsgListView.setPullLoadEnable(false);
+		//获取表情对应关系
+		Set<String> keySet = PhoneBookApplication.getInstance().getFaceMap().keySet();
+		keys = new ArrayList<String>();
+		keys.addAll(keySet);
 	}
 
 	@Override
