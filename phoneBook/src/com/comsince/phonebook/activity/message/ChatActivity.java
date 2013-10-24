@@ -6,6 +6,7 @@ import java.util.List;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -65,6 +66,8 @@ public class ChatActivity extends BaseMessageActivity {
 		msgEt.addTextChangedListener(this);
 		faceBtn.setOnClickListener(this);
 		mMsgListView.setXListViewListener(this);
+		msgEt.setOnTouchListener(this);
+		mMsgListView.setOnTouchListener(this);
 	}
 
 	@Override
@@ -189,11 +192,27 @@ public class ChatActivity extends BaseMessageActivity {
 		FacePageAdeapter adapter = new FacePageAdeapter(lv, faceViewPager);
 		faceViewPager.setAdapter(adapter);
 		faceViewPager.setCurrentItem(currentPage);
-		//faceViewPager.setTransitionEffect(mEffects[mSpUtil.getFaceEffect()]);
 		faceViewPager.setTransitionEffect(TransitionEffect.Standard);
 		indicator.setViewPager(faceViewPager);
 		adapter.notifyDataSetChanged();
 		faceLinearLayout.setVisibility(View.GONE);
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		switch (v.getId()) {
+		case R.id.msg_listView:
+			imm.hideSoftInputFromWindow(msgEt.getWindowToken(), 0);
+			faceLinearLayout.setVisibility(View.GONE);
+			isFaceShow = false;
+			break;
+		case R.id.msg_et:
+			imm.showSoftInput(msgEt, 0);
+			faceLinearLayout.setVisibility(View.GONE);
+			isFaceShow = false;
+			break;
+		}
+		return false;
 	}
 
 }

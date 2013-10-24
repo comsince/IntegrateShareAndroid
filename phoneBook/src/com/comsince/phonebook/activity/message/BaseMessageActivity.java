@@ -20,6 +20,7 @@ import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -47,7 +48,7 @@ import com.comsince.phonebook.view.viewpager.JazzyViewPager;
 import com.google.gson.Gson;
 
 public abstract class BaseMessageActivity extends Activity 
-       implements TextWatcher,OnClickListener,EventHandler,IXListViewListener{
+       implements TextWatcher,OnClickListener,EventHandler,IXListViewListener,OnTouchListener{
     /**基本组件**/
 	protected MsgListView mMsgListView;
 	protected TextView chatFriendName;
@@ -158,7 +159,6 @@ public abstract class BaseMessageActivity extends Activity
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				// TODO Auto-generated method stub
 				if (arg2 == PhoneBookApplication.NUM) {// 删除键的位置
 					int selection = msgEt.getSelectionStart();
 					String text = msgEt.getText().toString();
