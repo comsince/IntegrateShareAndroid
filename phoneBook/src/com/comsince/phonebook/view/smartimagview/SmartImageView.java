@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.comsince.phonebook.util.PhotoUtil;
+
 public class SmartImageView extends ImageView {
     private static final int LOADING_THREADS = 4;
     private static ExecutorService threadPool = Executors.newFixedThreadPool(LOADING_THREADS);
@@ -107,7 +109,7 @@ public class SmartImageView extends ImageView {
             @Override
             public void onComplete(Bitmap bitmap) {
                 if(bitmap != null) {
-                    setImageBitmap(bitmap);
+                    setImageBitmap(PhotoUtil.toRoundCorner(bitmap, 15));
                 } else {
                     // Set fallback resource
                     if(fallbackResource != null) {
