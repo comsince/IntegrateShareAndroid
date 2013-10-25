@@ -47,6 +47,13 @@ public class PhoneBookApplication extends Application {
 	public synchronized static PhoneBookApplication getInstance() {
 		return phoneBookApplication;
 	}
+	
+	/**
+	 * 获取preference
+	 * **/
+	public synchronized PhoneBookPreference getPreference() {
+		return phoneBookPreference;
+	}
 
 	/**
 	 * 当前用户的好友数据
@@ -129,6 +136,7 @@ public class PhoneBookApplication extends Application {
 	
 	/**
 	 *根据用户名及密码获取当前用户界面的头像
+	 *@param userInfo 用户头像文件名
 	 * **/
 	public Bitmap getAvatarByUserInfo(String userInfo){
 		try {
@@ -180,6 +188,15 @@ public class PhoneBookApplication extends Application {
 			return mFaceMap;
 		return null;
 	}
+	
+	 /**
+     * 获取当前用户头像文件名，不包含后缀名
+     * **/
+    public String getCurrentUserAvatarName(){
+    	String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+		String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
+		return fileName;
+    }
 	
 	
 	/**

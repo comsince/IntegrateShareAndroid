@@ -167,4 +167,22 @@ public class PhoneBookUtil {
 		String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
 		return BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_AVATAR+"/"+fileName+".jpg");
     }
+    
+    /**
+     * 根据文件名获取图片文件的访问链接
+     * @param fileName 要访问的文件名，仅限jpg格式
+     * **/
+    public static String getJpgFileWebUrlByFileName(String fileName){
+    	return BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_AVATAR+"/"+fileName+".jpg");
+    }
+    
+    /**
+     * 获取当前用户头像文件名，不包含后缀名
+     * **/
+    public static String getCurrentUserAvatarName(Context context){
+    	String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+		String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
+		return fileName;
+    }
+    
 }

@@ -13,7 +13,7 @@ public class UserDBHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE table IF NOT EXISTS user"
-				+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, nick TEXT, img TEXT, channelId TEXT, _group TEXT)");
+				+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT, userId TEXT, nick TEXT, img TEXT, channelId TEXT, _group TEXT, avatarname TEXT)");
 	}
 
 	@Override

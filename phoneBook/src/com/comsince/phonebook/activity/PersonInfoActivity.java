@@ -433,7 +433,10 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	private void savePersonAvatarToSDcard(Bitmap bitmap){
 		WebImage.removeWebImageCache();
 		String avatarFileName = phoneBookPreference.getUserName(this) + "_" + phoneBookPreference.getPassWord(this);
+		//缓存到SD卡
 		PhotoUtil.savePhotoToSDCard(bitmap, avatarFileName);
+	    //缓存到内存中
+		PhoneBookApplication.getInstance().getAvatarByUserInfo(avatarFileName);
 	}
 
 	/**

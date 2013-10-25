@@ -13,14 +13,16 @@ public class User implements Serializable {
 	private int headIcon;//
 	private int group;
 	private String msg;
+	private String userAvatarName;
 
-	public User(String UserId, String channelId, String nick, int headIcon, int group,String msg) {
+	public User(String UserId, String channelId, String nick, int headIcon, int group,String msg,String userAvatarName) {
 		this.UserId = UserId;
 		this.channelId = channelId;
 		this.nick = nick;
 		this.headIcon = headIcon;
 		this.group = group;
 		this.msg = msg;
+		this.userAvatarName = userAvatarName;
 	}
 
 	public User() {
@@ -76,9 +78,17 @@ public class User implements Serializable {
 		this.msg = msg;
 	}
 
+	public String getUserAvatarName() {
+		return userAvatarName;
+	}
+
+	public void setUserAvatarName(String userAvatarName) {
+		this.userAvatarName = userAvatarName;
+	}
+
 	@Override
 	public String toString() {
-		return "User [UserId=" + UserId + ", channelId=" + channelId + ", nick=" + nick + ", headIcon=" + headIcon + ", group=" + group + "]";
+		return "User [UserId=" + UserId + ", channelId=" + channelId + ", nick=" + nick + ", headIcon=" + headIcon + ", group=" + group + ",avatarName "+userAvatarName+" + ]";
 	}
 
 }

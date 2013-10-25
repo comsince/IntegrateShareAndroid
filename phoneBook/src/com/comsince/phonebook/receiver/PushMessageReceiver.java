@@ -21,6 +21,7 @@ import com.comsince.phonebook.entity.Message;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.L;
+import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.T;
 import com.google.gson.Gson;
 
@@ -161,15 +162,15 @@ public class PushMessageReceiver extends BroadcastReceiver {
 		String userId = msg.getUser_id();
 		int headId = msg.getHead_id();
 		if (!TextUtils.isEmpty(tag)) {// 如果是带有tag的消息
-			if (userId.equals(PhoneBookApplication.getInstance().phoneBookPreference.getUserId()))
+			if (userId.equals(PhoneBookApplication.getInstance().getPreference().getUserId()))
 				return;
-			User u = new User(userId, msg.getChannel_id(), msg.getNick(), headId, 0,"");
+			User u = new User(userId, msg.getChannel_id(), msg.getNick(), headId, 0,"",msg.getAvatar_name());
 			PhoneBookApplication.getInstance().getUserDB().addUser(u);// 存入或更新好友
 			for (EventHandler handler : ehList)
 				handler.onNewFriend(u);
 			if (!tag.equals(RESPONSE)) {
 				L.i("response start");
-				Message item = new Message(System.currentTimeMillis(), "hi", PushMessageReceiver.RESPONSE);
+				Message item = new Message(System.currentTimeMillis(), "hi", PushMessageReceiver.RESPONSE ,PhoneBookApplication.getInstance().getCurrentUserAvatarName());
 				new SendMsgAsyncTask(gson.toJson(item), userId).send();// 同时也回一条消息给对方1
 				L.i("response end");
 			}

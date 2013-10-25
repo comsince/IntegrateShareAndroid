@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 
 public class Message implements Serializable{
 	/**
-	 * 
+	 * 用户之间进行交互的消息模型
 	 */
 	private static final long serialVersionUID = 1L;
 	@Expose
@@ -25,8 +25,10 @@ public class Message implements Serializable{
 	private String message;
 	@Expose
 	private String tag;
-
-	public Message(long time_samp, String message, String tag) {
+	@Expose
+	private String avatar_name;
+	
+	public Message(long time_samp, String message, String tag ,String avatar_name) {
 		super();
 		PhoneBookPreference util = PhoneBookApplication.phoneBookPreference;
 		this.user_id = util.getUserId();
@@ -36,6 +38,7 @@ public class Message implements Serializable{
 		this.time_samp = time_samp;
 		this.message = message;
 		this.tag = tag;
+		this.avatar_name = avatar_name;
 	}
 
 	public String getUser_id() {
@@ -92,6 +95,14 @@ public class Message implements Serializable{
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	
+	public String getAvatar_name() {
+		return avatar_name;
+	}
+
+	public void setAvatar_name(String avatar_name) {
+		this.avatar_name = avatar_name;
 	}
 
 	@Override

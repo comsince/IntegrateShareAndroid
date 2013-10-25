@@ -27,6 +27,7 @@ import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.receiver.PushMessageReceiver;
 import com.comsince.phonebook.receiver.PushMessageReceiver.EventHandler;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
+import com.comsince.phonebook.util.L;
 import com.comsince.phonebook.util.T;
 import com.comsince.phonebook.util.TimeUtil;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView;
@@ -93,6 +94,10 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 		mUser = mUserDB.getUser();
 		mOnlineFriendAdapter = new OnlineFriendAdapter(mContext, mUser);
 		mRefreshListView.setAdapter(mOnlineFriendAdapter);
+		//测试
+		for(User user : mUser){
+			L.i(user.toString());
+		}
 	}
 	
 	public void invilidateListView(){

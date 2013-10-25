@@ -34,8 +34,8 @@ public class UserDB {
 	public void addUser(List<User> list) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		for (User u : list) {
-			db.execSQL("insert into user (userId,nick,img,channelId,_group) values(?,?,?,?,?)",
-					new Object[] { u.getUserId(), u.getNick(), u.getHeadIcon(), u.getChannelId(), u.getGroup() });
+			db.execSQL("insert into user (userId,nick,img,channelId,_group,avatarname) values(?,?,?,?,?,?)",
+					new Object[] { u.getUserId(), u.getNick(), u.getHeadIcon(), u.getChannelId(), u.getGroup(),u.getUserAvatarName() });
 		}
 		db.close();
 	}
@@ -46,8 +46,8 @@ public class UserDB {
 			return;
 		}
 		SQLiteDatabase db = helper.getWritableDatabase();
-		db.execSQL("insert into user (userId,nick,img,channelId,_group) values(?,?,?,?,?)",
-				new Object[] { u.getUserId(), u.getNick(), u.getHeadIcon(), u.getChannelId(), u.getGroup() });
+		db.execSQL("insert into user (userId,nick,img,channelId,_group,avatarname) values(?,?,?,?,?,?)",
+				new Object[] { u.getUserId(), u.getNick(), u.getHeadIcon(), u.getChannelId(), u.getGroup(), u.getUserAvatarName() });
 		db.close();
 
 	}
@@ -84,6 +84,7 @@ public class UserDB {
 			u.setHeadIcon(c.getInt(c.getColumnIndex("img")));
 			u.setChannelId(c.getString(c.getColumnIndex("channelId")));
 			u.setGroup(c.getInt(c.getColumnIndex("_group")));
+			u.setUserAvatarName(c.getString(c.getColumnIndex("avatarname")));
 			list.add(u);
 		}
 		c.close();

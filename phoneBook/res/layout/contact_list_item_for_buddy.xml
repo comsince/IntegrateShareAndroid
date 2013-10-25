@@ -6,8 +6,18 @@
     android:paddingBottom="6.0dip"
     android:paddingTop="6.0dip" >
 
-    <ImageView
+    <!-- <ImageView
         android:id="@+id/icon"
+        android:layout_width="50.0dip"
+        android:layout_height="50.0dip"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:duplicateParentState="true"
+        android:layout_marginLeft="10.0dip"
+        android:src="@drawable/phonebook" /> -->
+    
+    <com.comsince.phonebook.view.smartimagview.SmartImageView
+       android:id="@+id/icon"
         android:layout_width="50.0dip"
         android:layout_height="50.0dip"
         android:layout_alignParentLeft="true"
