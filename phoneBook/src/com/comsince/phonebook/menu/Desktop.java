@@ -19,7 +19,10 @@ import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.PersonInfoActivity;
 import com.comsince.phonebook.preference.PhoneBookPreference;
+import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.ViewUtil;
+import com.comsince.phonebook.view.smartimagview.SmartImageView;
+import com.comsince.phonebook.view.smartimagview.WebImage;
 
 public class Desktop {
 	private Context mContext;
@@ -30,6 +33,7 @@ public class Desktop {
 	private DesktopAdapter mAdapter;
 
 	private View mDesktop;
+	private SmartImageView mAvatar;
 	
 	private static PhoneBookPreference phoneBookPreference;
 	/**
@@ -54,6 +58,7 @@ public class Desktop {
 		//用户名
 		personAccount = (TextView) mDesktop.findViewById(R.id.desktop_name);
 		personAccount.setText(phoneBookPreference.getUserName(mContext));
+		mAvatar = (SmartImageView) mDesktop.findViewById(R.id.desktop_avatar);
 	}
 
 	public void setListener() {
@@ -71,6 +76,9 @@ public class Desktop {
 	public void init() {
 		mAdapter = new DesktopAdapter(mContext);
 		mDisplay.setAdapter(mAdapter);
+		//初始化个人头像信息
+		WebImage.removeWebImageCache();
+		mAvatar.setImageUrl(PhoneBookUtil.getCurrentUserAvatarWebUrl(mContext));
 	}
 
 	public View getView() {

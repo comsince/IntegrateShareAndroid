@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/kaixin_background"
     android:orientation="vertical"
     android:paddingRight="54dip" >
      <FrameLayout
@@ -12,20 +11,29 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/sidebar_bg_black"
+            android:background="@drawable/cover"
             android:orientation="vertical" >
 
             <RelativeLayout
                 android:id="@+id/desktop_top_layout"
+                android:background="@drawable/avatar_list_item_bg_selector"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
 
-                <ImageView
+                <!-- <ImageView
                     android:id="@+id/desktop_avatar"
                     android:layout_width="40dip"
                     android:layout_height="40dip"
                     android:layout_margin="8dip"
-                    android:src="@drawable/phonebook" />
+                    android:src="@drawable/phonebook" /> -->
+                
+                <com.comsince.phonebook.view.smartimagview.SmartImageView
+		                android:id="@+id/desktop_avatar"
+		                android:layout_width="40.0dip"
+		                android:layout_height="40.0dip"
+		                android:layout_margin="8dip"
+		                android:src="@drawable/phonebook"
+		                />
 
                 <TextView
                     android:id="@+id/desktop_name"
