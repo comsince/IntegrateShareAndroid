@@ -37,9 +37,15 @@ import com.comsince.phonebook.entity.Phone;
 import com.comsince.phonebook.entity.Phones;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.uikit.MMAlert;
+import com.comsince.phonebook.util.AndroidUtil;
+import com.comsince.phonebook.util.BaiduCloudSaveUtil;
+import com.comsince.phonebook.util.NetUtil;
 import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.PhotoUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
+import com.loopj.android.image.SmartImageView;
+import com.loopj.android.image.WebImage;
+import com.tencent.mm.sdk.platformtools.PhoneUtil;
 
 /**
  * 登陆用户个人信息页面，在这个页面中登陆用户需要填写自己的基本信息，并向服务器提交，只有 提交个人信息的方能加入到群组中
@@ -50,7 +56,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	private TextView personSex, personBirthDay, personRegion, personMarrige;
 	private TextView personQQ, personEmail, PersonMSN;
 	private Button btnBack , btnCommit;
-	private ImageButton personalCardAvatar;
+	private SmartImageView personalCardAvatar;
 	private TextView title;
 	private RelativeLayout RpersonName;
 	private RelativeLayout RpersonPhone;
@@ -89,8 +95,11 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	public static final int UPLOAD_PERSON_INFO_FAIL = 11;
 	
 	private boolean isUploadPersonInfo = false;
-	
+	/**是否需要从内存移除头像**/
+	private boolean isRemoveAvatar = false;
 	private boolean isUpdateData = false;
+	/**获取头像的网络地址**/
+	private String url;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -137,7 +146,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		title.setText("个人资料");
 		btnBack = (Button) findViewById(R.id.about_back);
 		btnCommit = (Button) findViewById(R.id.about_submit);
-		personalCardAvatar = (ImageButton) findViewById(R.id.personal_card_avatar);
+		personalCardAvatar = (SmartImageView) findViewById(R.id.personal_card_avatar);
 	}
 
 	/**
@@ -147,6 +156,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		// 先从本地加载文件
 		String personInfoDir = PhoneBookUtil.getPersonInfoPath();
 		String personInfoPath = personInfoDir + phoneBookPreference.getUserName(this) + "_" + phoneBookPreference.getPassWord(this) + ".xml";
+		initPersonAvatar();
 		try {
 			if(new File(personInfoPath).exists()){
 				InputStream personIn = new FileInputStream(personInfoPath);
@@ -376,6 +386,28 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 		startActivityForResult(intent,ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CROP);
 	}
 	
+	/***
+	 * 初始化用户头像
+	 * */
+	public void initPersonAvatar(){
+		String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+		String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
+		//当有网络情况下加载网络图片否则查看本地是否有图片
+		if(NetUtil.isNetConnected(context)){
+			//初始化访问图片网络地址.注意获取方式为GET
+			url = BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_AVATAR+"/"+fileName+".jpg");
+			personalCardAvatar.setImageUrl(url);
+		}else{
+			File file = new File(PhoneBookUtil.getCurrentUserAvatarFilePath(context));
+			Bitmap bitmap = null;
+			if(file.exists()){
+				bitmap = PhoneBookApplication.getInstance().getAvatarByUserInfo(fileName);
+				if(bitmap != null){
+					personalCardAvatar.setImageBitmap(bitmap);
+				}
+			}
+		}
+	}
 	/**
 	 * 保存裁剪的照片
 	 * 
@@ -400,6 +432,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	 * 将个人头像保存到本地
 	 * **/
 	private void savePersonAvatarToSDcard(Bitmap bitmap){
+		//WebImage.removeFromCache(PhoneBookUtil.getCurrentUserAvatarWebUrl(context));
 		String avatarFileName = phoneBookPreference.getUserName(this) + "_" + phoneBookPreference.getPassWord(this);
 		PhotoUtil.savePhotoToSDCard(bitmap, avatarFileName);
 	}

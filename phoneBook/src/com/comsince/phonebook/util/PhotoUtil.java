@@ -10,6 +10,7 @@ import com.comsince.phonebook.constant.Constant;
 
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuffXfermode;
@@ -87,4 +88,16 @@ public class PhotoUtil {
 		}
 		return newFilePath;
 	}
+	
+	/**
+	 * 从文件中获取图片
+	 * 
+	 * @param path
+	 *            图片的路径
+	 * @return
+	 */
+	public static Bitmap getBitmapFromFile(String path) {
+		return BitmapFactory.decodeFile(path);
+	}
+
 }

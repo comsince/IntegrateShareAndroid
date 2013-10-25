@@ -147,4 +147,24 @@ public class PhoneBookUtil {
     	}
     	return person;
     }
+    
+    /**
+     * 获取当前用户图片存储地址
+     * **/
+    public static String getCurrentUserAvatarFilePath(Context context){
+    	String userName = PhoneBookApplication.phoneBookPreference.getUserName(context);
+		String userPassword = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+    	String root = AndroidUtil.getSDCardRoot() + Constant.PHONE_BOOK_PATH +File.separator + Constant.DIR_PERSON_AVATAR +File.separator 
+    			          + userName + "_" + userPassword + ".jpg";
+    	return root;
+    }
+    
+    /**
+     * 获取头像的网络加密访问地址
+     * **/
+    public static String getCurrentUserAvatarWebUrl(Context context){
+    	String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
+		String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
+		return BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_PERSON_AVATAR+"/"+fileName+".jpg");
+    }
 }

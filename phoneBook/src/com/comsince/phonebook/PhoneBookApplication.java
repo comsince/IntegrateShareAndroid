@@ -19,10 +19,12 @@ import com.comsince.phonebook.dbhelper.UserDB;
 import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.preference.PhoneBookPreference;
+import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.PhotoUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tencent.mm.sdk.platformtools.PhoneUtil;
 
 public class PhoneBookApplication extends Application {
     public static PhoneBookPreference phoneBookPreference;
@@ -121,6 +123,29 @@ public class PhoneBookApplication extends Application {
 			return bitmap;
 		} catch (Exception e) {
 			return mDefault_Avatar;
+		}
+	}
+	
+	
+	/**
+	 *根据用户名及密码获取当前用户界面的头像
+	 * **/
+	public Bitmap getAvatarByUserInfo(String userInfo){
+		try {
+			Bitmap bitmap = null;
+			if(mAvatarCache.containsKey(userInfo)){
+				SoftReference<Bitmap> reference = mAvatarCache.get(userInfo);
+				bitmap = reference.get();
+				if (bitmap != null) {
+					return bitmap;
+				}
+			}
+			bitmap = PhotoUtil.toRoundCorner(PhotoUtil.getBitmapFromFile(PhoneBookUtil.getCurrentUserAvatarFilePath(context)), 15);
+			mAvatarCache.put(userInfo, new SoftReference<Bitmap>(bitmap));
+			return bitmap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	
