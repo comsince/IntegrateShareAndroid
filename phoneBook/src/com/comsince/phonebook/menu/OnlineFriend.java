@@ -211,8 +211,8 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 				}
 				//刷新adapter
 				mOnlineFriendAdapter.refreshData(mUser);
-				int headId = 0;
-				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0);
+				//int headId = 0;
+				//MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0);
 				//msgAdapter.upDateMsg(item);
 				//mMsgListView.setSelection(msgAdapter.getCount() - 1);
 				//mMsgDB.saveMsg(msgItem.getUser_id(), item);

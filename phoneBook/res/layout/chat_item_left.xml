@@ -25,7 +25,7 @@
         android:textSize="10.0sp"
         android:visibility="gone" />
 
-    <ImageView
+    <!-- <ImageView
         android:id="@+id/icon"
         android:layout_width="40.0dip"
         android:layout_height="40.0dip"
@@ -33,7 +33,17 @@
         android:background="@drawable/chat_tool_camera"
         android:clickable="true"
         android:scaleType="fitXY"
-        android:focusable="true"/>
+        android:focusable="true"/> -->
+    
+    <com.comsince.phonebook.view.smartimagview.SmartImageView
+        android:id="@+id/icon"
+        android:layout_width="40.0dip"
+        android:layout_height="40.0dip"
+        android:layout_below="@id/datetime"
+        android:background="@drawable/chat_tool_camera"
+        android:clickable="true"
+        android:scaleType="fitXY"
+        android:focusable="true" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"

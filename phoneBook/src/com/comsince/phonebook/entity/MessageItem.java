@@ -1,5 +1,8 @@
 package com.comsince.phonebook.entity;
 
+/**
+ * 消息内容模型，不同于交互消息模型，这个模型仅仅处理在界面显示的作用
+ * **/
 public class MessageItem {
 	// Text
 	public static final int MESSAGE_TYPE_TEXT = 1;
@@ -12,6 +15,7 @@ public class MessageItem {
 	private String name;// 消息来自
 	private long time;// 消息日期
 	private String message;// 消息内容
+	private String avatarName; //用户头像名
 	private int headImg;
 	private boolean isComMeg = true;// 是否为收到的消息
 
@@ -20,7 +24,7 @@ public class MessageItem {
 	public MessageItem() {
 	}
 
-	public MessageItem(int msgType, String name, long date, String message, int headImg, boolean isComMeg, int isNew) {
+	public MessageItem(int msgType, String name, long date, String message, int headImg, boolean isComMeg, int isNew ,String avatarName) {
 		super();
 		this.msgType = msgType;
 		this.name = name;
@@ -29,6 +33,7 @@ public class MessageItem {
 		this.headImg = headImg;
 		this.isComMeg = isComMeg;
 		this.isNew = isNew;
+		this.avatarName = avatarName;
 	}
 
 	public int getMsgType() {
@@ -97,6 +102,14 @@ public class MessageItem {
 
 	public void setIsNew(int isNew) {
 		this.isNew = isNew;
+	}
+
+	public String getAvatarName() {
+		return avatarName;
+	}
+
+	public void setAvatarName(String avatarName) {
+		this.avatarName = avatarName;
 	}
 
 }

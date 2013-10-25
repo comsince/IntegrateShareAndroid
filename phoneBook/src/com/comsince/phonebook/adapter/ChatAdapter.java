@@ -22,7 +22,11 @@ import android.widget.TextView.BufferType;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.entity.MessageItem;
+import com.comsince.phonebook.util.L;
+import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.TimeUtil;
+import com.comsince.phonebook.view.smartimagview.SmartImageTask.OnCompleteListener;
+import com.comsince.phonebook.view.smartimagview.SmartImageView;
 
 public class ChatAdapter extends BaseAdapter {
 
@@ -77,21 +81,31 @@ public class ChatAdapter extends BaseAdapter {
 			} else {
 				convertView = mInflater.inflate(R.layout.chat_item_right, null);
 			}
-			holder.head = (ImageView) convertView.findViewById(R.id.icon);
+			holder.head = (SmartImageView) convertView.findViewById(R.id.icon);
 			holder.time = (TextView) convertView.findViewById(R.id.datetime);
 			holder.msg = (TextView) convertView.findViewById(R.id.textView2);
 			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.progressBar1);
+			
 			convertView.setTag(R.drawable.phonebook + position);
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.drawable.phonebook + position);
 		}
 		holder.time.setText(TimeUtil.getChatTime(item.getDate()));
 		holder.time.setVisibility(View.VISIBLE);
-		//holder.head.setBackgroundResource(PushApplication.heads[item.getHeadImg()]);
+		
+		String userAvatar = item.getAvatarName();
+		L.i("chatadapter userAvatar" + userAvatar);
 		if(isComMsg){
-			holder.head.setBackgroundResource(R.drawable.phonebook);
+			Bitmap avatarBitmap = PhoneBookApplication.getInstance().getAvatarByUserInfoExceptMe(userAvatar);
+			L.i("chatadapter bitmap :" + avatarBitmap);
+			if(avatarBitmap != null){
+				holder.head.setImageBitmap(avatarBitmap);
+			}else{
+				holder.head.setImageUrl(PhoneBookUtil.getJpgFileWebUrlByFileName(userAvatar),userAvatar);
+			}
 		}else{
-			holder.head.setBackgroundResource(R.drawable.chat_tool_camera);
+			String userName = PhoneBookApplication.getInstance().getCurrentUserAvatarName();
+			holder.head.setImageBitmap(PhoneBookApplication.getInstance().getAvatarByUserInfo(userName));
 		}
 		/*if (!isComMsg && !mSpUtil.getShowHead()) {
 			holder.head.setVisibility(View.GONE);
@@ -139,7 +153,7 @@ public class ChatAdapter extends BaseAdapter {
 	}
 	
 	static class ViewHolder {
-		ImageView head;
+		SmartImageView head;
 		TextView time;
 		TextView msg;
 		ImageView imageView;

@@ -62,7 +62,20 @@
             android:progressDrawable="@drawable/progress_receivepic" />
     </RelativeLayout>
 
-    <ImageView
+    <!-- <ImageView
+        android:id="@+id/icon"
+        android:layout_width="40.0dip"
+        android:layout_height="40.0dip"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/datetime"
+        android:layout_gravity="top"
+        android:background="@drawable/chat_tool_camera"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/chat_tool_camera" /> -->
+    
+    <com.comsince.phonebook.view.smartimagview.SmartImageView
         android:id="@+id/icon"
         android:layout_width="40.0dip"
         android:layout_height="40.0dip"

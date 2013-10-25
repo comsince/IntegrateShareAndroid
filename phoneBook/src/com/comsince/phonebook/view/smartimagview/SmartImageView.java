@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.comsince.phonebook.PhoneBookApplication;
+import com.comsince.phonebook.util.L;
 import com.comsince.phonebook.util.PhotoUtil;
 
 public class SmartImageView extends ImageView {
@@ -27,6 +29,13 @@ public class SmartImageView extends ImageView {
 
     public SmartImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+    
+    /**
+     * 设置图片网络地址，并作本地缓存
+     * */
+    public void setImageUrl(String url,String avatarName){
+    	setImage(new WebImage(url),null,null,null,avatarName);
     }
 
 
@@ -52,7 +61,7 @@ public class SmartImageView extends ImageView {
     }
 
     public void setImageUrl(String url, final Integer fallbackResource, final Integer loadingResource, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(new WebImage(url), fallbackResource, loadingResource, completeListener);
+        setImage(new WebImage(url), fallbackResource, loadingResource, completeListener,null);
     }
 
 
@@ -72,26 +81,26 @@ public class SmartImageView extends ImageView {
 
     // Set image using SmartImage object
     public void setImage(final SmartImage image) {
-        setImage(image, null, null, null);
+        setImage(image, null, null, null,null);
     }
 
     public void setImage(final SmartImage image, final SmartImageTask.OnCompleteListener completeListener) {
-        setImage(image, null, null, completeListener);
+        setImage(image, null, null, completeListener,null);
     }
 
     public void setImage(final SmartImage image, final Integer fallbackResource) {
-        setImage(image, fallbackResource, fallbackResource, null);
+        setImage(image, fallbackResource, fallbackResource, null,null);
     }
 
     public void setImage(final SmartImage image, final Integer fallbackResource, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(image, fallbackResource, fallbackResource, completeListener);
+        setImage(image, fallbackResource, fallbackResource, completeListener,null);
     }
 
     public void setImage(final SmartImage image, final Integer fallbackResource, final Integer loadingResource) {
-        setImage(image, fallbackResource, loadingResource, null);
+        setImage(image, fallbackResource, loadingResource, null,null);
     }
 
-    public void setImage(final SmartImage image, final Integer fallbackResource, final Integer loadingResource, final SmartImageTask.OnCompleteListener completeListener) {
+    public void setImage(final SmartImage image, final Integer fallbackResource, final Integer loadingResource, final SmartImageTask.OnCompleteListener completeListener ,final String userAvatar) {
         // Set a loading resource
         if(loadingResource != null){
             setImageResource(loadingResource);
@@ -110,6 +119,11 @@ public class SmartImageView extends ImageView {
             public void onComplete(Bitmap bitmap) {
                 if(bitmap != null) {
                     setImageBitmap(PhotoUtil.toRoundCorner(bitmap, 15));
+                    //存储图片
+                    if(userAvatar != null){
+                    	L.i("smartview:" +userAvatar);
+                    	PhoneBookApplication.getInstance().getAvatarByUserInfoExceptMe(userAvatar,bitmap);
+                    }
                 } else {
                     // Set fallback resource
                     if(fallbackResource != null) {

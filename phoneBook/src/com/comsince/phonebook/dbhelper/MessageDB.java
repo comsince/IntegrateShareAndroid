@@ -19,19 +19,19 @@ public class MessageDB {
 	}
 
 	public void saveMsg(String id, MessageItem entity) {
-		db.execSQL("CREATE table IF NOT EXISTS _" + id + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, img TEXT,date TEXT,isCome TEXT,message TEXT,isNew TEXT)");
+		db.execSQL("CREATE table IF NOT EXISTS _" + id + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, img TEXT,date TEXT,isCome TEXT,message TEXT,isNew TEXT,avatarName TEXT)");
 		int isCome = 0;
 		if (entity.isComMeg()) {// 如果是收到的消息，保存在数据库的值为1
 			isCome = 1;
 		}
-		db.execSQL("insert into _" + id + " (name,img,date,isCome,message,isNew) values(?,?,?,?,?,?)", new Object[] { entity.getName(), entity.getHeadImg(), entity.getDate(),
-				isCome, entity.getMessage(), entity.getIsNew() });
+		db.execSQL("insert into _" + id + " (name,img,date,isCome,message,isNew,avatarName) values(?,?,?,?,?,?,?)", new Object[] { entity.getName(), entity.getHeadImg(), entity.getDate(),
+				isCome, entity.getMessage(), entity.getIsNew(),entity.getAvatarName() });
 	}
 
 	public List<MessageItem> getMsg(String id, int pager) {
 		List<MessageItem> list = new LinkedList<MessageItem>();
 		int num = 10 * (pager + 1);// 本来是准备做滚动到顶端自动加载数据
-		db.execSQL("CREATE table IF NOT EXISTS _" + id + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, img TEXT,date TEXT,isCome TEXT,message TEXT,isNew TEXT)");
+		db.execSQL("CREATE table IF NOT EXISTS _" + id + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, img TEXT,date TEXT,isCome TEXT,message TEXT,isNew TEXT,avatarName TEXT)");
 		Cursor c = db.rawQuery("SELECT * from _" + id + " ORDER BY _id DESC LIMIT " + num, null);
 		while (c.moveToNext()) {
 			String name = c.getString(c.getColumnIndex("name"));
@@ -40,11 +40,12 @@ public class MessageDB {
 			int isCome = c.getInt(c.getColumnIndex("isCome"));
 			String message = c.getString(c.getColumnIndex("message"));
 			int isNew = c.getInt(c.getColumnIndex("isNew"));
+			String avatarName = c.getString(c.getColumnIndex("avatarName"));
 			boolean isComMsg = false;
 			if (isCome == 1) {
 				isComMsg = true;
 			}
-			MessageItem entity = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, name, date, message, img, isComMsg, isNew);
+			MessageItem entity = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, name, date, message, img, isComMsg, isNew,avatarName);
 			list.add(entity);
 		}
 		c.close();
@@ -53,7 +54,7 @@ public class MessageDB {
 	}
 
 	public int getNewCount(String id) {
-		db.execSQL("CREATE table IF NOT EXISTS _" + id + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, img TEXT,date TEXT,isCome TEXT,message TEXT,isNew TEXT)");
+		db.execSQL("CREATE table IF NOT EXISTS _" + id + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, img TEXT,date TEXT,isCome TEXT,message TEXT,isNew TEXT,avatarName TEXT)");
 		Cursor c = db.rawQuery("SELECT isNew from _" + id + " where isNew=1", null);
 		int count = c.getCount();
 		// L.i("new message num = " + count);
@@ -62,7 +63,7 @@ public class MessageDB {
 	}
 
 	public void clearNewCount(String id) {
-		db.execSQL("CREATE table IF NOT EXISTS _" + id + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, img TEXT,date TEXT,isCome TEXT,message TEXT,isNew TEXT)");
+		db.execSQL("CREATE table IF NOT EXISTS _" + id + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, img TEXT,date TEXT,isCome TEXT,message TEXT,isNew TEXT,avatarName TEXT)");
 		db.execSQL("update _" + id + " set isNew=0 where isNew=1");
 	}
 

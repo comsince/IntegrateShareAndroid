@@ -157,6 +157,49 @@ public class PhoneBookApplication extends Application {
 		}
 	}
 	
+	/**
+	 * 返回给定的头像文件名的bitmap
+	 * **/
+	public Bitmap getAvatarByUserInfoExceptMe(String userInfo){
+		try {
+			Bitmap bitmap = null;
+			if(mAvatarCache.containsKey(userInfo)){
+				SoftReference<Bitmap> reference = mAvatarCache.get(userInfo);
+				bitmap = reference.get();
+				if (bitmap != null) {
+					return bitmap;
+				}
+			}
+			bitmap = PhotoUtil.toRoundCorner(bitmap,15);
+			mAvatarCache.put(userInfo, new SoftReference<Bitmap>(bitmap));
+			return bitmap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * 将bitmap头像加入的缓存中
+	 * **/
+	
+	public void getAvatarByUserInfoExceptMe(String userInfo , Bitmap bitmap){
+		try {
+			if(mAvatarCache.containsKey(userInfo)){
+				SoftReference<Bitmap> reference = mAvatarCache.get(userInfo);
+				bitmap = reference.get();
+				if (bitmap == null) {
+					mAvatarCache.put(userInfo, new SoftReference<Bitmap>(bitmap));
+				}
+			}else{
+				mAvatarCache.put(userInfo, new SoftReference<Bitmap>(bitmap));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public synchronized UserDB getUserDB() {
 		if (mUserDB == null)
 			mUserDB = new UserDB(this);

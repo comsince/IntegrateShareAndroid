@@ -232,7 +232,7 @@ public abstract class BaseMessageActivity extends Activity
 					return;
 				//int headId = msgItem.getHead_id();
 				int headId = 0;
-				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0);
+				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0 ,msgItem.getAvatar_name());
 				msgAdapter.upDateMsg(item);
 				mMsgListView.setSelection(msgAdapter.getCount() - 1);
 				mMsgDB.saveMsg(msgItem.getUser_id(), item);

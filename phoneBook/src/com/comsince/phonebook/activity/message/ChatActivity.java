@@ -28,6 +28,7 @@ import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.receiver.PushMessageReceiver;
 import com.comsince.phonebook.util.L;
+import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.view.extendlistview.MsgListView;
 import com.comsince.phonebook.view.viewpager.CirclePageIndicator;
 import com.comsince.phonebook.view.viewpager.JazzyViewPager;
@@ -148,14 +149,14 @@ public class ChatActivity extends BaseMessageActivity {
 			String msg = msgEt.getText().toString();
 			MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT,
 					phoneBookPre.getUserName(), System.currentTimeMillis(), msg,
-					0, false, 0);
+					0, false, 0,PhoneBookUtil.getCurrentUserAvatarName(context));
 			L.i("发送消息： "+item.getName());
 			msgAdapter.upDateMsg(item);
 			mMsgListView.setSelection(msgAdapter.getCount() - 1);
 			mMsgDB.saveMsg(mFromUser.getUserId(), item);
 			msgEt.setText("");
 			//发送消息
-			com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, "","");
+			com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, "",PhoneBookUtil.getCurrentUserAvatarName(context));
 			new SendMsgAsyncTask(mGson.toJson(msgItem), mFromUser.getUserId()).send();
 			break;
 	  }
