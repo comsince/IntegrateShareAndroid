@@ -92,7 +92,7 @@
                         android:background="@drawable/personal_card_avatar"
                         android:scaleType="fitXY" /> -->
                     
-                    <com.loopj.android.image.SmartImageView
+                    <com.comsince.phonebook.view.smartimagview.SmartImageView
 		                android:id="@+id/personal_card_avatar"
 		                android:layout_width="60.0dip"
 		                android:layout_height="60.0dip"

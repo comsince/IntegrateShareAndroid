@@ -43,9 +43,8 @@ import com.comsince.phonebook.util.NetUtil;
 import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.PhotoUtil;
 import com.comsince.phonebook.util.SimpleXmlReaderUtil;
-import com.loopj.android.image.SmartImageView;
-import com.loopj.android.image.WebImage;
-import com.tencent.mm.sdk.platformtools.PhoneUtil;
+import com.comsince.phonebook.view.smartimagview.SmartImageView;
+import com.comsince.phonebook.view.smartimagview.WebImage;
 
 /**
  * 登陆用户个人信息页面，在这个页面中登陆用户需要填写自己的基本信息，并向服务器提交，只有 提交个人信息的方能加入到群组中
@@ -432,7 +431,7 @@ public class PersonInfoActivity extends Activity implements OnClickListener{
 	 * 将个人头像保存到本地
 	 * **/
 	private void savePersonAvatarToSDcard(Bitmap bitmap){
-		//WebImage.removeFromCache(PhoneBookUtil.getCurrentUserAvatarWebUrl(context));
+		WebImage.removeWebImageCache();
 		String avatarFileName = phoneBookPreference.getUserName(this) + "_" + phoneBookPreference.getPassWord(this);
 		PhotoUtil.savePhotoToSDCard(bitmap, avatarFileName);
 	}
