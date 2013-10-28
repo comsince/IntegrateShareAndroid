@@ -23,6 +23,7 @@ import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.GroupFriendActivity;
 import com.comsince.phonebook.activity.JoinGroupDialogActivity;
+import com.comsince.phonebook.activity.group.CreateGroupActivity;
 import com.comsince.phonebook.adapter.MGroupAdapter;
 import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
@@ -139,7 +140,7 @@ public class MGroup {
 					generalAsyncTask.execute();
 					break;
 				case MMAlertSelect_Create_Group:
-					
+					createGroup();
 					break;
 				case MMAlertSelect_Join_Group:
 					joinGroup();
@@ -156,6 +157,12 @@ public class MGroup {
 		Intent intent = new Intent();
 		intent.setClass(mContext, JoinGroupDialogActivity.class);
 		((Activity)mContext).startActivity(intent);
+	}
+	
+	public void createGroup(){
+		Intent intent = new Intent();
+		intent.setClass(mContext, CreateGroupActivity.class);
+		mContext.startActivity(intent);
 	}
 	
 	Handler groupHandler = new Handler(){

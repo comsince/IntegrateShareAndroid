@@ -19,6 +19,10 @@ public class GroupInfo {
 	private String remark;
 	@Element(required = false)
 	private String groupName;
+	@Element(required = false)
+	private String groupAvatar;
+	@Element(required = false)
+	private String groupRegion;
 
 	public String getAdminAccount() {
 		return adminAccount;
@@ -60,4 +64,20 @@ public class GroupInfo {
 		this.groupName = groupName;
 	}
 
+	public String getGroupAvatar() {
+		return groupAvatar;
+	}
+
+	public void setGroupAvatar(String groupAvatar) {
+		this.groupAvatar = groupAvatar;
+	}
+
+	public String getGroupRegion() {
+		return groupRegion;
+	}
+
+	public void setGroupRegion(String groupRegion) {
+		this.groupRegion = groupRegion;
+	}
+	
 }

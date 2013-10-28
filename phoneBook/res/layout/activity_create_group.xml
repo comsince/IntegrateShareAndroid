@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/kaixin_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dip"
+        android:background="@drawable/global_top_background" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/title_bar_center_button_bg"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/group_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:maxWidth="150dip"
+                android:padding="8dip"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:text="创建群" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/group_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="8dip"
+            android:layout_marginLeft="8dip"
+            android:layout_marginTop="8dip"
+            android:background="@drawable/title_text_button_left_arrow"
+            android:ellipsize="end"
+            android:maxWidth="80dip"
+            android:minWidth="48dip"
+            android:singleLine="true"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:text="返回"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:id="@+id/about_avatar_layout"
+                    android:layout_width="120dip"
+                    android:layout_height="120dip" >
+
+                    <ImageButton
+                        android:id="@+id/group_avatar"
+                        android:layout_width="100dip"
+                        android:layout_height="100dip"
+                        android:layout_margin="8dip"
+                        android:background="@drawable/avatar_background_white"
+                        android:padding="4dip"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/head_default" />
+
+                    <Button
+                        android:id="@+id/group_avatar_change"
+                        android:layout_width="40dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/about_button_change_logo" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/about_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/about_avatar_layout"
+                    android:layout_toRightOf="@+id/about_avatar_layout"
+                    android:padding="8dip"
+                    android:textColor="#000000"
+                    android:textSize="19sp" />
+
+                <TextView
+                    android:id="@+id/about_signature"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/about_name"
+                    android:layout_below="@+id/about_name"
+                    android:paddingBottom="8dip"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <!--群名称 -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/group_name"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/cdetail_lefttop"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="群名称" />
+
+                <RelativeLayout
+                    android:id="@+id/group_name_editable_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/cdetail_righttop_selector"
+                    android:clickable="true" >
+
+                    <ImageView
+                        android:id="@+id/group_name_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+
+                    <TextView
+                        android:id="@+id/group_name_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_toLeftOf="@id/group_name_editable_iv"
+                        android:maxLength="99" />
+                </RelativeLayout>
+            </LinearLayout>
+            <!-- 生日 -->
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip" >
+
+                <TextView
+                    android:id="@+id/group_tag"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/cdetail_leftcenter"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="群标签" />
+
+                <RelativeLayout
+                    android:id="@+id/group_tag_editable_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/group_tag"
+                    android:background="@drawable/cdetail_rightcenter_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/group_tag_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:hint="即是邀请码仅限英文字符"
+                        android:layout_marginLeft="10.0dip" />
+
+                    <ImageView
+                        android:id="@+id/group_tag_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <!-- 活动区域 -->
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip" >
+
+                <TextView
+                    android:id="@+id/group_reigon"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/cdetail_leftcenter"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:hint="群活动区域"
+                    android:text="区域" />
+
+                <RelativeLayout
+                    android:id="@+id/group_reigon_editable_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/group_reigon"
+                    android:background="@drawable/cdetail_rightcenter_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/group_reigon_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip" />
+
+                    <ImageView
+                        android:id="@+id/group_reigon_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <!-- 群说明 -->
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip" >
+
+                <TextView
+                    android:id="@+id/group_remark"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/setting_pad_item_bottom_selector"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="群说明" />
+
+                <RelativeLayout
+                    android:id="@+id/group_remark_editable_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/group_remark"
+                    android:background="@drawable/cdetail_rightbottom_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/group_remark_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip" />
+
+                    <ImageView
+                        android:id="@+id/group_remark_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+                </RelativeLayout>
+            </RelativeLayout>
+            
+              <Button
+                android:id="@+id/create_group_btn"
+                android:layout_width="fill_parent"
+                android:layout_marginTop="30dip"
+                android:layout_height="45dip"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:background="@drawable/login_btn"
+                android:shadowColor="#7f000000"
+                android:shadowDx="0.0"
+                android:shadowDy="1.0"
+                android:shadowRadius="1.0"
+                android:text="创建群组"
+                android:textColor="#ffffff"
+                android:textSize="18sp" 
+                android:enabled="true"/>
+            <!-- 其他联系方式 -->
+            <!-- QQ -->
+
+          <!--   <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:layout_marginTop="8dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/personal_card_qq"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/cdetail_lefttop"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="QQ" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_qq_editable_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/cdetail_righttop_selector"
+                    android:clickable="true" >
+
+                    <ImageView
+                        android:id="@+id/personal_card_qq_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+
+                    <TextView
+                        android:id="@+id/personal_card_qq_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_toLeftOf="@id/personal_card_qq_editable_iv"
+                        android:maxLength="99" />
+                </RelativeLayout>
+            </LinearLayout>
+            email
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip" >
+
+                <TextView
+                    android:id="@+id/personal_card_email"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/cdetail_leftcenter"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="邮箱" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_email_editable_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/personal_card_email"
+                    android:background="@drawable/cdetail_rightcenter_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/personal_card_email_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip" />
+
+                    <ImageView
+                        android:id="@+id/personal_card_email_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+                </RelativeLayout>
+            </RelativeLayout>
+            msn
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip" >
+
+                <TextView
+                    android:id="@+id/personal_card_msn"
+                    style="@style/MidSizeBlackTextStyle"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/setting_pad_item_bottom_selector"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10.0dip"
+                    android:text="MSN" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_card_msn_editable_box"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/personal_card_msn"
+                    android:background="@drawable/cdetail_rightbottom_selector"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/personal_card_msn_editable_tv"
+                        style="@style/MidSizeBlackTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip" />
+
+                    <ImageView
+                        android:id="@+id/personal_card_msn_editable_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10.0dip"
+                        android:src="@drawable/setting_arrow" />
+                </RelativeLayout>
+            </RelativeLayout> -->
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

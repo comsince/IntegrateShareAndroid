@@ -109,6 +109,13 @@
             android:windowSoftInputMode="stateHidden|adjustUnspecified"
             android:screenOrientation="portrait">
         </activity>
+        <!-- 创建群组 -->
+        <activity
+            android:name=".activity.group.CreateGroupActivity"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            android:screenOrientation="portrait">
+        </activity>
+        
         
         <!-- push service client 用来接收push服务receiver -->
         <receiver android:name=".receiver.PushMessageReceiver" >

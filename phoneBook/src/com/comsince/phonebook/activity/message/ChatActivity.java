@@ -48,6 +48,12 @@ public class ChatActivity extends BaseMessageActivity {
 	}
 	
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		PushMessageReceiver.ehList.remove(this);// 移除监听
+	}
+	
+	@Override
 	public void onBackPressed() {
 		if (params.softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE || isFaceShow) {
 			faceLinearLayout.setVisibility(View.GONE);

@@ -112,6 +112,16 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 			}else{
 				flag = false;
 			}
+		}else if(taskTag == Constant.TASK_UPLOAD_GROUP_AVATAR){
+			condition = params[0];
+			String upLoadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_GROUP_AVATAR+"/"+condition+".jpg");
+			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+Constant.DIR_GROUP_AVATAR+File.separator+condition+".jpg";
+			String responeMsg = BaiduCloudSaveUtil.putObject(upLoadURL, uploadXmlPath);
+			if(responeMsg.equals("OK")){
+				flag = true;
+			}else{
+				flag = false;
+			}
 		}else if(taskTag == Constant.TASK_DOWNLOAD){
 			String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);
 			String fileName = PhoneBookApplication.phoneBookPreference.getUserName(context)+"_"+passWord;
