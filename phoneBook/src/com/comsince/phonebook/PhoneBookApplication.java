@@ -167,11 +167,9 @@ public class PhoneBookApplication extends Application {
 				SoftReference<Bitmap> reference = mAvatarCache.get(userInfo);
 				bitmap = reference.get();
 				if (bitmap != null) {
-					return bitmap;
+					return PhotoUtil.toRoundCorner(bitmap,15);
 				}
 			}
-			bitmap = PhotoUtil.toRoundCorner(bitmap,15);
-			mAvatarCache.put(userInfo, new SoftReference<Bitmap>(bitmap));
 			return bitmap;
 		} catch (Exception e) {
 			e.printStackTrace();

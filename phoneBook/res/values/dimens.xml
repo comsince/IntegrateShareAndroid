@@ -21,4 +21,6 @@
     <dimen name="LargeAvatarSize">56dp</dimen>
     
     <dimen name="bigdetailsize">16dp</dimen>
+    
+    <dimen name="gd_arrow_offset">5dp</dimen>
 </resources>

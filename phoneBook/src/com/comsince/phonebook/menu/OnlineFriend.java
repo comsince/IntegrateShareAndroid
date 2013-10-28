@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 
 import com.baidu.android.pushservice.PushConstants;
@@ -22,7 +23,6 @@ import com.comsince.phonebook.activity.message.ChatActivity;
 import com.comsince.phonebook.adapter.OnlineFriendAdapter;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.dbhelper.UserDB;
-import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.receiver.PushMessageReceiver;
 import com.comsince.phonebook.receiver.PushMessageReceiver.EventHandler;
@@ -33,8 +33,12 @@ import com.comsince.phonebook.util.TimeUtil;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnCancelListener;
 import com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView.OnRefreshListener;
+import com.comsince.phonebook.view.quickactionbar.QuickAction;
+import com.comsince.phonebook.view.quickactionbar.QuickActionBar;
+import com.comsince.phonebook.view.quickactionbar.QuickActionWidget;
+import com.comsince.phonebook.view.quickactionbar.QuickActionWidget.OnQuickActionClickListener;
 
-public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHandler{
+public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHandler,OnQuickActionClickListener{
 	
 	private Context mContext;
 	private PhoneBookApplication phoneBookApplication;
@@ -44,6 +48,8 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 	private OnlineFriendAdapter mOnlineFriendAdapter;
 	private List<User> mUser;
 	private UserDB mUserDB;
+	private QuickActionWidget mBar;
+	private int onItemClickPosition;
 	
 	public static final int NEW_MESSAGE = 0x001;// 收到消息
 	
@@ -84,6 +90,19 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 				}
 			}
 		});
+		
+		mRefreshListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View view, int position, long arg3) {
+				if(position != 0){
+					onItemClickPosition = position;
+					//T.showLong(mContext, String.valueOf(onItemClickPosition));
+					showChildQuickActionBar(view.findViewById(R.id.icon));
+				}
+				return false;
+			}
+		});
 		mRefreshListView.setOnCancelListener(this);
 		mRefreshListView.setOnRefreshListener(this);
 	}
@@ -104,6 +123,19 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 		if(mRefreshListView != null){
 			mRefreshListView.invalidateViews();
 		}
+	}
+	
+	/**
+	 * 初始化actionbar
+	 * **/
+	private void showChildQuickActionBar(View view) {
+		mBar = new QuickActionBar(mContext);
+		mBar.addQuickAction(new QuickAction(mContext, R.drawable.ic_action_share_pressed, R.string.open));
+		mBar.addQuickAction(new QuickAction(mContext, R.drawable.ic_action_rename_pressed, R.string.rename));
+		mBar.addQuickAction(new QuickAction(mContext, R.drawable.ic_action_move_pressed, R.string.move));
+		mBar.addQuickAction(new QuickAction(mContext, R.drawable.ic_action_delete_pressed, R.string.delete));
+		mBar.setOnQuickActionClickListener(this);
+		mBar.show(view);
 	}
 	
 	/**
@@ -221,5 +253,34 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 			}
 		}
 	};
+
+	@Override
+	public void onQuickActionClicked(QuickActionWidget widget, int position) {
+		User u = mUser.get(onItemClickPosition-1);
+		if (u != null)
+			switch (position) {
+			case 0:
+				//mMsgDB.clearNewCount(u.getUserId());// 新消息置空
+				Intent toChatIntent = new Intent(mContext,ChatActivity.class);
+				toChatIntent.putExtra("user", u);
+				mContext.startActivity(toChatIntent);
+				break;
+			case 1:
+				T.showShort(mContext, "rename");
+				break;
+			case 2:
+				T.showShort(mContext, "move");
+				break;
+			case 3:
+				mUserDB.delUser(u);
+				refreshOnLineFriendData();
+				//mRecentDB.delRecent(u.getUserId());
+				//((MainActivity) getActivity()).upDateList();
+				T.showShort(mContext, "删除成功！");
+				break;
+			default:
+				break;
+			}
+	}
 	
 }
