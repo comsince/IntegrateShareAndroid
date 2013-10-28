@@ -9,6 +9,7 @@ public class Constant {
     public static final int DOWN_LOAD_SUCCESS = 10000;
     public static final int DOWN_LOAD_FAIL = 10001;
     
+    
     public static final int DOWN_LOAD_GROUPPERSON_SUCCESS =10002;
     public static final int DOWN_LOAD_GROUPPERSON_FAIL =10004;
     public static final int UPLAOD_GROUPPERSON_SUCCESS = 10003;
@@ -26,6 +27,7 @@ public class Constant {
   	public static final String DIR_PERSON_INFO = "personInfo";
   	public static final String DIR_LOGIN_INFO = "loginInfo";
   	public static final String FILE_GROUP_SUFFIX = "groupInfo";
+  	public static final String FILE_GROUP_INFO_NO_SUFFIX = "groupDetail";
   	public static final String FILE_GROUP_INFO = "groupDetail.xml";
   	public static final String FILE_GROUP_PERSON_INFO = "groupPerson";
   	public static final String FILE_GROUP_PERSON_XML = "groupPerson.xml";
@@ -43,6 +45,9 @@ public class Constant {
   	public static final int TASK_UPLOAD = 30001;
   	public static final int TASK_UPLOAD_PRESON_AVATAR = 300010;
   	public static final int TASK_UPLOAD_GROUP_AVATAR = 300011;
+  	public static final int TASK_UPLOAD_GROUP_DETAIL = 300012;
+  	public static final int TASK_UPLOAD_GROUP_PERSON = 300013;
+  	public static final int TASK_UPLOAD_PERSON_GROUP = 300014;
   	public static final int TASK_DOWNLOAD = 30002;
   	public static final int TASK_DOWNLOAD_PERSON_GROUP_INFO = 30003;
   	public static final int TASK_SEND_NOTIFICATION_TO_GROUP = 30004;

@@ -16,6 +16,7 @@ import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.GeneralLoadingActivity;
 import com.comsince.phonebook.activity.PersonInfoActivity;
+import com.comsince.phonebook.activity.group.CreateGroupActivity;
 import com.comsince.phonebook.adapter.MGroupAdapter;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Group;
@@ -121,6 +122,30 @@ public class GeneralAsyncTask extends AsyncTask<String, Void, Boolean> {
 				flag = true;
 			}else{
 				flag = false;
+			}
+		}else if(taskTag == Constant.TASK_UPLOAD_GROUP_DETAIL){
+			condition = params[0];
+			String upLoadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+condition+"/"+Constant.FILE_GROUP_INFO);
+			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+condition+File.separator+Constant.FILE_GROUP_INFO;
+			String responeMsg = BaiduCloudSaveUtil.putObject(upLoadURL, uploadXmlPath);
+			if(responeMsg.equals("OK")){
+				flag = true;
+				mGroupHandler.sendEmptyMessage(CreateGroupActivity.UPLOAD_GROUP_DETAIL_SUCCESS);
+			}else{
+				flag = false;
+				mGroupHandler.sendEmptyMessage(CreateGroupActivity.UPLOAD_GROUP_DETAIL_FAIL);
+			}
+		}else if(taskTag == Constant.TASK_UPLOAD_GROUP_PERSON){
+			condition = params[0];
+			String upLoadURL = BaiduCloudSaveUtil.generateUrl(Constant.PHONE_BOOK_PATH, "/"+condition+"/"+Constant.FILE_GROUP_PERSON_XML);
+			String uploadXmlPath = AndroidUtil.getSDCardRoot()+Constant.PHONE_BOOK_PATH+File.separator+condition+File.separator+Constant.FILE_GROUP_PERSON_XML;
+			String responeMsg = BaiduCloudSaveUtil.putObject(upLoadURL, uploadXmlPath);
+			if(responeMsg.equals("OK")){
+				flag = true;
+				mGroupHandler.sendEmptyMessage(CreateGroupActivity.UPLOAD_GROUP_PERSON_SUCCESS);
+			}else{
+				flag = false;
+				mGroupHandler.sendEmptyMessage(CreateGroupActivity.UPLOAD_GROUP_PERSON_FAIL);
 			}
 		}else if(taskTag == Constant.TASK_DOWNLOAD){
 			String passWord = PhoneBookApplication.phoneBookPreference.getPassWord(context);

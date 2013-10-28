@@ -225,7 +225,6 @@
                     android:background="@drawable/cdetail_leftcenter"
                     android:gravity="center_vertical"
                     android:paddingLeft="10.0dip"
-                    android:hint="群活动区域"
                     android:text="区域" />
 
                 <RelativeLayout
@@ -244,6 +243,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:hint="群活动区域"
                         android:layout_marginLeft="10.0dip" />
 
                     <ImageView

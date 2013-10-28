@@ -5,6 +5,7 @@ import com.comsince.phonebook.activity.AddInfoDialogActivity;
 import com.comsince.phonebook.activity.PersonInfoActivity;
 import com.comsince.phonebook.activity.dialog.FunctionSelectDialog;
 import com.comsince.phonebook.constant.ActivityForResultUtil;
+import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.util.T;
 
 import android.content.Intent;
@@ -33,6 +34,14 @@ public class CreateGroupActivity extends BaseCreateGroup {
 			finish();
 			break;
 		case R.id.create_group_btn:
+			String groupName = tvGroupName.getText().toString().trim();
+			String groupTag = tvGroupTag.getText().toString().trim();
+			if(TextUtils.isEmpty(groupName) || TextUtils.isEmpty(groupTag)){
+				T.showLong(mContext, "请先填写群组标签和群组名");
+			}else{
+				createGroup();
+				createGroupUpLoadTask(mContext.getString(R.string.group_info_person_upload),Constant.TASK_UPLOAD_GROUP_DETAIL,groupInfo.getGroupTag());
+			}
 			break;
 		case R.id.group_avatar_change:
 			if(TextUtils.isEmpty(tvGroupTag.getText().toString().trim())){
