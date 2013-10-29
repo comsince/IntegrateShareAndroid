@@ -79,7 +79,7 @@
                     android:layout_width="120dip"
                     android:layout_height="120dip" >
 
-                    <ImageButton
+                    <!-- <ImageButton
                         android:id="@+id/about_avatar"
                         android:layout_width="100dip"
                         android:layout_height="100dip"
@@ -87,7 +87,17 @@
                         android:background="@drawable/avatar_background_white"
                         android:padding="4dip"
                         android:scaleType="fitXY"
-                        android:src="@drawable/head_default" />
+                        android:src="@drawable/head_default" /> -->
+                    
+                    <com.comsince.phonebook.view.smartimagview.SmartImageView
+                        android:id="@+id/about_avatar"
+                        android:layout_width="100dip"
+                        android:layout_height="100dip"
+                        android:layout_margin="8dip"
+                        android:background="@drawable/avatar_background_white"
+                        android:padding="4dip"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/head_default"/>
 
                     <Button
                         android:id="@+id/about_avatar_change"

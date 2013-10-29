@@ -177,6 +177,24 @@ public class PhoneBookUtil {
     }
     
     /**
+     * 根据相对路径获取个人头像文件名,不含后缀名
+     * **/
+    public static String getPersonAvatarNameByDetailInfoPath(String path){
+    	String[] pathSpitByseparator = path.split("/");	
+    	for(int i=0 ;i < pathSpitByseparator.length;i++){
+    		L.i("spit","i: "+i + pathSpitByseparator[i]);
+    	}
+    	String xmlName = pathSpitByseparator[2];
+    	L.i("spit", "xmlName: "+xmlName);
+    	//注意点号要转义
+    	String[] xml = xmlName.split("\\.");
+    	for(int j=0 ; j<xml.length ; j++){
+    		L.i("spit", "j :" +j+xml[j]);
+    	}
+    	return xml[0];
+    }
+    
+    /**
      * 获取群组的头像url
      * **/
     public static String getGroupAvatarWebUrl(String fileName){

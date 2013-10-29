@@ -4,6 +4,7 @@ package com.comsince.phonebook.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
@@ -21,12 +23,13 @@ import com.comsince.phonebook.entity.Person;
 import com.comsince.phonebook.entity.Phone;
 import com.comsince.phonebook.util.AndroidUtil;
 import com.comsince.phonebook.util.PhoneBookUtil;
+import com.comsince.phonebook.view.smartimagview.SmartImageView;
 
 public class FriendInfoActivity extends Activity {
 	private Button mBack;
 	private TextView mTitle;
 	private Button mSubmit;
-	private ImageButton mAvatar;
+	private SmartImageView mAvatar;
 	private Button mAvatarChange;
 	private TextView mName;
 	private TextView mSignature;
@@ -71,6 +74,7 @@ public class FriendInfoActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		initPersonAvatar();
 		init();
 	}
 
@@ -80,7 +84,7 @@ public class FriendInfoActivity extends Activity {
 		mBack = (Button) findViewById(R.id.about_back);
 		mTitle = (TextView) findViewById(R.id.about_title);
 		mSubmit = (Button) findViewById(R.id.about_submit);
-		mAvatar = (ImageButton) findViewById(R.id.about_avatar);
+		mAvatar = (SmartImageView) findViewById(R.id.about_avatar);
 		mAvatarChange = (Button) findViewById(R.id.about_avatar_change);
 		mName = (TextView) findViewById(R.id.about_name);
 		mSignature = (TextView) findViewById(R.id.about_signature);
@@ -196,6 +200,21 @@ public class FriendInfoActivity extends Activity {
 			
 			downLoadPersonInfo = new GeneralAsyncTask(downInfo, Constant.TASK_DOWNLOAD_TARTGET_PERONINFO, context);
 			downLoadPersonInfo.execute(targetPersonInfoRelativePath);
+		}
+	}
+	
+	/**
+	 * 加载个人头像
+	 * **/
+	public void initPersonAvatar(){
+		if(!TextUtils.isEmpty(targetPersonInfoRelativePath)){
+			String avatarName = PhoneBookUtil.getPersonAvatarNameByDetailInfoPath(targetPersonInfoRelativePath);
+			Bitmap bitmap = PhoneBookApplication.getInstance().getAvatarByUserInfoExceptMe(avatarName);
+			if(bitmap != null){
+				mAvatar.setImageBitmap(bitmap);
+			}else{
+				mAvatar.setImageUrl(PhoneBookUtil.getJpgFileWebUrlByFileName(avatarName), avatarName);
+			}
 		}
 	}
 
