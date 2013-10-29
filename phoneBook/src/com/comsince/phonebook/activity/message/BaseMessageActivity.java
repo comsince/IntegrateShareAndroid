@@ -19,25 +19,26 @@ import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.adapter.ChatAdapter;
 import com.comsince.phonebook.adapter.FaceAdapter;
 import com.comsince.phonebook.dbhelper.MessageDB;
+import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.preference.PhoneBookPreference;
@@ -76,6 +77,8 @@ public abstract class BaseMessageActivity extends Activity
 	protected PhoneBookPreference phoneBookPre;
 	protected PhoneBookApplication phoneBookApplication;
 	protected Gson mGson;
+	
+	protected Group group;
 	
 	//消息传递对象，即是发给谁
 	protected User mFromUser;
@@ -140,6 +143,17 @@ public abstract class BaseMessageActivity extends Activity
 		}
 		return msgList;
 
+	}
+	
+	protected List<MessageItem> initMsgData(String condition){
+		List<MessageItem> list = mMsgDB.getMsg(condition,MsgPagerNum);
+		List<MessageItem> msgList = new ArrayList<MessageItem>();// 消息对象数组
+		if (list.size() > 0) {
+			for (MessageItem entity : list) {
+				msgList.add(entity);
+			}
+		}
+		return msgList;
 	}
 	
 	/**
@@ -226,18 +240,35 @@ public abstract class BaseMessageActivity extends Activity
 	protected Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == NEW_MESSAGE) {
-				com.comsince.phonebook.entity.Message msgItem = (com.comsince.phonebook.entity.Message) msg.obj;
-				String userId = msgItem.getUser_id();
-				if (!userId.equals(mFromUser.getUserId()))// 如果不是当前正在聊天对象的消息，不处理
-					return;
-				//int headId = msgItem.getHead_id();
-				int headId = 0;
-				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0 ,msgItem.getAvatar_name());
-				msgAdapter.upDateMsg(item);
-				mMsgListView.setSelection(msgAdapter.getCount() - 1);
-				mMsgDB.saveMsg(msgItem.getUser_id(), item);
-				//RecentItem recentItem = new RecentItem(userId, headId, msgItem.getNick(), msgItem.getMessage(), 0, System.currentTimeMillis());
-				//mRecentDB.saveRecent(recentItem);
+				if(mFromUser != null){
+					com.comsince.phonebook.entity.Message msgItem = (com.comsince.phonebook.entity.Message) msg.obj;
+					String userId = msgItem.getUser_id();
+					if (!userId.equals(mFromUser.getUserId()))// 如果不是当前正在聊天对象的消息，不处理
+						return;
+					//int headId = msgItem.getHead_id();
+					int headId = 0;
+					MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0 ,msgItem.getAvatar_name());
+					msgAdapter.upDateMsg(item);
+					mMsgListView.setSelection(msgAdapter.getCount() - 1);
+					mMsgDB.saveMsg(msgItem.getUser_id(), item);
+					//RecentItem recentItem = new RecentItem(userId, headId, msgItem.getNick(), msgItem.getMessage(), 0, System.currentTimeMillis());
+					//mRecentDB.saveRecent(recentItem);
+				}
+				
+				if(group != null){
+					com.comsince.phonebook.entity.Message msgItem = (com.comsince.phonebook.entity.Message) msg.obj;
+					String userId = msgItem.getUser_id();
+					//过滤自己发送的群消息
+					if (userId.equals(PhoneBookApplication.getInstance().getPreference().getUserId()))
+						return;
+					int headId = 0;
+					MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0 ,msgItem.getAvatar_name());
+					msgAdapter.upDateMsg(item);
+					mMsgListView.setSelection(msgAdapter.getCount() - 1);
+					mMsgDB.saveMsg(group.getGroupTag(), item);
+					//RecentItem recentItem = new RecentItem(userId, headId, msgItem.getNick(), msgItem.getMessage(), 0, System.currentTimeMillis());
+					//mRecentDB.saveRecent(recentItem);
+				}
 			}
 		}
 	};

@@ -64,4 +64,6 @@
     <string name="move">移动到</string>
     <string name="delete">删除</string>
     <string name="open">打开</string>
+    <string name="groupchat">群聊</string>
+    <string name="about">关于</string>
 </resources>

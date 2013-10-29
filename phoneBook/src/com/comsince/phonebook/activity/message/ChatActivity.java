@@ -24,6 +24,7 @@ import com.comsince.phonebook.R;
 import com.comsince.phonebook.adapter.ChatAdapter;
 import com.comsince.phonebook.adapter.FacePageAdeapter;
 import com.comsince.phonebook.asynctask.SendMsgAsyncTask;
+import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.receiver.PushMessageReceiver;
@@ -95,11 +96,17 @@ public class ChatActivity extends BaseMessageActivity {
 	@Override
 	protected void initData() {
 		mFromUser = (User) getIntent().getSerializableExtra("user");
-		chatFriendName.setText(mFromUser.getNick());
-		//初始化消息加载页数
-		MsgPagerNum = 0;
+		group = (Group) getIntent().getSerializableExtra("group");
 		mMsgDB = phoneBookApplication.getMessageDB();
-		msgList = initMsgData();
+		MsgPagerNum = 0;
+		if(mFromUser != null){
+			chatFriendName.setText(mFromUser.getNick());
+			//初始化消息加载页数
+			msgList = initMsgData();
+		}else if(group != null){
+			chatFriendName.setText(group.getGroupName());
+			msgList = new ArrayList<MessageItem>();
+		}
 		msgAdapter = new ChatAdapter(context, msgList);
 		mMsgListView.setAdapter(msgAdapter);
 		mMsgListView.setPullLoadEnable(false);
@@ -152,18 +159,37 @@ public class ChatActivity extends BaseMessageActivity {
 			break;
 			
 		case R.id.send_btn:
-			String msg = msgEt.getText().toString();
-			MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT,
-					phoneBookPre.getUserName(), System.currentTimeMillis(), msg,
-					0, false, 0,PhoneBookUtil.getCurrentUserAvatarName(context));
-			L.i("发送消息： "+item.getName());
-			msgAdapter.upDateMsg(item);
-			mMsgListView.setSelection(msgAdapter.getCount() - 1);
-			mMsgDB.saveMsg(mFromUser.getUserId(), item);
-			msgEt.setText("");
-			//发送消息
-			com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, "",PhoneBookUtil.getCurrentUserAvatarName(context));
-			new SendMsgAsyncTask(mGson.toJson(msgItem), mFromUser.getUserId()).send();
+			//一对一消息发送
+			if(mFromUser != null){
+				String msg = msgEt.getText().toString();
+				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT,
+						phoneBookPre.getUserName(), System.currentTimeMillis(), msg,
+						0, false, 0,PhoneBookUtil.getCurrentUserAvatarName(context));
+				L.i("发送消息： "+item.getName());
+				msgAdapter.upDateMsg(item);
+				mMsgListView.setSelection(msgAdapter.getCount() - 1);
+				mMsgDB.saveMsg(mFromUser.getUserId(), item);
+				msgEt.setText("");
+				//发送消息
+				com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, "",PhoneBookUtil.getCurrentUserAvatarName(context));
+				new SendMsgAsyncTask(mGson.toJson(msgItem), mFromUser.getUserId()).send();
+			}
+			//群组消息发送
+			if(group != null){
+				String msg = msgEt.getText().toString();
+				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT,
+						phoneBookPre.getUserName(), System.currentTimeMillis(), msg,
+						0, false, 0,PhoneBookUtil.getCurrentUserAvatarName(context));
+				L.i("发送消息： "+item.getName());
+				msgAdapter.upDateMsg(item);
+				mMsgListView.setSelection(msgAdapter.getCount() - 1);
+				mMsgDB.saveMsg(group.getGroupTag(), item);
+				msgEt.setText("");
+				//发送消息
+				com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, "",PhoneBookUtil.getCurrentUserAvatarName(context));
+				new SendMsgAsyncTask(mGson.toJson(msgItem), group.getGroupTag(),true).send();
+			}
+			
 			break;
 	  }
 	}
@@ -198,9 +224,14 @@ public class ChatActivity extends BaseMessageActivity {
 	@Override
 	public void onRefresh() {
 		MsgPagerNum++;
-		List<MessageItem> msgList = initMsgData();
+		if(mFromUser != null){
+			List<MessageItem> msgList = initMsgData();
+			msgAdapter.refreshMsg(msgList);
+		}else if(group != null){
+			List<MessageItem> msgList = initMsgData(group.getGroupTag());
+			msgAdapter.refreshMsg(msgList);
+		}
 		int position = msgAdapter.getCount();
-		msgAdapter.refreshMsg(msgList);
 		mMsgListView.stopRefresh();
 		mMsgListView.setSelection(msgAdapter.getCount() - position - 1);
 	}

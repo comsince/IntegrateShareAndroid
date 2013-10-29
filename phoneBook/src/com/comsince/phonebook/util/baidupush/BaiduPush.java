@@ -13,6 +13,7 @@ import java.util.Map;
 
 
 
+
 import android.util.Log;
 
 
@@ -53,6 +54,39 @@ public class BaiduPush {
 		ra.put(RestApi._PUSH_TYPE, RestApi.PUSH_TYPE_ALL);
 		return PostHttpRequest(ra);
 	}
+	
+	/**
+	 * 给指定用户组推送消息
+	 * **/
+    public static String pushMessageToGroup(String message,String tag){
+    	RestApi ra = new RestApi(RestApi.METHOD_PUSH_MESSAGE);
+		ra.put(RestApi._MESSAGE_TYPE, RestApi.MESSAGE_TYPE_MESSAGE);
+		ra.put(RestApi._MESSAGES, message);
+		ra.put(RestApi._MESSAGE_KEYS, MSGKEY);
+		ra.put(RestApi._PUSH_TYPE, RestApi.PUSH_TYPE_TAG);
+		ra.put(RestApi._TAG, tag);
+		return PostHttpRequest(ra);
+    }
+    
+    /**
+	 * 给指定标签用户推送消息
+	 * 
+	 * @param message
+	 * @param tag
+	 * @return
+	 */
+	public String PushTagMessage(String message, String tag) {
+		RestApi ra = new RestApi(RestApi.METHOD_PUSH_MESSAGE);
+		ra.put(RestApi._MESSAGE_TYPE, RestApi.MESSAGE_TYPE_MESSAGE);
+		ra.put(RestApi._MESSAGES, message);
+		ra.put(RestApi._MESSAGE_KEYS, MSGKEY);
+		// ra.put(RestApi._MESSAGE_EXPIRES, "86400");
+		ra.put(RestApi._PUSH_TYPE, RestApi.PUSH_TYPE_TAG);
+		// ra.put(RestApi._DEVICE_TYPE, RestApi.DEVICE_TYPE_ANDROID);
+		ra.put(RestApi._TAG, tag);
+		return PostHttpRequest(ra);
+	}
+
 	
 	/**
 	 * 给指定用户推送消息

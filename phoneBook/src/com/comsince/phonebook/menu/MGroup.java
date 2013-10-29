@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.GroupFriendActivity;
 import com.comsince.phonebook.activity.JoinGroupDialogActivity;
 import com.comsince.phonebook.activity.group.CreateGroupActivity;
+import com.comsince.phonebook.activity.message.ChatActivity;
 import com.comsince.phonebook.adapter.MGroupAdapter;
 import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
@@ -32,8 +34,12 @@ import com.comsince.phonebook.entity.Groups;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.uikit.MMAlert;
 import com.comsince.phonebook.util.AndroidUtil;
+import com.comsince.phonebook.view.quickactionbar.QuickAction;
+import com.comsince.phonebook.view.quickactionbar.QuickActionBar;
+import com.comsince.phonebook.view.quickactionbar.QuickActionWidget;
+import com.comsince.phonebook.view.quickactionbar.QuickActionWidget.OnQuickActionClickListener;
 
-public class MGroup {
+public class MGroup implements OnQuickActionClickListener{
 	private Context mContext;
 	private PhoneBookApplication phoneBookApplication;
 	private View mGroup;
@@ -41,6 +47,7 @@ public class MGroup {
 	private ListView mDisplay;
 	private EditText mSearch;
 	private Button selection;
+	private QuickActionWidget mBar;
 	
 	private List<Group> mGroupResult = new ArrayList<Group>();
 	private MGroupAdapter mGroupAdapter;
@@ -48,6 +55,8 @@ public class MGroup {
 	private OnOpenListener mOnOpenListener;
 	//通用asyncTask
 	GeneralAsyncTask generalAsyncTask;
+	
+	private int onItemLongClickPosition;
 	
 	private static final int MMAlertSelect_Get_Group  =  0;
 	private static final int MMAlertSelect_Create_Group  =  1;
@@ -96,6 +105,15 @@ public class MGroup {
 				intent.putExtra("groupTag", mGroupResult.get(position).getGroupTag());
 				intent.setClass(mContext, GroupFriendActivity.class);
 				((Activity)mContext).startActivity(intent);
+			}
+		});
+        mDisplay.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View view, int position, long arg3) {
+				onItemLongClickPosition = position;
+				showChildQuickActionBar(view.findViewById(R.id.friends_item_avatar));
+				return false;
 			}
 		});
 	}
@@ -203,5 +221,57 @@ public class MGroup {
 		mOnOpenListener = onOpenListener;
 	}
 	
+	/**
+	 * 初始化actionbar
+	 * **/
+	private void showChildQuickActionBar(View view) {
+		mBar = new QuickActionBar(mContext);
+		mBar.addQuickAction(new QuickAction(mContext, R.drawable.ic_action_share_pressed, R.string.open));
+		mBar.addQuickAction(new QuickAction(mContext, R.drawable.ic_action_rename_pressed, R.string.groupchat));
+		mBar.addQuickAction(new QuickAction(mContext, R.drawable.ic_action_move_pressed, R.string.about));
+		mBar.addQuickAction(new QuickAction(mContext, R.drawable.ic_action_delete_pressed, R.string.delete));
+		mBar.setOnQuickActionClickListener(this);
+		mBar.show(view);
+	}
+
+	@Override
+	public void onQuickActionClicked(QuickActionWidget widget, int position) {
+		switch (position) {
+		case 0:
+			//打开该群组的人员列表
+			goToFriendList();
+			break;
+		case 1:
+			//群聊
+			chatToGroup();
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+
+		}
+	}
+	
+	/**
+	 * 跳转到朋友列表
+	 * */
+	public void goToFriendList(){
+		Intent intent = new Intent();
+		intent.putExtra("groupTag", mGroupResult.get(onItemLongClickPosition).getGroupTag());
+		intent.setClass(mContext, GroupFriendActivity.class);
+		((Activity)mContext).startActivity(intent);
+	}
+	
+	/**
+	 *群聊天
+	 * **/
+	public void chatToGroup(){
+		Intent intent = new Intent();
+		intent.putExtra("group", mGroupResult.get(onItemLongClickPosition));
+		//intent.putExtra("groupTag", mGroupResult.get(onItemLongClickPosition).getGroupTag());
+		intent.setClass(mContext, ChatActivity.class);
+		((Activity)mContext).startActivity(intent);
+	}
 	
 }

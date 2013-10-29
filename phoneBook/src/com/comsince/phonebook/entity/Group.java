@@ -1,5 +1,7 @@
 package com.comsince.phonebook.entity;
 
+import java.io.Serializable;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -7,7 +9,11 @@ import org.simpleframework.xml.Root;
  * 该人员加入的分组
  * */
 @Root(strict = false, name = "group")
-public class Group {
+public class Group implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4408433059240361180L;
 	@Element(required = false)
 	private String groupTag;
 	@Element(required = false)

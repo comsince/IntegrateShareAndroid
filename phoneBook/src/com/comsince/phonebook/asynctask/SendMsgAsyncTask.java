@@ -19,6 +19,7 @@ public class SendMsgAsyncTask {
 	private Handler mHandler;
 	private MyAsyncTask mTask;
 	private String mUserId;
+	private String mGroupTag;
 	private OnSendScuessListener mListener;
 
 	public interface OnSendScuessListener {
@@ -41,6 +42,16 @@ public class SendMsgAsyncTask {
 		//mBaiduPush = PushApplication.getInstance().getBaiduPush();
 		mMessage = jsonMsg;
 		mUserId = useId;
+		mGroupTag = null;
+		mHandler = new Handler();
+	}
+	
+	public SendMsgAsyncTask(String jsonMsg,String groupTag,boolean isGroupTag){
+		mMessage = jsonMsg;
+		if(isGroupTag){
+			mGroupTag = groupTag;
+			mUserId = null;
+		}
 		mHandler = new Handler();
 	}
 
@@ -65,10 +76,15 @@ public class SendMsgAsyncTask {
 		@Override
 		protected String doInBackground(Void... message) {
 			String result = "";
-			if(TextUtils.isEmpty(mUserId))
+			if (!TextUtils.isEmpty(mGroupTag)) {
+				//不要把参数写反了
+                result = BaiduPush.pushMessageToGroup(mMessage , mGroupTag);
+			} else if (TextUtils.isEmpty(mUserId)) {
 				result = BaiduPush.PushMessage(mMessage);
-			else
+			} else {
 				result = BaiduPush.PushMessage(mMessage, mUserId);
+			}
+
 			return result;
 		}
 
