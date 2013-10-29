@@ -234,6 +234,9 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 			if (msg.what == NEW_MESSAGE) {
 				com.comsince.phonebook.entity.Message msgItem = (com.comsince.phonebook.entity.Message) msg.obj;
 				String userId = msgItem.getUser_id();
+				if(msgItem.getTag().equals(Constant.ONETOGROUP)){
+					return;
+				}
 				//查找需要更新消息的用户
 				for(User user : mUser){
 					if(user.getUserId().equals(userId)){

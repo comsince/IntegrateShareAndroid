@@ -41,6 +41,10 @@ public class Constant {
   	public static final String ACTION_FINISH = "com.comsince.phonebook.loadingfinish";
   	public static final String ACTION_ADD_TAG = "com.comsince.phonebook.addtag";
   	
+  	//群发消息与一对一消息tag
+  	public static final String ONETOONE = "oneToOne";
+  	public static final String ONETOGROUP = "oneToGroup";
+  	
   	//general task type
   	public static final int TASK_UPLOAD = 30001;
   	public static final int TASK_UPLOAD_PRESON_AVATAR = 300010;

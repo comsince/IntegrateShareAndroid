@@ -161,7 +161,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 		String tag = msg.getTag();
 		String userId = msg.getUser_id();
 		int headId = msg.getHead_id();
-		if (!TextUtils.isEmpty(tag)) {// 如果是带有tag的消息
+		if (!TextUtils.isEmpty(tag) && !tag.equals(Constant.ONETOGROUP) && !tag.equals(Constant.ONETOONE)) {// 如果是带有tag的消息
 			if (userId.equals(PhoneBookApplication.getInstance().getPreference().getUserId()))
 				return;
 			User u = new User(userId, msg.getChannel_id(), msg.getNick(), headId, 0,"",msg.getAvatar_name());

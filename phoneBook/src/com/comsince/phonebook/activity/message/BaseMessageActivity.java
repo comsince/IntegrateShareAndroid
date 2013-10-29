@@ -37,6 +37,7 @@ import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.adapter.ChatAdapter;
 import com.comsince.phonebook.adapter.FaceAdapter;
+import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.dbhelper.MessageDB;
 import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.MessageItem;
@@ -243,7 +244,7 @@ public abstract class BaseMessageActivity extends Activity
 				if(mFromUser != null){
 					com.comsince.phonebook.entity.Message msgItem = (com.comsince.phonebook.entity.Message) msg.obj;
 					String userId = msgItem.getUser_id();
-					if (!userId.equals(mFromUser.getUserId()))// 如果不是当前正在聊天对象的消息，不处理
+					if (!userId.equals(mFromUser.getUserId()) || msgItem.getTag().equals(Constant.ONETOGROUP))// 如果不是当前正在聊天对象的消息，不处理
 						return;
 					//int headId = msgItem.getHead_id();
 					int headId = 0;
@@ -259,7 +260,7 @@ public abstract class BaseMessageActivity extends Activity
 					com.comsince.phonebook.entity.Message msgItem = (com.comsince.phonebook.entity.Message) msg.obj;
 					String userId = msgItem.getUser_id();
 					//过滤自己发送的群消息
-					if (userId.equals(PhoneBookApplication.getInstance().getPreference().getUserId()))
+					if (userId.equals(PhoneBookApplication.getInstance().getPreference().getUserId()) || msgItem.getTag().equals(Constant.ONETOONE))
 						return;
 					int headId = 0;
 					MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0 ,msgItem.getAvatar_name());

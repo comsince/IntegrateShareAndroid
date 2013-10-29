@@ -24,6 +24,7 @@ import com.comsince.phonebook.R;
 import com.comsince.phonebook.adapter.ChatAdapter;
 import com.comsince.phonebook.adapter.FacePageAdeapter;
 import com.comsince.phonebook.asynctask.SendMsgAsyncTask;
+import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
@@ -171,7 +172,7 @@ public class ChatActivity extends BaseMessageActivity {
 				mMsgDB.saveMsg(mFromUser.getUserId(), item);
 				msgEt.setText("");
 				//发送消息
-				com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, "",PhoneBookUtil.getCurrentUserAvatarName(context));
+				com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, Constant.ONETOONE,PhoneBookUtil.getCurrentUserAvatarName(context));
 				new SendMsgAsyncTask(mGson.toJson(msgItem), mFromUser.getUserId()).send();
 			}
 			//群组消息发送
@@ -186,7 +187,7 @@ public class ChatActivity extends BaseMessageActivity {
 				mMsgDB.saveMsg(group.getGroupTag(), item);
 				msgEt.setText("");
 				//发送消息
-				com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, "",PhoneBookUtil.getCurrentUserAvatarName(context));
+				com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, Constant.ONETOGROUP,PhoneBookUtil.getCurrentUserAvatarName(context));
 				new SendMsgAsyncTask(mGson.toJson(msgItem), group.getGroupTag(),true).send();
 			}
 			
