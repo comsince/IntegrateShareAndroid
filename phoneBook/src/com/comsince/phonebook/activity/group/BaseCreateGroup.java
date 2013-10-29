@@ -313,6 +313,15 @@ public abstract class BaseCreateGroup extends Activity implements OnClickListene
     	submitPersonGroup();
     }
     
+    /**
+     * 注册群组广播
+     * **/
+    protected void registerGroupTag(){
+    	Intent intent = new Intent(Constant.ACTION_ADD_TAG);
+		intent.putExtra("tag", groupInfo.getGroupTag());
+		sendBroadcast(intent);
+    }
+    
     protected void createGroupUpLoadTask(String showtext,int taskTag,String param){
     	groupTask = new GeneralAsyncTask(showtext, taskTag, mContext,createGroupHandler);
     	if(param != null){

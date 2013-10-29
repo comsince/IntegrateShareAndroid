@@ -41,6 +41,10 @@ public class CreateGroupActivity extends BaseCreateGroup {
 			}else{
 				createGroup();
 				createGroupUpLoadTask(mContext.getString(R.string.group_info_person_upload),Constant.TASK_UPLOAD_GROUP_DETAIL,groupInfo.getGroupTag());
+				registerGroupTag();
+				T.showLong(mContext, "创建群组成功");
+				btnCreateGroup.setFocusable(false);
+				btnCreateGroup.setPressed(false);
 			}
 			break;
 		case R.id.group_avatar_change:

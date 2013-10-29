@@ -159,6 +159,7 @@ public class PhoneBookApplication extends Application {
 	
 	/**
 	 * 返回给定的头像文件名的bitmap
+	 * 返回指定key的bitmap
 	 * **/
 	public Bitmap getAvatarByUserInfoExceptMe(String userInfo){
 		try {

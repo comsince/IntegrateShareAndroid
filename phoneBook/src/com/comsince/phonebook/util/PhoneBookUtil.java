@@ -177,6 +177,13 @@ public class PhoneBookUtil {
     }
     
     /**
+     * 获取群组的头像url
+     * **/
+    public static String getGroupAvatarWebUrl(String fileName){
+    	return BaiduCloudSaveUtil.generateUrlForGet(Constant.PHONE_BOOK_PATH, "/"+Constant.DIR_GROUP_AVATAR+"/"+fileName+".jpg");
+    }
+    
+    /**
      * 获取当前用户头像文件名，不包含后缀名
      * **/
     public static String getCurrentUserAvatarName(Context context){

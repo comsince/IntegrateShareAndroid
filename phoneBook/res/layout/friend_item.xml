@@ -27,11 +27,18 @@
         android:orientation="horizontal"
         android:paddingRight="30dip" >
 
-        <ImageView
+        <!-- <ImageView
             android:id="@+id/friends_item_avatar"
             android:layout_width="45dip"
             android:layout_height="45dip"
-            android:layout_margin="8dip" />
+            android:layout_margin="8dip" /> -->
+        
+        <com.comsince.phonebook.view.smartimagview.SmartImageView
+            android:id="@+id/friends_item_avatar"
+            android:layout_width="45dip"
+            android:layout_height="45dip"
+            android:layout_margin="8dip"
+            android:src="@drawable/phonebook" />
 
         <TextView
             android:id="@+id/friends_item_name"
