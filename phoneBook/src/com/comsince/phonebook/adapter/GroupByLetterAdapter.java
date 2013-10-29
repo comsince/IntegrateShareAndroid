@@ -1,8 +1,5 @@
 package com.comsince.phonebook.adapter;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,28 +7,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.comsince.phonebook.R;
-import com.comsince.phonebook.activity.FriendInfoActivity;
-import com.comsince.phonebook.constant.Constant;
-import com.comsince.phonebook.entity.GroupPerson;
-import com.comsince.phonebook.entity.Person;
-import com.comsince.phonebook.entity.Persons;
-import com.comsince.phonebook.util.AndroidUtil;
-import com.comsince.phonebook.util.DataUtil;
-import com.comsince.phonebook.util.FileUtil;
-import com.comsince.phonebook.util.SimpleXmlReaderUtil;
-
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.comsince.phonebook.PhoneBookApplication;
+import com.comsince.phonebook.R;
+import com.comsince.phonebook.activity.FriendInfoActivity;
+import com.comsince.phonebook.entity.GroupPerson;
+import com.comsince.phonebook.util.DataUtil;
+import com.comsince.phonebook.util.PhoneBookUtil;
+import com.comsince.phonebook.view.smartimagview.SmartImageView;
 
 public class GroupByLetterAdapter extends BaseAdapter {
     private Context context;
@@ -86,17 +80,17 @@ public class GroupByLetterAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
-		if (convertView == null) {
+		if (convertView == null || convertView.getTag(R.drawable.phonebook + position) == null) {
 			convertView = LayoutInflater.from(context).inflate(R.layout.friend_item, null);
 			holder = new ViewHolder();
 			holder.alpha = (TextView) convertView.findViewById(R.id.friends_item_alpha);
 			holder.alpha_line = (ImageView) convertView.findViewById(R.id.friends_item_alpha_line);
-			holder.avatar = (ImageView) convertView.findViewById(R.id.friends_item_avatar);
+			holder.avatar = (SmartImageView) convertView.findViewById(R.id.friends_item_avatar);
 			holder.name = (TextView) convertView.findViewById(R.id.friends_item_name);
 			holder.arrow = (ImageView) convertView.findViewById(R.id.friends_item_arrow);
-			convertView.setTag(holder);
+			convertView.setTag(R.drawable.phonebook + position);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (ViewHolder) convertView.getTag(R.drawable.phonebook + position);
 		}
 
 		int section = getSectionForPosition(position);
@@ -110,7 +104,15 @@ public class GroupByLetterAdapter extends BaseAdapter {
 			holder.alpha_line.setVisibility(View.GONE);
 		}
 		holder.name.setText(groupPerson.getPersonRealName());
-		holder.avatar.setBackgroundResource(R.drawable.phonebook);
+		//图片加载问题
+		String avatarFileName = groupPerson.getPersonAccount() + "_" + groupPerson.getPersonAccountPassword();
+		Bitmap bitmap = PhoneBookApplication.getInstance().getAvatarByUserInfoExceptMe(avatarFileName);
+		if(bitmap != null){
+			holder.avatar.setImageBitmap(bitmap);
+		}else{
+			holder.avatar.setImageUrl(PhoneBookUtil.getJpgFileWebUrlByFileName(avatarFileName), avatarFileName);
+		}
+		//
 		holder.arrow.setVisibility(View.GONE);
         convertView.setOnClickListener(new OnClickListener() {
 			
@@ -147,7 +149,7 @@ public class GroupByLetterAdapter extends BaseAdapter {
 	class ViewHolder {
 		TextView alpha;
 		ImageView alpha_line;
-		ImageView avatar;
+		SmartImageView avatar;
 		TextView name;
 		ImageView arrow;
 	}
