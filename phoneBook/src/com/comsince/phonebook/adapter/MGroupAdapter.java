@@ -1,6 +1,8 @@
 package com.comsince.phonebook.adapter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -28,11 +30,16 @@ public class MGroupAdapter extends BaseAdapter {
 	private ListView groupListView;
 	public static final int NEW_MESSAGE = 1;
 	public static final int CLEAR_MESSAGE = 2;
+	private Map<String,Boolean> msgCommingMap = new HashMap<String,Boolean>();
 	
 	public MGroupAdapter(Context context,List<Group> mGroupResult){
 		inflater = LayoutInflater.from(context);
 		if(mGroupResult != null){
 			this.mGroupResult = mGroupResult;
+			//初始化所有的群组都无消息
+			for(Group group : mGroupResult){
+				msgCommingMap.put(group.getGroupTag(), false);
+			}
 		}
 	}
 	
@@ -57,7 +64,7 @@ public class MGroupAdapter extends BaseAdapter {
 	
 	public void refreshComingMsg(String groupTag){
 		nowCommingMsgGroupTag = groupTag;
-		//upDateView();
+		msgCommingMap.put(groupTag, true);
 		notifyDataSetChanged();
 	}
 	
@@ -67,7 +74,11 @@ public class MGroupAdapter extends BaseAdapter {
 	public void refreshComingMsg(String groupTag,int msgtag){
 		nowCommingMsgGroupTag = groupTag;
 		msgTag = msgtag;
-		//upDateView();
+		if(msgTag == NEW_MESSAGE){
+			msgCommingMap.put(groupTag, true);
+		}else if(msgTag == CLEAR_MESSAGE){
+			msgCommingMap.put(groupTag, false);
+		}
 		notifyDataSetChanged();
 	}
 	
@@ -127,7 +138,7 @@ public class MGroupAdapter extends BaseAdapter {
 		
 		int isVisable = holder.msgNew.getVisibility();
 		L.i("mgroupAdapter isvisable :"+String.valueOf(isVisable));
-		if(groupTag.equals(nowCommingMsgGroupTag) && View.GONE == isVisable && msgTag == NEW_MESSAGE){
+		/*if(groupTag.equals(nowCommingMsgGroupTag) && View.GONE == isVisable && msgTag == NEW_MESSAGE){
 			holder.msgNew.setVisibility(View.VISIBLE);
 			msgTag = 0;
 		}
@@ -135,6 +146,12 @@ public class MGroupAdapter extends BaseAdapter {
 		if(groupTag.equals(nowCommingMsgGroupTag) && msgTag == CLEAR_MESSAGE){
 			holder.msgNew.setVisibility(View.GONE);
 			msgTag = 0;
+		}*/
+		
+		if(msgCommingMap.get(groupTag)){
+			holder.msgNew.setVisibility(View.VISIBLE);
+		}else{
+			holder.msgNew.setVisibility(View.GONE);
 		}
 		
 		return convertView;
