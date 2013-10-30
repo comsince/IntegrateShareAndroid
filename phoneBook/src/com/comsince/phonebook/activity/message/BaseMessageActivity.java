@@ -244,7 +244,7 @@ public abstract class BaseMessageActivity extends Activity
 				if(mFromUser != null){
 					com.comsince.phonebook.entity.Message msgItem = (com.comsince.phonebook.entity.Message) msg.obj;
 					String userId = msgItem.getUser_id();
-					if (!userId.equals(mFromUser.getUserId()) || msgItem.getTag().equals(Constant.ONETOGROUP))// 如果不是当前正在聊天对象的消息，不处理
+					if (!userId.equals(mFromUser.getUserId()) || !msgItem.getTag().equals(Constant.ONETOONE))// 如果不是当前正在聊天对象的消息，不处理
 						return;
 					//int headId = msgItem.getHead_id();
 					int headId = 0;
@@ -264,9 +264,12 @@ public abstract class BaseMessageActivity extends Activity
 						return;
 					int headId = 0;
 					MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0 ,msgItem.getAvatar_name());
-					msgAdapter.upDateMsg(item);
-					mMsgListView.setSelection(msgAdapter.getCount() - 1);
-					mMsgDB.saveMsg(group.getGroupTag(), item);
+					//如果不是当前群组的消息就不用更新当前的adapter
+					if(msgItem.getTag().equals(group.getGroupTag())){
+						msgAdapter.upDateMsg(item);
+						mMsgListView.setSelection(msgAdapter.getCount() - 1);
+						mMsgDB.saveMsg(group.getGroupTag(), item);
+					}
 					//RecentItem recentItem = new RecentItem(userId, headId, msgItem.getNick(), msgItem.getMessage(), 0, System.currentTimeMillis());
 					//mRecentDB.saveRecent(recentItem);
 				}

@@ -20,6 +20,8 @@ import com.comsince.phonebook.view.smartimagview.SmartImageView;
 public class MGroupAdapter extends BaseAdapter {
 	private List<Group> mGroupResult;
 	private LayoutInflater inflater;
+	private int nowCommingMsgPosition;
+	private String nowCommingMsgGroupTag;
 	public MGroupAdapter(Context context,List<Group> mGroupResult){
 		inflater = LayoutInflater.from(context);
 		if(mGroupResult != null){
@@ -37,7 +39,20 @@ public class MGroupAdapter extends BaseAdapter {
 			this.notifyDataSetChanged();
 		}
 	}
-
+	
+	/**
+	 * 新消息来临更新adapter
+	 * **/
+	public void refreshComingMsg(int position){
+		nowCommingMsgPosition = position;
+		notifyDataSetChanged();
+	}
+	
+	public void refreshComingMsg(String groupTag){
+		nowCommingMsgGroupTag = groupTag;
+		notifyDataSetChanged();
+	}
+	
 	@Override
 	public int getCount() {
 		return mGroupResult.size();
@@ -64,6 +79,7 @@ public class MGroupAdapter extends BaseAdapter {
 			holder.avatar = (SmartImageView) convertView.findViewById(R.id.friends_item_avatar);
 			holder.name = (TextView) convertView.findViewById(R.id.friends_item_name);
 			holder.arrow = (ImageView) convertView.findViewById(R.id.friends_item_arrow);
+			holder.msgNew = (ImageView) convertView.findViewById(R.id.group_message_new);
 			convertView.setTag(R.drawable.phonebook + position);
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.drawable.phonebook + position);
@@ -80,6 +96,15 @@ public class MGroupAdapter extends BaseAdapter {
 			}
 		}
 		holder.name.setText(group.getGroupName() + " [邀请码]："+groupTag);
+		
+		if(position == nowCommingMsgPosition){
+			holder.msgNew.setVisibility(View.VISIBLE);
+		}
+		
+		if(groupTag.equals(nowCommingMsgGroupTag)){
+			holder.msgNew.setVisibility(View.VISIBLE);
+		}
+		
 		return convertView;
 	}
 	
@@ -89,6 +114,7 @@ public class MGroupAdapter extends BaseAdapter {
 		SmartImageView avatar;
 		TextView name;
 		ImageView arrow;
+		ImageView msgNew;
 	}
 
 }

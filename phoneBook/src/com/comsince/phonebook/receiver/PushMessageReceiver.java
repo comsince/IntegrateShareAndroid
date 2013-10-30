@@ -36,6 +36,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 	AlertDialog.Builder builder;
 	/**其他在线用户接到发送来的消息就设置tag为此值，在发送给本身**/
 	public static final String RESPONSE = "response";
+	public static final String PHONEBOOK = "phoneBook";
 	
 	public static abstract interface EventHandler {
 		
@@ -161,7 +162,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 		String tag = msg.getTag();
 		String userId = msg.getUser_id();
 		int headId = msg.getHead_id();
-		if (!TextUtils.isEmpty(tag) && !tag.equals(Constant.ONETOGROUP) && !tag.equals(Constant.ONETOONE)) {// 如果是带有tag的消息
+		if (!TextUtils.isEmpty(tag) && (tag.equals(RESPONSE) || tag.equals(PHONEBOOK))) {// 如果是带有tag的消息
 			if (userId.equals(PhoneBookApplication.getInstance().getPreference().getUserId()))
 				return;
 			User u = new User(userId, msg.getChannel_id(), msg.getNick(), headId, 0,"",msg.getAvatar_name());

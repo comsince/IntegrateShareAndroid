@@ -31,6 +31,8 @@ import com.comsince.phonebook.asynctask.GeneralAsyncTask;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Group;
 import com.comsince.phonebook.entity.Groups;
+import com.comsince.phonebook.entity.User;
+import com.comsince.phonebook.receiver.PushMessageReceiver.EventHandler;
 import com.comsince.phonebook.ui.base.FlipperLayout.OnOpenListener;
 import com.comsince.phonebook.uikit.MMAlert;
 import com.comsince.phonebook.util.AndroidUtil;
@@ -272,6 +274,13 @@ public class MGroup implements OnQuickActionClickListener{
 		//intent.putExtra("groupTag", mGroupResult.get(onItemLongClickPosition).getGroupTag());
 		intent.setClass(mContext, ChatActivity.class);
 		((Activity)mContext).startActivity(intent);
+	}
+	
+	/**
+	 * 更新群组消息来临状态
+	 * **/
+	public void refreshGroupMsgState(String groupTag){
+		mGroupAdapter.refreshComingMsg(groupTag);
 	}
 	
 }

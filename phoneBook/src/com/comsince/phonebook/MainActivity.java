@@ -24,7 +24,9 @@ import com.baidu.android.pushservice.PushManager;
 import com.comsince.phonebook.asynctask.SendMsgAsyncTask;
 import com.comsince.phonebook.asynctask.SendMsgAsyncTask.OnSendScuessListener;
 import com.comsince.phonebook.constant.Constant;
+import com.comsince.phonebook.dbhelper.MessageDB;
 import com.comsince.phonebook.dbhelper.UserDB;
+import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.menu.Desktop;
 import com.comsince.phonebook.menu.Desktop.onChangeViewListener;
@@ -70,7 +72,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 	private Context context;
 	
 	private UserDB mUserDB;
-	//private MessageDB mMsgDB;
+	private MessageDB mMsgDB;
 	private Gson mGson;
 	/**发送消息**/
 	private SendMsgAsyncTask task;
@@ -163,6 +165,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 	private void initData(){
 		mUserDB = phoneBookApplication.getUserDB();
 		mGson = phoneBookApplication.getGson();
+		mMsgDB = phoneBookApplication.getMessageDB();
 		//回调监听,用户第一次登陆时回调用
 		PushMessageReceiver.ehList.add(this);
 	}
@@ -182,6 +185,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 	@Override
 	protected void onDestroy() {
 		unregisterReceiver(addTagReceiver);
+		PushMessageReceiver.ehList.remove(this);
 		super.onDestroy();
 	}
 
@@ -266,8 +270,9 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 
 	@Override
 	public void onMessage(com.comsince.phonebook.entity.Message message) {
-		// TODO Auto-generated method stub
-		
+		Message handlerMsg = handler.obtainMessage(Constant.NEW_MESSAGE);
+		handlerMsg.obj = message;
+		handler.sendMessage(handlerMsg);
 	}
 
 	@Override
@@ -325,37 +330,26 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 				T.showShort(phoneBookApplication, "好友列表已更新!");
 				break;
 			case Constant.NEW_MESSAGE:
-				/*// String message = (String) msg.obj;
-				com.way.bean.Message msgItem = (com.way.bean.Message) msg.obj;
+				//根据消息的类型转发到不同的分组下
+				com.comsince.phonebook.entity.Message msgItem = (com.comsince.phonebook.entity.Message) msg.obj;
 				String userId = msgItem.getUser_id();
-				String nick = msgItem.getNick();
-				String content = msgItem.getMessage();
-				int headId = msgItem.getHead_id();
-				// try {
-				// headId = Integer
-				// .parseInt(JsonUtil.getFromUserHead(message));
-				// } catch (Exception e) {
-				// L.e("head is not integer  " + e);
-				// }
-				if (mUserDB.selectInfo(userId) == null) {// 如果不存在此好友，则添加到数据库
-					User user = new User(userId, msgItem.getChannel_id(), nick,
-							headId, 0);
-					mUserDB.addUser(user);
-					mLeftFragment = (LeftFragment) getSupportFragmentManager()
-							.findFragmentById(R.id.main_left_fragment);
-					mLeftFragment.updateAdapter();// 更新一下好友列表
+				String tag = msgItem.getTag();
+				//自己发送的消息不用处理
+				if(userId.equals(phonebookPreference.getUserId())){
+					return;
 				}
-				// TODO Auto-generated method stub
-				MessageItem item = new MessageItem(
-						MessageItem.MESSAGE_TYPE_TEXT, nick,
-						System.currentTimeMillis(), content, headId, true, 1);
-				mMsgDB.saveMsg(userId, item);
-				// 保存到最近会话列表
-				RecentItem recentItem = new RecentItem(userId, headId, nick,
-						content, 0, System.currentTimeMillis());
-				mRecentDB.saveRecent(recentItem);
-				mAdapter.addFirst(recentItem);
-				T.showShort(mApplication, nick + ":" + content);*/
+				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), 0, true, 0 ,msgItem.getAvatar_name());
+				//处理群组消息
+				if(!tag.equals(Constant.ONETOONE) && mGroup != null){
+					//更新消息提示
+					mGroup.refreshGroupMsgState(tag);
+					//更新消息数据库
+					mMsgDB.saveMsg(tag, item);
+				}
+				//处理一对一消息
+				if(tag.equals(Constant.ONETOONE) &&  mOnlineFriend != null){
+					
+				}
 				break;
 			default:
 				break;

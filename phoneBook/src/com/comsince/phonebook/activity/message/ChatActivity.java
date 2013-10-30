@@ -187,7 +187,7 @@ public class ChatActivity extends BaseMessageActivity {
 				mMsgDB.saveMsg(group.getGroupTag(), item);
 				msgEt.setText("");
 				//发送消息
-				com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, Constant.ONETOGROUP,PhoneBookUtil.getCurrentUserAvatarName(context));
+				com.comsince.phonebook.entity.Message msgItem = new com.comsince.phonebook.entity.Message(System.currentTimeMillis(), msg, group.getGroupTag(),PhoneBookUtil.getCurrentUserAvatarName(context));
 				new SendMsgAsyncTask(mGson.toJson(msgItem), group.getGroupTag(),true).send();
 			}
 			
