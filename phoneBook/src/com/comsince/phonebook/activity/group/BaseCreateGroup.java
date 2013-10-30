@@ -294,6 +294,9 @@ public abstract class BaseCreateGroup extends Activity implements OnClickListene
 				if(gr.getGroupName().equals(groupName) && gr.getGroupTag().equals(groupTag)){
 					break;
 				}
+				if(gr.getGroupTag().equals(groupTag)){
+					break;
+				}
 				i++;
 			}
 			if(i == size){

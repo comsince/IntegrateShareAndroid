@@ -3,6 +3,7 @@ package com.comsince.phonebook.adapter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -148,9 +149,22 @@ public class MGroupAdapter extends BaseAdapter {
 			msgTag = 0;
 		}*/
 		L.i("mgrouadapter gorupTag :" + groupTag +" map "+msgCommingMap);
+		L.i("msgCommingMap.containsKey(groupTag)"+msgCommingMap.containsKey(groupTag));
 		if(!msgCommingMap.containsKey(groupTag)){
 			msgCommingMap.put(groupTag, false);
 		}
+		/*int i = 0;
+		int mapSize = msgCommingMap.size();
+		for(Entry<String, Boolean> e : msgCommingMap.entrySet()){
+			if(e.getKey().equals(groupTag)){
+				break;
+			}
+			i++;
+		}
+		if(i == mapSize){
+			msgCommingMap.put(groupTag, false);
+		}*/
+		//
 		if(msgCommingMap.get(groupTag)){
 			holder.msgNew.setVisibility(View.VISIBLE);
 		}else{
