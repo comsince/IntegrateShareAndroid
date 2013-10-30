@@ -45,6 +45,7 @@ public class CreateGroupActivity extends BaseCreateGroup {
 				T.showLong(mContext, "创建群组成功");
 				btnCreateGroup.setFocusable(false);
 				btnCreateGroup.setPressed(false);
+				finish();
 			}
 			break;
 		case R.id.group_avatar_change:

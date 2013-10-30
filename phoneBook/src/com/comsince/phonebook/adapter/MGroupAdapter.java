@@ -147,7 +147,10 @@ public class MGroupAdapter extends BaseAdapter {
 			holder.msgNew.setVisibility(View.GONE);
 			msgTag = 0;
 		}*/
-		
+		L.i("mgrouadapter gorupTag :" + groupTag +" map "+msgCommingMap);
+		if(!msgCommingMap.containsKey(groupTag)){
+			msgCommingMap.put(groupTag, false);
+		}
 		if(msgCommingMap.get(groupTag)){
 			holder.msgNew.setVisibility(View.VISIBLE);
 		}else{
