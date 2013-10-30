@@ -102,11 +102,13 @@ public class MGroup implements OnQuickActionClickListener{
         mDisplay.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				Intent intent = new Intent();
-				intent.putExtra("groupTag", mGroupResult.get(position).getGroupTag());
-				intent.setClass(mContext, GroupFriendActivity.class);
-				((Activity)mContext).startActivity(intent);
+			public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+				//Intent intent = new Intent();
+				//intent.putExtra("groupTag", mGroupResult.get(position).getGroupTag());
+				//intent.setClass(mContext, GroupFriendActivity.class);
+				//((Activity)mContext).startActivity(intent);
+				onItemLongClickPosition = position;
+				showChildQuickActionBar(view.findViewById(R.id.friends_item_avatar));
 			}
 		});
         mDisplay.setOnItemLongClickListener(new OnItemLongClickListener() {

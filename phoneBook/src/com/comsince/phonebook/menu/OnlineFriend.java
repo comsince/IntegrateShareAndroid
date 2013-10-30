@@ -108,7 +108,7 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 	}
 	
 	private void initData(){
-		PushMessageReceiver.ehList.add(this);
+		//PushMessageReceiver.ehList.add(this);
 		mUserDB = phoneBookApplication.getUserDB();
 		mUser = mUserDB.getUser();
 		mOnlineFriendAdapter = new OnlineFriendAdapter(mContext, mUser);
@@ -159,12 +159,22 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 		mUser = mUserDB.getUser();
 		mOnlineFriendAdapter.refreshData(mUser);
 	}
+	
+	/**
+	 * 更新用户消息
+	 * **/
+	public void refreshOnLineFriendData(String userId,String userMsg){
+		mOnlineFriendAdapter.refreshData(userId, userMsg);
+	}
 
 	/**获取在线好友界面*/
 	public View getView(){
 		return mOnlineFriend;
 	}
 	
+	/**
+	 * 更新来临的消息
+	 * **/
 	
 	/**
 	 * 设置打开侧边栏的监听器，在主activity中调用
@@ -204,9 +214,9 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 
 	@Override
 	public void onMessage(com.comsince.phonebook.entity.Message message) {
-		Message handlerMsg = handler.obtainMessage(NEW_MESSAGE);
+		/*Message handlerMsg = handler.obtainMessage(NEW_MESSAGE);
 		handlerMsg.obj = message;
-		handler.sendMessage(handlerMsg);
+		handler.sendMessage(handlerMsg);*/
 	}
 
 	@Override
@@ -246,13 +256,6 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 				}
 				//刷新adapter
 				mOnlineFriendAdapter.refreshData(mUser);
-				//int headId = 0;
-				//MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msgItem.getNick(), System.currentTimeMillis(), msgItem.getMessage(), headId, true, 0);
-				//msgAdapter.upDateMsg(item);
-				//mMsgListView.setSelection(msgAdapter.getCount() - 1);
-				//mMsgDB.saveMsg(msgItem.getUser_id(), item);
-				//RecentItem recentItem = new RecentItem(userId, headId, msgItem.getNick(), msgItem.getMessage(), 0, System.currentTimeMillis());
-				//mRecentDB.saveRecent(recentItem);
 			}
 		}
 	};

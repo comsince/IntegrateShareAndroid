@@ -43,6 +43,7 @@ import com.comsince.phonebook.util.BaiduPushUtil;
 import com.comsince.phonebook.util.L;
 import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.util.T;
+import com.comsince.phonebook.util.TimeUtil;
 import com.comsince.phonebook.util.ViewUtil;
 import com.google.gson.Gson;
 import com.tencent.mm.sdk.platformtools.PhoneUtil;
@@ -348,7 +349,9 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 				}
 				//处理一对一消息
 				if(tag.equals(Constant.ONETOONE) &&  mOnlineFriend != null){
-					
+					String userMsg = "["+TimeUtil.getChatTime(System.currentTimeMillis())+"] "+msgItem.getMessage();
+					mOnlineFriend.refreshOnLineFriendData(userId, userMsg);
+					mMsgDB.saveMsg(userId, item);
 				}
 				break;
 			default:

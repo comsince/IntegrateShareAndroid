@@ -20,6 +20,8 @@ import com.comsince.phonebook.view.smartimagview.SmartImageView;
 public class OnlineFriendAdapter extends BaseAdapter{
 	private List<User> mUser;
 	private LayoutInflater inflater;
+	private String nowCommingMsgUserId = "";
+	private String nowCommingMs;
 	public OnlineFriendAdapter(Context context,List<User> users){
 		inflater = LayoutInflater.from(context);
 		if(users != null){
@@ -32,6 +34,12 @@ public class OnlineFriendAdapter extends BaseAdapter{
 			this.mUser = users;
 			this.notifyDataSetChanged();
 		}
+	}
+	
+	public void refreshData(String userId,String msg){
+		nowCommingMsgUserId = userId;
+		nowCommingMs =  msg;
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -74,6 +82,11 @@ public class OnlineFriendAdapter extends BaseAdapter{
 			L.i("friendadapter"+user.toString());
 			holder.avatarImage.setImageUrl(PhoneBookUtil.getJpgFileWebUrlByFileName(user.getUserAvatarName()));
 		}
+		String userId = user.getUserId();
+		if(userId.equals(nowCommingMsgUserId)){
+			holder.userId.setText(nowCommingMs);
+		}
+		
 		return convertView;
 	}
 	

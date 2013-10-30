@@ -20,8 +20,8 @@ import com.comsince.phonebook.view.smartimagview.SmartImageView;
 public class MGroupAdapter extends BaseAdapter {
 	private List<Group> mGroupResult;
 	private LayoutInflater inflater;
-	private int nowCommingMsgPosition;
-	private String nowCommingMsgGroupTag;
+	private int nowCommingMsgPosition = -1;
+	private String nowCommingMsgGroupTag = "";
 	public MGroupAdapter(Context context,List<Group> mGroupResult){
 		inflater = LayoutInflater.from(context);
 		if(mGroupResult != null){
