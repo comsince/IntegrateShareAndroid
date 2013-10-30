@@ -277,13 +277,14 @@ public class MGroup implements OnQuickActionClickListener{
 		//intent.putExtra("groupTag", mGroupResult.get(onItemLongClickPosition).getGroupTag());
 		intent.setClass(mContext, ChatActivity.class);
 		((Activity)mContext).startActivity(intent);
+		mGroupAdapter.refreshComingMsg(mGroupResult.get(onItemLongClickPosition).getGroupTag(), MGroupAdapter.CLEAR_MESSAGE);
 	}
 	
 	/**
 	 * 更新群组消息来临状态
 	 * **/
 	public void refreshGroupMsgState(String groupTag){
-		mGroupAdapter.refreshComingMsg(groupTag);
+		mGroupAdapter.refreshComingMsg(groupTag,MGroupAdapter.NEW_MESSAGE);
 	}
 	
 }

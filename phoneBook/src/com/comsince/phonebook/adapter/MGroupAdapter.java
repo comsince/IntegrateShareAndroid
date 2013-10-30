@@ -24,7 +24,10 @@ public class MGroupAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private int nowCommingMsgPosition = -1;
 	private String nowCommingMsgGroupTag = "";
+	private int msgTag = 0;
 	private ListView groupListView;
+	public static final int NEW_MESSAGE = 1;
+	public static final int CLEAR_MESSAGE = 2;
 	
 	public MGroupAdapter(Context context,List<Group> mGroupResult){
 		inflater = LayoutInflater.from(context);
@@ -54,6 +57,16 @@ public class MGroupAdapter extends BaseAdapter {
 	
 	public void refreshComingMsg(String groupTag){
 		nowCommingMsgGroupTag = groupTag;
+		//upDateView();
+		notifyDataSetChanged();
+	}
+	
+	/**
+	 * 点击消除消息提示,新消息来临
+	 * */
+	public void refreshComingMsg(String groupTag,int msgtag){
+		nowCommingMsgGroupTag = groupTag;
+		msgTag = msgtag;
 		//upDateView();
 		notifyDataSetChanged();
 	}
@@ -114,8 +127,14 @@ public class MGroupAdapter extends BaseAdapter {
 		
 		int isVisable = holder.msgNew.getVisibility();
 		L.i("mgroupAdapter isvisable :"+String.valueOf(isVisable));
-		if(groupTag.equals(nowCommingMsgGroupTag) && View.GONE == isVisable){
+		if(groupTag.equals(nowCommingMsgGroupTag) && View.GONE == isVisable && msgTag == NEW_MESSAGE){
 			holder.msgNew.setVisibility(View.VISIBLE);
+			msgTag = 0;
+		}
+		
+		if(groupTag.equals(nowCommingMsgGroupTag) && msgTag == CLEAR_MESSAGE){
+			holder.msgNew.setVisibility(View.GONE);
+			msgTag = 0;
 		}
 		
 		return convertView;
