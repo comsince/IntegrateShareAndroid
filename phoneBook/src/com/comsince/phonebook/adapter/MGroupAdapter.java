@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.entity.Group;
+import com.comsince.phonebook.util.L;
 import com.comsince.phonebook.util.PhoneBookUtil;
 import com.comsince.phonebook.view.smartimagview.SmartImageView;
 
@@ -22,6 +24,8 @@ public class MGroupAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private int nowCommingMsgPosition = -1;
 	private String nowCommingMsgGroupTag = "";
+	private ListView groupListView;
+	
 	public MGroupAdapter(Context context,List<Group> mGroupResult){
 		inflater = LayoutInflater.from(context);
 		if(mGroupResult != null){
@@ -50,7 +54,12 @@ public class MGroupAdapter extends BaseAdapter {
 	
 	public void refreshComingMsg(String groupTag){
 		nowCommingMsgGroupTag = groupTag;
+		//upDateView();
 		notifyDataSetChanged();
+	}
+	
+	public void setListview(ListView listView){
+		this.groupListView = listView;
 	}
 	
 	@Override
@@ -80,9 +89,11 @@ public class MGroupAdapter extends BaseAdapter {
 			holder.name = (TextView) convertView.findViewById(R.id.friends_item_name);
 			holder.arrow = (ImageView) convertView.findViewById(R.id.friends_item_arrow);
 			holder.msgNew = (ImageView) convertView.findViewById(R.id.group_message_new);
-			convertView.setTag(R.drawable.phonebook + position);
+			convertView.setTag(R.drawable.phonebook + position,holder);
+			L.i("mgroupAdapter setposition :"+String.valueOf(position));
 		} else {
 			holder = (ViewHolder) convertView.getTag(R.drawable.phonebook + position);
+			L.i("mgroupAdapter getposition :"+String.valueOf(position));
 		}
 		holder.alpha.setVisibility(View.GONE);
 		Group group = mGroupResult.get(position);
@@ -101,11 +112,28 @@ public class MGroupAdapter extends BaseAdapter {
 			holder.msgNew.setVisibility(View.VISIBLE);
 		}
 		
-		if(groupTag.equals(nowCommingMsgGroupTag)){
+		int isVisable = holder.msgNew.getVisibility();
+		L.i("mgroupAdapter isvisable :"+String.valueOf(isVisable));
+		if(groupTag.equals(nowCommingMsgGroupTag) && View.GONE == isVisable){
 			holder.msgNew.setVisibility(View.VISIBLE);
 		}
 		
 		return convertView;
+	}
+	
+	/**可见更新，仅当可见的时候更新view
+	 * **/
+	private void upDateView(){
+		int i = 0;
+		for(Group group : mGroupResult){
+			if(group.getGroupTag().equals(nowCommingMsgGroupTag)){
+				break;
+			}
+			i++;
+		}
+		groupListView.getChildAt(0);
+		ViewHolder viewHolder = (ViewHolder) groupListView.getTag(R.drawable.phonebook + i);
+		viewHolder.msgNew.setVisibility(View.VISIBLE);
 	}
 	
 	class ViewHolder {

@@ -125,6 +125,7 @@ public class MGroup implements OnQuickActionClickListener{
 	public void initData(){
 		getGroupData();
 		mGroupAdapter = new MGroupAdapter(mContext, mGroupResult);
+		mGroupAdapter.setListview(mDisplay);
 		mDisplay.setAdapter(mGroupAdapter);
 	}
 	/**
