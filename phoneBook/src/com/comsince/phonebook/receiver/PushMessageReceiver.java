@@ -11,6 +11,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -25,8 +27,10 @@ import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.L;
 import com.comsince.phonebook.util.PhoneBookUtil;
+import com.comsince.phonebook.util.PhotoUtil;
 import com.comsince.phonebook.util.T;
 import com.google.gson.Gson;
+import com.tencent.mm.sdk.platformtools.PhoneUtil;
 
 
 /**
@@ -189,7 +193,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 					((EventHandler) ehList.get(i)).onMessage(msg);
 					L.i("receiver Listener :"+ehList.get(i));
 				}
-			} else {
+			}  else {
 				// 通知栏提醒，保存数据库
 				// show notify
 				showNotify(msg);
@@ -209,8 +213,9 @@ public class PushMessageReceiver extends BroadcastReceiver {
 		mNewNum++;
 		// 更新通知栏
 		PhoneBookApplication application = PhoneBookApplication.getInstance();
-		int icon = R.drawable.phonebook;
 		CharSequence tickerText = message.getNick() + ":" + message.getMessage();
+		/*int icon = R.drawable.phonebook;
+		
 		long when = System.currentTimeMillis();
 		Notification notification = new Notification(icon, tickerText, when);
 		notification.flags = Notification.FLAG_NO_CLEAR;
@@ -218,11 +223,50 @@ public class PushMessageReceiver extends BroadcastReceiver {
 		// notification.defaults |= Notification.DEFAULT_SOUND;
 		// 设定震动(需加VIBRATE权限)
 		notification.defaults |= Notification.DEFAULT_VIBRATE;
-		notification.contentView = null;
+		notification.contentView = null;*/
 		Intent intent = new Intent(application, MainActivity.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(application, 0, intent, 0);
-		notification.setLatestEventInfo(PhoneBookApplication.getInstance(), application.getPreference().getUserName() + " (" + mNewNum + "条新消息)", tickerText, contentIntent);
-		application.getNotificationManager().notify(NOTIFY_ID, notification);// 通知一下才会生效哦
-	}
+		/*notification.setLatestEventInfo(PhoneBookApplication.getInstance(), application.getPreference().getUserName() + " (" + mNewNum + "条新消息)", tickerText, contentIntent);*/
+		
+		
+		// 下面是4.0通知栏api
+		Bitmap bitmap = application.getAvatarByUserInfoExceptMe(getBitMap(message));
+		if(bitmap != null){
+			bitmap = PhotoUtil.toRoundCorner(bitmap, 15);
+		}else{
+			bitmap = BitmapFactory.decodeResource(application.getResources(), R.drawable.phonebook);
+		}
+		String contentTitle = null;
+		if(message.getTag().equals(Constant.ONETOONE)){
+			contentTitle = message.getNick();
+		}else{
+			contentTitle = message.getTag();
+		}
+		Notification.Builder mNotificationBuilder = new Notification.Builder(application)
+		        .setTicker(tickerText)
+		        .setContentTitle(contentTitle)
+				.setContentText(tickerText)
+				.setLargeIcon(bitmap)
+				.setSmallIcon(R.drawable.phonebook)
+				.setWhen(System.currentTimeMillis())
+				.setContentIntent(contentIntent);
+		Notification n = mNotificationBuilder.getNotification();
+		n.flags |= Notification.FLAG_NO_CLEAR;
+		//n.defaults |= Notification.DEFAULT_VIBRATE;
 
+		
+		application.getNotificationManager().notify(NOTIFY_ID, n);// 通知一下才会生效哦
+	}
+	
+	/**
+	 * 根据消息决定通知显示方式
+	 * **/
+    private String getBitMap(Message msg){
+    	String tag = msg.getTag();
+    	if(tag.equals(Constant.ONETOONE)){
+    		return msg.getAvatar_name();
+    	}else{
+    		return tag;
+    	}
+    }
 }
