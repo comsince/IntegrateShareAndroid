@@ -188,6 +188,9 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 		mHomeWatcher = new HomeWatcher(this);
 		mHomeWatcher.setOnHomePressedListener(this);
 		mHomeWatcher.startWatch();
+		//点击完消息后，消息数量置空，并且关闭通知到消息
+		phoneBookApplication.getNotificationManager().cancel(PushMessageReceiver.NOTIFY_ID);
+		PushMessageReceiver.mNewNum = 0;
 		//更新当前分组
 		mGroup.refreshGroupData();
 	}

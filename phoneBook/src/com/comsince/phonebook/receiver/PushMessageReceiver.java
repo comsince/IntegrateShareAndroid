@@ -213,7 +213,7 @@ public class PushMessageReceiver extends BroadcastReceiver {
 		CharSequence tickerText = message.getNick() + ":" + message.getMessage();
 		long when = System.currentTimeMillis();
 		Notification notification = new Notification(icon, tickerText, when);
-		//notification.flags = Notification.FLAG_NO_CLEAR;
+		notification.flags = Notification.FLAG_NO_CLEAR;
 		// 设置默认声音
 		// notification.defaults |= Notification.DEFAULT_SOUND;
 		// 设定震动(需加VIBRATE权限)
