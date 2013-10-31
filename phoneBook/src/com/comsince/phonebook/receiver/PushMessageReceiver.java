@@ -6,6 +6,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.util.Log;
 import com.baidu.android.pushservice.PushConstants;
 import com.comsince.phonebook.MainActivity;
 import com.comsince.phonebook.PhoneBookApplication;
+import com.comsince.phonebook.R;
 import com.comsince.phonebook.asynctask.SendMsgAsyncTask;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Message;
@@ -37,6 +40,9 @@ public class PushMessageReceiver extends BroadcastReceiver {
 	/**其他在线用户接到发送来的消息就设置tag为此值，在发送给本身**/
 	public static final String RESPONSE = "response";
 	public static final String PHONEBOOK = "phoneBook";
+	
+	public static int mNewNum = 0;// 通知栏新消息条目
+	public static final int NOTIFY_ID = 0x000;
 	
 	public static abstract interface EventHandler {
 		
@@ -179,18 +185,44 @@ public class PushMessageReceiver extends BroadcastReceiver {
 			if (PhoneBookApplication.getInstance().phoneBookPreference.getMsgSound())// 如果用户开启播放声音
 				PhoneBookApplication.getInstance().getMediaPlayer().start();
 			if (ehList.size() > 0) {// 有监听的时候，传递下去
-				for (int i = 0; i < ehList.size(); i++)
+				for (int i = 0; i < ehList.size(); i++){
 					((EventHandler) ehList.get(i)).onMessage(msg);
+					L.i("receiver Listener :"+ehList.get(i));
+				}
 			} else {
 				// 通知栏提醒，保存数据库
 				// show notify
-				/*showNotify(msg);
-				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msg.getNick(), System.currentTimeMillis(), msg.getMessage(), headId, true, 1);
+				showNotify(msg);
+				/*MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msg.getNick(), System.currentTimeMillis(), msg.getMessage(), headId, true, 1);
 				RecentItem recentItem = new RecentItem(userId, headId, msg.getNick(), msg.getMessage(), 0, System.currentTimeMillis());
 				PushApplication.getInstance().getMessageDB().saveMsg(userId, item);
 				PushApplication.getInstance().getRecentDB().saveRecent(recentItem);*/
 			}
 		}
+	}
+	
+	/**
+	 * 消息来临显示通知栏
+	 * **/
+	@SuppressWarnings("deprecation")
+	private void showNotify(Message message) {
+		mNewNum++;
+		// 更新通知栏
+		PhoneBookApplication application = PhoneBookApplication.getInstance();
+		int icon = R.drawable.phonebook;
+		CharSequence tickerText = message.getNick() + ":" + message.getMessage();
+		long when = System.currentTimeMillis();
+		Notification notification = new Notification(icon, tickerText, when);
+		//notification.flags = Notification.FLAG_NO_CLEAR;
+		// 设置默认声音
+		// notification.defaults |= Notification.DEFAULT_SOUND;
+		// 设定震动(需加VIBRATE权限)
+		notification.defaults |= Notification.DEFAULT_VIBRATE;
+		notification.contentView = null;
+		Intent intent = new Intent(application, MainActivity.class);
+		PendingIntent contentIntent = PendingIntent.getActivity(application, 0, intent, 0);
+		notification.setLatestEventInfo(PhoneBookApplication.getInstance(), application.getPreference().getUserName() + " (" + mNewNum + "条新消息)", tickerText, contentIntent);
+		application.getNotificationManager().notify(NOTIFY_ID, notification);// 通知一下才会生效哦
 	}
 
 }

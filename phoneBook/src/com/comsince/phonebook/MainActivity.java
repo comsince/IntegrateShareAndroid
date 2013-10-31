@@ -28,6 +28,8 @@ import com.comsince.phonebook.dbhelper.MessageDB;
 import com.comsince.phonebook.dbhelper.UserDB;
 import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
+import com.comsince.phonebook.homewatch.HomeWatcher;
+import com.comsince.phonebook.homewatch.HomeWatcher.OnHomePressedListener;
 import com.comsince.phonebook.menu.Desktop;
 import com.comsince.phonebook.menu.Desktop.onChangeViewListener;
 import com.comsince.phonebook.menu.Friends;
@@ -50,7 +52,7 @@ import com.tencent.mm.sdk.platformtools.PhoneUtil;
 
 
 
-public class MainActivity extends Activity implements OnOpenListener,EventHandler{
+public class MainActivity extends Activity implements OnOpenListener,EventHandler,OnHomePressedListener{
 	protected PhoneBookApplication phoneBookApplication;
 	private PhoneBookPreference phonebookPreference;
 	
@@ -77,7 +79,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 	private Gson mGson;
 	/**发送消息**/
 	private SendMsgAsyncTask task;
-	
+	private HomeWatcher mHomeWatcher;
 	/**
 	 * 接收加入群组tag的广播
 	 * */
@@ -167,8 +169,7 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 		mUserDB = phoneBookApplication.getUserDB();
 		mGson = phoneBookApplication.getGson();
 		mMsgDB = phoneBookApplication.getMessageDB();
-		//回调监听,用户第一次登陆时回调用
-		PushMessageReceiver.ehList.add(this);
+		
 	}
 
 	@Override
@@ -180,13 +181,29 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (!PushManager.isPushEnabled(this))
+			PushManager.resumeWork(this);
+		//回调监听,用户第一次登陆时回调用
+		PushMessageReceiver.ehList.add(this);
+		mHomeWatcher = new HomeWatcher(this);
+		mHomeWatcher.setOnHomePressedListener(this);
+		mHomeWatcher.startWatch();
+		//更新当前分组
 		mGroup.refreshGroupData();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mHomeWatcher.setOnHomePressedListener(null);
+		mHomeWatcher.stopWatch();
+		PushMessageReceiver.ehList.remove(this);// 暂停就移除监听,主要是为了能显示通知栏
 	}
 
 	@Override
 	protected void onDestroy() {
 		unregisterReceiver(addTagReceiver);
-		PushMessageReceiver.ehList.remove(this);
+		//PushMessageReceiver.ehList.remove(this);
 		super.onDestroy();
 	}
 
@@ -359,6 +376,18 @@ public class MainActivity extends Activity implements OnOpenListener,EventHandle
 			}
 		}
 	};
+
+	@Override
+	public void onHomePressed() {
+		// TODO Auto-generated method stub
+		//这里暂时不显示挂机图标
+	}
+
+	@Override
+	public void onHomeLongPressed() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Application;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,6 +31,7 @@ public class PhoneBookApplication extends Application {
     public static PhoneBookPreference phoneBookPreference;
     public static Context context;
     public static PhoneBookApplication phoneBookApplication;
+    private NotificationManager mNotificationManager;
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -223,6 +225,12 @@ public class PhoneBookApplication extends Application {
 		if (mMediaPlayer == null)
 			mMediaPlayer = MediaPlayer.create(this, R.raw.office);
 		return mMediaPlayer;
+	}
+	
+	public NotificationManager getNotificationManager() {
+		if (mNotificationManager == null)
+			mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+		return mNotificationManager;
 	}
 	
 	public Map<String, Integer> getFaceMap() {
