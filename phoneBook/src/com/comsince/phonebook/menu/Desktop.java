@@ -106,7 +106,7 @@ public class Desktop {
 
 	public class DesktopAdapter extends BaseAdapter {
 		private Context mContext;
-		private String[] mName = { "群组","好友","在线好友", "最近消息" };
+		private String[] mName = { "群组","在线好友","好友", "最近消息" };
 		private int[] mIcon = {R.drawable.sidebar_icon_friends,R.drawable.sidebar_icon_friends,R.drawable.sidebar_icon_friends, R.drawable.sidebar_icon_news };
 		private int[] mIconPressed = { R.drawable.sidebar_icon_friends_pressed,R.drawable.sidebar_icon_friends_pressed,R.drawable.sidebar_icon_friends_pressed ,R.drawable.sidebar_icon_news_pressed };
 		private int mChoose = 0;
