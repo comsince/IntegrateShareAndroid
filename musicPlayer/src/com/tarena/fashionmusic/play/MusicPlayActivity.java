@@ -646,7 +646,7 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 		audioLrc.setSentencelist(mLyric.list);
 		audioLrc.setNotCurrentPaintColor(Color.WHITE);
 		audioLrc.setCurrentPaintColor(musicPreference.getLrcColor(context));
-		audioLrc.setCurrentTextSize(45);
+		audioLrc.setCurrentTextSize(35);
 		audioLrc.setLrcTextSize(musicPreference.getLrcSize(context));
 		audioLrc.setTexttypeface(Typeface.SERIF);
 		audioLrc.setTextHeight(40);
