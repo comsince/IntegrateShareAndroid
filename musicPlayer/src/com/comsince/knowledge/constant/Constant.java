@@ -45,6 +45,7 @@ public class Constant {
 	public static final String APP_ID = "wx4d2b64bdcc5c3bf8";
 	//百度开放平台
 	public static final String BAIDU_APP_KEY = "AVAcAhQy9g4FA7GrxPMqjQ58";
+	public static final String BAIDU_APP_SECRET = "ajgSXo5GUzIfdL2Bf9ve3C9StWFgwtyc";
 	//sina 单点登录用
 	public static final String SINA_SSO_APP_KEY = "2563761543";
 	

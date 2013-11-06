@@ -147,6 +147,9 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onDestroy() {
 		unregisterReceiver(musicReceiver);
+		if(favorLayout.getVoiceDialog() != null){
+			favorLayout.getVoiceDialog().dismiss();
+		}
 		super.onDestroy();
 	}
 
