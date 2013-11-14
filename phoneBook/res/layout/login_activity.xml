@@ -31,7 +31,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dip"
                 android:scaleType="centerInside"
-                android:hint="与你的朋友始终保持着联系是我的宗旨"/>
+                android:hint="与您的朋友始终保持着联系是我们的宗旨"/>
 
             <EditText
                 android:id="@+id/username"

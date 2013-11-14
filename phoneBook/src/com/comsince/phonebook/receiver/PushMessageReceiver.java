@@ -23,6 +23,7 @@ import com.comsince.phonebook.R;
 import com.comsince.phonebook.asynctask.SendMsgAsyncTask;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.entity.Message;
+import com.comsince.phonebook.entity.MessageItem;
 import com.comsince.phonebook.entity.User;
 import com.comsince.phonebook.preference.PhoneBookPreference;
 import com.comsince.phonebook.util.L;
@@ -201,6 +202,13 @@ public class PushMessageReceiver extends BroadcastReceiver {
 				RecentItem recentItem = new RecentItem(userId, headId, msg.getNick(), msg.getMessage(), 0, System.currentTimeMillis());
 				PushApplication.getInstance().getMessageDB().saveMsg(userId, item);
 				PushApplication.getInstance().getRecentDB().saveRecent(recentItem);*/
+				MessageItem item = new MessageItem(MessageItem.MESSAGE_TYPE_TEXT, msg.getNick(), System.currentTimeMillis(), 
+						msg.getMessage(), 0, true, 0 ,msg.getAvatar_name());
+				if(msg.getTag().equals(Constant.ONETOONE)){
+					PhoneBookApplication.getInstance().getMessageDB().saveMsg(msg.getUser_id(), item);
+				}else{
+					PhoneBookApplication.getInstance().getMessageDB().saveMsg(msg.getTag(), item);
+				}
 			}
 		}
 	}
