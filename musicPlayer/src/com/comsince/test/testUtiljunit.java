@@ -165,6 +165,12 @@ public class testUtiljunit extends AndroidTestCase {
 	   FileUtil.save(in, AndroidUtil.getSDCardRoot()+"TMusic/download/yc_zh_primary_person_test1.xml");
    }
    
+   public void testmimiApi() throws IOException{
+	   String url = "http://2.comsince.duapp.com/api/user_login.action";
+	   String result = HttpTool.getString(url, null, null, HttpTool.GET);
+	   System.out.println("result:"+result);
+   }
+   
    public void testUpload() throws IOException{
 	   String urlStr = "http://bcs.duapp.com/comsince/log.txt";
 	   InputStream in = this.mContext.getAssets().open("conf/sounds.xml");
