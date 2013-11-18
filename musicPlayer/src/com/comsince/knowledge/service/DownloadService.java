@@ -188,6 +188,7 @@ public class DownloadService extends Service {
 				Bundle bundle = new Bundle();
 				intent.putExtras(bundle);
 				sendBroadcast(intent);
+				manager.cancel(0);
 				break;
 			case Constant.MSG_ERROR:
 				manager.cancel(0);
