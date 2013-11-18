@@ -106,12 +106,15 @@ public class LocalMusicListAdapter extends BaseAdapter {
 				}
 			}
 		});
-
+		
 		if (bitmap != null) {
-			viewHolder.ivAlbum.setBackgroundResource(R.drawable.default_bg_s);
+			//viewHolder.ivAlbum.setBackgroundResource(R.drawable.default_bg_s);
 		}else{
 			viewHolder.ivAlbum.setBackgroundResource(R.drawable.default_bg_s);
 		}
+		
+
+		
 		/**
 		 * 更新当前播放的歌曲的显示状态信息
 		 * */
