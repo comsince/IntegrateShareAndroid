@@ -47,6 +47,14 @@ public class LocalMusicListAdapter extends BaseAdapter {
 		nowplaypos = position;
 		notifyDataSetChanged();
 	}
+	
+	public void refreshData(List<Music> musics){
+		if(musics != null && musics.size() != 0){
+			this.musicList = musics;
+			notifyDataSetChanged();
+		}
+		
+	}
 
 	@Override
 	public int getCount() {
@@ -60,7 +68,8 @@ public class LocalMusicListAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return musicList.get(position).getId();
+		//return musicList.get(position).getId();
+		return position;
 	}
 
 	@Override

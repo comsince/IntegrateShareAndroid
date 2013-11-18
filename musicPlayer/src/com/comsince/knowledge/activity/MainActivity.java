@@ -43,6 +43,7 @@ import com.comsince.knowledge.entity.TingMusicJson;
 import com.comsince.knowledge.layout.FavoriteLayout;
 import com.comsince.knowledge.layout.LocalLayout;
 import com.comsince.knowledge.layout.NetLayout;
+import com.comsince.knowledge.layout.LocalLayout.ScanSdReceiver;
 import com.comsince.knowledge.lrcutil.BaiduLrc;
 import com.comsince.knowledge.service.DownloadService;
 import com.comsince.knowledge.service.DownloadService.DownLoadBinder;
@@ -292,17 +293,20 @@ public class MainActivity extends Activity implements OnClickListener{
 	 * 初始化当前音乐播放信息
 	 * */
 	public void showNowPalyMusicInfo(){
-		Music music = MyApplication.musics.get(position);
-		if (music != null) {
-			nowBitMap = BitmapTool.getbitBmBykey(context, music.getAlbumkey());
-			if (nowBitMap != null && nowBitMap.isRecycled() == false) {
-				listShowAlbum.setImageBitmap(nowBitMap);
-			} else {
-				listShowAlbum.setImageResource(R.drawable.default_bg_s);
+		if(MyApplication.musics.size() != 0){
+			Music music = MyApplication.musics.get(position);
+			if (music != null) {
+				nowBitMap = BitmapTool.getbitBmBykey(context, music.getAlbumkey());
+				if (nowBitMap != null && nowBitMap.isRecycled() == false) {
+					listShowAlbum.setImageBitmap(nowBitMap);
+				} else {
+					listShowAlbum.setImageResource(R.drawable.default_bg_s);
+				}
+				musicName.setText(music.getMusicName());
+				musicTime.setText("00:00/" + StrTime.getTime(music.getTime()));
 			}
-			musicName.setText(music.getMusicName());
-			musicTime.setText("00:00/" + StrTime.getTime(music.getTime()));
 		}
+		
 	}
 
 	public void initpageData() {

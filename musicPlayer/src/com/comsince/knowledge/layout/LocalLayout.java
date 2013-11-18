@@ -2,24 +2,30 @@ package com.comsince.knowledge.layout;
 
 import java.util.List;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.LocalMusicListAdapter;
 import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.Music;
+import com.comsince.knowledge.utils.MusicDataUtil;
 import com.comsince.knowledge.view.xlistview.MsgListView;
+import com.comsince.knowledge.view.xlistview.MsgListView.IXListViewListener;
 import com.tarena.fashionmusic.MyApplication;
 
-public class LocalLayout extends LinearLayout {
+public class LocalLayout extends LinearLayout implements IXListViewListener{
 	private static String TAG = "Aisa";
 	View rootview;
 	MsgListView localistview;
@@ -27,6 +33,7 @@ public class LocalLayout extends LinearLayout {
 	Context context;
 	List<Music> musicList;
 	LocalMusicListAdapter adapter;
+	ScanSdReceiver scanSdReceiver;
 
 	public LocalLayout(Context context) {
 		super(context);
@@ -41,6 +48,9 @@ public class LocalLayout extends LinearLayout {
 	
 	public void initView(){
 		localistview = (MsgListView) rootview.findViewById(R.id.lvSounds);
+		//禁用上拉加载数据
+		localistview.setPullLoadEnable(false);
+		localistview.setXListViewListener(this);
 	}
 	
 	public void initData(){
@@ -48,7 +58,9 @@ public class LocalLayout extends LinearLayout {
 		musicList = MyApplication.musics;
 		Log.d(TAG, "musicList size :" + musicList.size());
 		adapter = new LocalMusicListAdapter(context, musicList,localistview);
-		localistview.setAdapter(adapter);
+		if(musicList.size() > 0){
+			localistview.setAdapter(adapter);
+		}
 	}
 	
 	public void initListener(){
@@ -58,7 +70,6 @@ public class LocalLayout extends LinearLayout {
 			public void onItemClick(AdapterView<?> adapterView, View itemView, int position, long arg3) {
 				Log.d("LocalLayout", itemView.toString());
 				//((LocalMusicListAdapter)localistview.getAdapter()).showNowPlayPos(position);
-				int currentposition = (int)arg3;
 				Log.d("LocalLayout ", "onclick position :"+position);
 				if(position != 0){
 					goplay(position -1);
@@ -84,7 +95,47 @@ public class LocalLayout extends LinearLayout {
 	public void setLocalistview(MsgListView localistview) {
 		this.localistview = localistview;
 	}
+
+	@Override
+	public void onRefresh() {
+		Log.d("scan", "RefreshStart");
+		scanSdCard();
+	}
+
+	@Override
+	public void onLoadMore() {
+		
+	}
 	
-	
+	/**
+	 * 开始媒体库扫描
+	 * */
+	public void scanSdCard() {
+		IntentFilter intentfilter = new IntentFilter(Intent.ACTION_MEDIA_SCANNER_STARTED);
+		intentfilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
+		intentfilter.addDataScheme("file");
+		scanSdReceiver = new ScanSdReceiver();
+		context.registerReceiver(scanSdReceiver, intentfilter);
+		context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory().getAbsolutePath())));
+	}
+
+	public class ScanSdReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if(action.equals(Intent.ACTION_MEDIA_SCANNER_STARTED)){
+				Log.d("scan", "Start");
+			}else if(action.equals(Intent.ACTION_MEDIA_SCANNER_FINISHED)){
+				musicList = MusicDataUtil.getMultiDatas(context);
+				Log.d("scan", "Finish");
+				localistview.stopRefresh();
+				//刷新adapter
+				Log.d("scan" , String.valueOf(musicList.size()));
+			    adapter.refreshData(musicList);
+			}
+		}
+		
+	}
 
 }
