@@ -64,6 +64,7 @@ public class MsgListView extends ListView implements OnScrollListener {
 	private final static float OFFSET_RADIO = 1.8f; // support iOS like pull
 													// feature.
 
+	private ListAdapter listadapter;
 	/**
 	 * @param context
 	 */
@@ -118,8 +119,18 @@ public class MsgListView extends ListView implements OnScrollListener {
 			mIsFooterReady = true;
 			addFooterView(mFooterView);
 		}
+		listadapter = adapter;
 		super.setAdapter(adapter);
 	}
+	
+	/**
+	 * 获取adapter,防止出现android.widget.HeaderViewListAdapter 
+	 * cannot be cast to com.comsince.knowledge.adapter.LocalMusicListAdapter
+	 * **/
+	public ListAdapter getAdapter(){
+		return listadapter;
+	}
+	
 
 	/**
 	 * enable or disable pull down refresh feature.

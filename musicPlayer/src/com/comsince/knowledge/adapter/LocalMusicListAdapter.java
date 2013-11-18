@@ -21,15 +21,16 @@ import com.comsince.knowledge.entity.Music;
 import com.comsince.knowledge.utils.AlbumImageLoader;
 import com.comsince.knowledge.utils.AlbumImageLoader.ImageCallback;
 import com.comsince.knowledge.utils.StrTime;
+import com.comsince.knowledge.view.xlistview.MsgListView;
 
 public class LocalMusicListAdapter extends BaseAdapter {
 	private List<Music> musicList;
 	private LayoutInflater inflater;
 	AlbumImageLoader albumImageLoader;
-	ListView listView;
+	MsgListView listView;
 	int nowplaypos;
 
-	public LocalMusicListAdapter(Context context, List<Music> musicList, ListView listView) {
+	public LocalMusicListAdapter(Context context, List<Music> musicList, MsgListView listView) {
 		inflater = LayoutInflater.from(context);
 		if (musicList != null) {
 			this.musicList = musicList;

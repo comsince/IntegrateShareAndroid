@@ -58,7 +58,12 @@ public class LocalLayout extends LinearLayout {
 			public void onItemClick(AdapterView<?> adapterView, View itemView, int position, long arg3) {
 				Log.d("LocalLayout", itemView.toString());
 				//((LocalMusicListAdapter)localistview.getAdapter()).showNowPlayPos(position);
-				goplay(position);
+				int currentposition = (int)arg3;
+				Log.d("LocalLayout ", "onclick position :"+position);
+				if(position != 0){
+					goplay(position -1);
+				}
+				//goplay(position);
 			}
 		});
 	}
@@ -72,7 +77,7 @@ public class LocalLayout extends LinearLayout {
 		Log.d("netlayout boardcast", Constant.ACTION_JUMR);
 	}
 
-	public ListView getLocalistview() {
+	public MsgListView getLocalistview() {
 		return localistview;
 	}
 
