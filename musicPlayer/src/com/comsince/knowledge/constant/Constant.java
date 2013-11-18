@@ -58,4 +58,9 @@ public class Constant {
 	public static final int MSG_START = 6;
 	public static final int MSG_OK = 7;
 	public static final int MSG_ERROR = 8;
+	
+	//主界面中搜索歌曲点击弹出的菜单选项
+	public static final int MMALERT_DOWNLOAD_MUSIC = 0;
+	public static final int MMALERT_SHARE_MUSIC = 1;
+	public static final int MMALERT_CANCEL_MUSIC = 2;
 }

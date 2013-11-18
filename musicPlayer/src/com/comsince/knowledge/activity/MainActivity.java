@@ -251,7 +251,19 @@ public class MainActivity extends Activity implements OnClickListener{
 
 					@Override
 					public void onClick(int whichButton) {
-						downLoadMusic(baiduDevMusic);
+						switch (whichButton) {
+						case Constant.MMALERT_DOWNLOAD_MUSIC:
+							downLoadMusic(baiduDevMusic);
+							break;
+						case Constant.MMALERT_SHARE_MUSIC:
+							break;
+						case Constant.MMALERT_CANCEL_MUSIC:
+							break;
+						default:
+							break;
+						}
+						
+						
 					}
 					
 				});

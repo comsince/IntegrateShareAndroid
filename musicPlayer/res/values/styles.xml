@@ -38,4 +38,8 @@
         <item name="android:minWidth">40dp</item>
     </style>
     
+     <style name="DataSheetAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/push_up_in</item>
+    </style>
+    
 </resources>
