@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- <ListView
+    <!--
+         <ListView
         android:id="@+id/lvSounds"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:cacheColorHint="#00000000"
         android:divider="@drawable/navigation_list_divider"
         android:dividerHeight="1dp"
-        android:fastScrollEnabled="true" /> -->
+        android:fastScrollEnabled="true" />
+    -->
 
-    <ListView
+   <!--  <ListView
         android:id="@+id/lvSounds"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -19,7 +21,17 @@
         android:dividerHeight="2.0px"
         android:fadingEdgeLength="0.0dip"
         android:fastScrollEnabled="true"
-        android:listSelector="@drawable/local_category_left_item_bg_selector"
-        />
+        android:listSelector="@drawable/local_category_left_item_bg_selector" /> -->
+
+    <com.comsince.knowledge.view.xlistview.MsgListView
+        android:id="@+id/lvSounds"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/navigation_list_divider"
+        android:dividerHeight="2.0px"
+        android:fadingEdgeLength="0.0dip"
+        android:fastScrollEnabled="true"
+        android:listSelector="@drawable/local_category_left_item_bg_selector" />
 
 </merge>

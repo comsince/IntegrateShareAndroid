@@ -16,12 +16,13 @@ import com.comsince.knowledge.R;
 import com.comsince.knowledge.adapter.LocalMusicListAdapter;
 import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.Music;
+import com.comsince.knowledge.view.xlistview.MsgListView;
 import com.tarena.fashionmusic.MyApplication;
 
 public class LocalLayout extends LinearLayout {
 	private static String TAG = "Aisa";
 	View rootview;
-	ListView localistview;
+	MsgListView localistview;
 	LayoutInflater inflater;
 	Context context;
 	List<Music> musicList;
@@ -39,7 +40,7 @@ public class LocalLayout extends LinearLayout {
 	}
 	
 	public void initView(){
-		localistview = (ListView) rootview.findViewById(R.id.lvSounds);
+		localistview = (MsgListView) rootview.findViewById(R.id.lvSounds);
 	}
 	
 	public void initData(){
@@ -75,7 +76,7 @@ public class LocalLayout extends LinearLayout {
 		return localistview;
 	}
 
-	public void setLocalistview(ListView localistview) {
+	public void setLocalistview(MsgListView localistview) {
 		this.localistview = localistview;
 	}
 	
