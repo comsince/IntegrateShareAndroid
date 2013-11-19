@@ -54,7 +54,9 @@ import com.comsince.knowledge.uikit.MMAlert;
 import com.comsince.knowledge.utils.BitmapTool;
 import com.comsince.knowledge.utils.HttpDownloader;
 import com.comsince.knowledge.utils.StrTime;
+import com.comsince.knowledge.view.dialog.SearchLrcDialog.searchLrcDialogListeners;
 import com.comsince.knowledge.view.dialog.SleepModeDialog;
+import com.comsince.knowledge.view.dialog.SearchLrcDialog;
 import com.tarena.fashionmusic.MyApplication;
 import com.tarena.fashionmusic.lrc.Lyric;
 import com.tarena.fashionmusic.lrc.LyricView;
@@ -184,6 +186,51 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.searchlrc:
+			final SearchLrcDialog searchLrcDialog = new SearchLrcDialog(context,curMusic.getMusicName(),curMusic.getSinger());
+			searchLrcDialog.setSearchLrcDialogListender(new searchLrcDialogListeners() {
+				
+				@Override
+				public void commit(final String musicName, final String artist) {
+					searchLrcDialog.dismiss();
+					new Thread() {
+						private String songId = null;
+						private BaiduDevMusicList baiduDevMusicList = null;
+						@Override
+						public void run() {
+							List<String> searchCondition = new ArrayList<String>();
+							searchCondition.add(musicName);
+							searchCondition.add(artist);
+							for(int i=0 ;i< searchCondition.size();i++){
+								baiduDevMusicList = BaiduLrc.getBaiduDevMusicListBySongName(searchCondition.get(i));
+								if(baiduDevMusicList != null){
+									if (baiduDevMusicList.getBaiduDevMusics() != null) {
+										Log.d("TEST", curMusic.getSinger());
+										songId = BaiduLrc.getSongIdBySinger(artist, baiduDevMusicList);
+										if (!TextUtils.isEmpty(songId)) {
+											updateLrc();
+										}
+									}
+								}
+							}
+						}
+						
+						/**
+						 * 更新下载歌词
+						 * */
+						private void updateLrc(){
+							String LrcUrl = BaiduLrc.getLrcAddressBySongId(songId);
+							Log.d("TEST", LrcUrl);
+							Log.d("TEST", curMusic.getMusicName());
+							Log.d("TEST", curMusic.getSinger());
+							HttpDownloader down = new HttpDownloader();
+							down.downFile(LrcUrl, Constant.LRC_DIR, curMusic.getMusicName() + "-" + curMusic.getSinger() + ".lrc");
+							musicInfoHandler.sendEmptyMessage(Constant.UPDATE_LRC);
+						}
+
+					}.start();
+				}
+			});
+			searchLrcDialog.show();
 			return true;
 		case R.id.sleepmode:
 			final SleepModeDialog dialog = new SleepModeDialog(context);
