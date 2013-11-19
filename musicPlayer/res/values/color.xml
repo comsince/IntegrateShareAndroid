@@ -45,4 +45,11 @@
     <color name="color_tab_bg">#ff279ce7</color>
     <color name="color_transparent">#00000000</color>
     <color name="bg_song_recognition_entrance">#ffeeeeee</color>
+    
+    
+    <!-- add dialog -->
+    <color name="color_dialog_list_line">#eeeeeee6</color>
+    <color name="color_dialog_list_press">#ff47caff</color>
+    <color name="color_text_grey">#ff999999</color>
+    <color name="add_black">#000000</color>
 </resources>

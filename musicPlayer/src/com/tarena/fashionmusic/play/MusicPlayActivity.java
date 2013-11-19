@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,8 +20,6 @@ import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,6 +34,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.sharesdk.BaiduShareException;
 import com.baidu.sharesdk.ShareContent;
@@ -53,6 +53,7 @@ import com.comsince.knowledge.uikit.MMAlert;
 import com.comsince.knowledge.utils.BitmapTool;
 import com.comsince.knowledge.utils.HttpDownloader;
 import com.comsince.knowledge.utils.StrTime;
+import com.comsince.knowledge.view.dialog.SleepModeDialog;
 import com.tarena.fashionmusic.MyApplication;
 import com.tarena.fashionmusic.lrc.Lyric;
 import com.tarena.fashionmusic.lrc.LyricView;
@@ -61,6 +62,7 @@ import com.tarena.fashionmusic.lrc.Sentence;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXTextObject;
+import com.comsince.knowledge.view.dialog.SleepModeDialog.SleepModeDialogListener;
 
 
 public class MusicPlayActivity extends Activity implements OnClickListener {
@@ -173,24 +175,42 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.searchlrc:
-			
-			break;
-
+			return true;
+		case R.id.sleepmode:
+			final SleepModeDialog dialog = new SleepModeDialog(context);
+			dialog.setSleepModeDialogListener(new SleepModeDialogListener() {
+				@Override
+				public void commit(String time) {
+					dialog.dismiss();
+					//Toast.makeText(context, "commit", Toast.LENGTH_SHORT).show();
+				}
+			});
+			dialog.show();
+			return true;
+		case R.id.setting:
+			return true;
 		default:
-			break;
+			return super.onContextItemSelected(item);
 		}
-		return super.onContextItemSelected(item);
+		
 	}
 
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		return true;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.music_activity_menu, menu);
-		return super.onCreateOptionsMenu(menu);
+        Toast.makeText(this,
+                "onCreateOptionsMenu",
+                Toast.LENGTH_LONG).show();
+		return true;
 	}
 
 
