@@ -63,4 +63,7 @@ public class Constant {
 	public static final int MMALERT_DOWNLOAD_MUSIC = 0;
 	public static final int MMALERT_SHARE_MUSIC = 1;
 	public static final int MMALERT_CANCEL_MUSIC = 2;
+	
+	//睡眠时间
+	public static final int SLEEP_MODE = 10001;
 }

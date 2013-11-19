@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -113,6 +114,11 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	 * 更新歌词intent
 	 * */
 	public static Intent intent;
+	
+	/**
+	 * 睡眠时间
+	 * */
+	public static int sleeptime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -186,6 +192,15 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 				public void commit(String time) {
 					dialog.dismiss();
 					//Toast.makeText(context, "commit", Toast.LENGTH_SHORT).show();
+					sleeptime = Integer.valueOf(time);
+					if(sleepThread != null){
+						sleepThread.destroy();
+						sleepThread = new SleepThread();
+						sleepThread.start();
+					}else{
+						sleepThread = new SleepThread();
+						sleepThread.start();
+					}
 				}
 			});
 			dialog.show();
@@ -207,9 +222,6 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.music_activity_menu, menu);
-        Toast.makeText(this,
-                "onCreateOptionsMenu",
-                Toast.LENGTH_LONG).show();
 		return true;
 	}
 
@@ -490,6 +502,24 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			audioLrc.invalidate();
 		}
 	};
+	
+	/**
+	 * 睡眠等待
+	 * */
+	Thread sleepThread;
+	public class SleepThread extends Thread {
+
+		public void run() {
+			while (true) {
+				try {
+					Thread.sleep(sleeptime * 60000);// 线程暂停时间XX分钟
+					musicInfoHandler.sendEmptyMessage(Constant.SLEEP_MODE);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	/**
 	 * 处理音乐信息的总Handler
@@ -512,6 +542,15 @@ public class MusicPlayActivity extends Activity implements OnClickListener {
 			case Constant.UPDATE_LRC:
 				ShowLyric(Constant.LRC_PATH + curMusic.getMusicName() +"-"+curMusic.getSinger() +".lrc");
 				isDownLrc = false;
+				break;
+				
+			case Constant.SLEEP_MODE:
+				musicPreference.saveMusicCurrentMs(context, curMs);
+				musicPlayIntent = new Intent();
+				musicPlayIntent.setAction(Constant.ACTION_PAUSE);
+				sendBroadcast(musicPlayIntent);
+				isPlaying = false;
+				musicPlay.setImageResource(R.drawable.btn_music_play);
 				break;
 
 			default:
