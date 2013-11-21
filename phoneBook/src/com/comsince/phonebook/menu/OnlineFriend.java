@@ -10,6 +10,9 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -61,6 +64,7 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 	private LinearLayout conversation_secretfile_layout;
 	private LinearLayout conversation_watermark_layout;
 	private LinearLayout conversation_rich_status_layout;
+	private RelativeLayout conversation_options_bar;
 	
 	public static final int NEW_MESSAGE = 0x001;// 收到消息
 	
@@ -85,6 +89,7 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
     	conversation_secretfile_layout = (LinearLayout) mOnlineFriend.findViewById(R.id.conversation_secretfile_layout);
     	conversation_watermark_layout = (LinearLayout) mOnlineFriend.findViewById(R.id.conversation_watermark_layout);
     	conversation_rich_status_layout = (LinearLayout) mOnlineFriend.findViewById(R.id.conversation_rich_status_layout);
+    	conversation_options_bar = (RelativeLayout) mOnlineFriend.findViewById(R.id.conversation_options_bar);
 	}
 	
 	private void setListener(){
@@ -103,10 +108,31 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 			public void onClick(View v) {
 				if(isoperationBarGone){
 					ReOperation.setVisibility(View.VISIBLE);
+					conversation_options_bar.clearAnimation();
+					Animation inAnimation = AnimationUtils.loadAnimation(mContext, R.anim.push_up_outin);
+					conversation_options_bar.startAnimation(inAnimation);
 					isoperationBarGone = false;
 				}else{
-					ReOperation.setVisibility(View.GONE);
-					mRefreshListView.setVisibility(View.VISIBLE);
+					Animation outAnimation = AnimationUtils.loadAnimation(mContext, R.anim.push_up_out);
+					outAnimation.setAnimationListener(new AnimationListener() {
+						
+						@Override
+						public void onAnimationStart(Animation animation) {
+							
+						}
+						
+						@Override
+						public void onAnimationRepeat(Animation animation) {
+							
+						}
+						
+						@Override
+						public void onAnimationEnd(Animation animation) {
+							ReOperation.setVisibility(View.GONE);
+						}
+					});
+					conversation_options_bar.clearAnimation();
+					conversation_options_bar.startAnimation(outAnimation);
 					isoperationBarGone = true;
 				}
 				/*Intent intent = new Intent();
