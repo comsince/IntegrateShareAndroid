@@ -43,6 +43,8 @@
                 android:background="@drawable/button_title_addfriends" />
         </LinearLayout>
         
+   
+        
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
@@ -58,7 +60,7 @@
             android:listSelector="@drawable/list_selector_transition" >
         </com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView>
 
-        <include
+         <include
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             layout="@layout/conversation_options_bar"

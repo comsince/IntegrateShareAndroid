@@ -116,6 +116,12 @@
             android:screenOrientation="portrait">
         </activity>
         
+        <!-- 测试-->
+        <activity
+            android:name=".activity.test.TestRelativeLayoutActivity"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified"
+            android:screenOrientation="portrait">
+        </activity>
         
         <!-- push service client 用来接收push服务receiver -->
         <receiver android:name=".receiver.PushMessageReceiver" >

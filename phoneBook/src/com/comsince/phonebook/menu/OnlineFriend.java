@@ -14,13 +14,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.comsince.phonebook.PhoneBookApplication;
 import com.comsince.phonebook.R;
 import com.comsince.phonebook.activity.message.ChatActivity;
+import com.comsince.phonebook.activity.test.TestRelativeLayoutActivity;
 import com.comsince.phonebook.adapter.OnlineFriendAdapter;
 import com.comsince.phonebook.constant.Constant;
 import com.comsince.phonebook.dbhelper.UserDB;
@@ -39,7 +42,7 @@ import com.comsince.phonebook.view.quickactionbar.QuickActionBar;
 import com.comsince.phonebook.view.quickactionbar.QuickActionWidget;
 import com.comsince.phonebook.view.quickactionbar.QuickActionWidget.OnQuickActionClickListener;
 
-public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHandler,OnQuickActionClickListener{
+public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHandler,OnQuickActionClickListener,OnClickListener{
 	
 	private Context mContext;
 	private PhoneBookApplication phoneBookApplication;
@@ -53,6 +56,11 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 	private QuickActionWidget mBar;
 	private int onItemClickPosition;
 	private boolean isoperationBarGone = true;
+	
+	private LinearLayout conversation_multichat_layout;
+	private LinearLayout conversation_secretfile_layout;
+	private LinearLayout conversation_watermark_layout;
+	private LinearLayout conversation_rich_status_layout;
 	
 	public static final int NEW_MESSAGE = 0x001;// 收到消息
 	
@@ -72,6 +80,11 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 		mMenu = (Button) mOnlineFriend.findViewById(R.id.online_friend_menu);
 		mOperation = (Button) mOnlineFriend.findViewById(R.id.group_add);
 		ReOperation = (RelativeLayout) mOnlineFriend.findViewById(R.id.conversation_options_page);
+		
+		conversation_multichat_layout = (LinearLayout) mOnlineFriend.findViewById(R.id.conversation_multichat_layout);
+    	conversation_secretfile_layout = (LinearLayout) mOnlineFriend.findViewById(R.id.conversation_secretfile_layout);
+    	conversation_watermark_layout = (LinearLayout) mOnlineFriend.findViewById(R.id.conversation_watermark_layout);
+    	conversation_rich_status_layout = (LinearLayout) mOnlineFriend.findViewById(R.id.conversation_rich_status_layout);
 	}
 	
 	private void setListener(){
@@ -93,8 +106,12 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 					isoperationBarGone = false;
 				}else{
 					ReOperation.setVisibility(View.GONE);
+					mRefreshListView.setVisibility(View.VISIBLE);
 					isoperationBarGone = true;
 				}
+				/*Intent intent = new Intent();
+				intent.setClass(mContext, TestRelativeLayoutActivity.class);
+				mContext.startActivity(intent);*/
 			}
 		});
 		
@@ -124,6 +141,11 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 		});
 		mRefreshListView.setOnCancelListener(this);
 		mRefreshListView.setOnRefreshListener(this);
+		
+		conversation_multichat_layout.setOnClickListener(this);
+    	conversation_secretfile_layout.setOnClickListener(this);
+    	conversation_watermark_layout.setOnClickListener(this);
+    	conversation_rich_status_layout.setOnClickListener(this);
 	}
 	
 	private void initData(){
@@ -306,6 +328,25 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 			default:
 				break;
 			}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.conversation_multichat_layout:
+            Toast.makeText(mContext, "click conversation_multichat_layout", Toast.LENGTH_LONG).show();
+			break;
+		case R.id.conversation_secretfile_layout:
+			Toast.makeText(mContext, "click conversation_secretfile_layout", Toast.LENGTH_LONG).show();
+			break;
+		case R.id.conversation_watermark_layout:
+			Toast.makeText(mContext, "click conversation_watermark_layout", Toast.LENGTH_LONG).show();
+			break;
+		case R.id.conversation_rich_status_layout:
+			Toast.makeText(mContext, "click conversation_rich_status_layout", Toast.LENGTH_LONG).show();
+			break;
+		}
+
 	}
 	
 }
