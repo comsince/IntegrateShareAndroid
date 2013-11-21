@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
@@ -43,13 +44,15 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 	private Context mContext;
 	private PhoneBookApplication phoneBookApplication;
 	private View mOnlineFriend;
-	private Button mMenu;
+	private Button mMenu,mOperation;
+	private RelativeLayout ReOperation;
 	private RefreshListView mRefreshListView;
 	private OnlineFriendAdapter mOnlineFriendAdapter;
 	private List<User> mUser;
 	private UserDB mUserDB;
 	private QuickActionWidget mBar;
 	private int onItemClickPosition;
+	private boolean isoperationBarGone = true;
 	
 	public static final int NEW_MESSAGE = 0x001;// 收到消息
 	
@@ -67,6 +70,8 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 	private void findViewById(){
 		mRefreshListView = (RefreshListView) mOnlineFriend.findViewById(R.id.online_friend_list);
 		mMenu = (Button) mOnlineFriend.findViewById(R.id.online_friend_menu);
+		mOperation = (Button) mOnlineFriend.findViewById(R.id.group_add);
+		ReOperation = (RelativeLayout) mOnlineFriend.findViewById(R.id.conversation_options_page);
 	}
 	
 	private void setListener(){
@@ -75,6 +80,20 @@ public class OnlineFriend implements OnRefreshListener,OnCancelListener,EventHan
 			public void onClick(View v) {
 				if (mOnOpenListener != null) {
 					mOnOpenListener.open();
+				}
+			}
+		});
+		
+		mOperation.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(isoperationBarGone){
+					ReOperation.setVisibility(View.VISIBLE);
+					isoperationBarGone = false;
+				}else{
+					ReOperation.setVisibility(View.GONE);
+					isoperationBarGone = true;
 				}
 			}
 		});

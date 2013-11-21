@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/conversation_options_page"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="top" >
+
+    <View
+        android:id="@+id/conversation_options_whole_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#7f000000" />
+
+    <RelativeLayout
+        android:id="@+id/conversation_options_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="84.0dip"
+        android:layout_gravity="top"
+        android:background="@drawable/skin_conversation_options_bg"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <View
+                android:layout_width="80.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <View
+                android:layout_width="1.0dip"
+                android:layout_height="fill_parent"
+                android:background="@drawable/skin_conversation_options_bg_line" />
+
+            <View
+                android:layout_width="80.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <View
+                android:layout_width="1.0dip"
+                android:layout_height="fill_parent"
+                android:background="@drawable/skin_conversation_options_bg_line" />
+
+            <View
+                android:layout_width="80.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+
+            <View
+                android:layout_width="1.0dip"
+                android:layout_height="fill_parent"
+                android:background="@drawable/skin_conversation_options_bg_line" />
+
+            <View
+                android:layout_width="80.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <LinearLayout
+                android:id="@+id/conversation_multichat_layout"
+                android:layout_width="80.0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0.0dip"
+                android:layout_marginRight="0.0dip"
+                android:layout_marginTop="0.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/conversation_option_selector"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:src="@drawable/conversation_options_multichat" />
+
+                <TextView
+                    android:id="@+id/conversation_multichat_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="0.0dip"
+                    android:ellipsize="end"
+                    android:shadowColor="#ff000000"
+                    android:shadowRadius="1.0"
+                    android:singleLine="true"
+                    android:text="@string/conversation_options_multichat"
+                    android:textColor="@color/skin_options_bar_item"
+                    android:textSize="12.0sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/conversation_secretfile_layout"
+                android:layout_width="80.0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0.0dip"
+                android:layout_marginRight="0.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/conversation_option_selector"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/near_all_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:src="@drawable/conversation_options_secretfile" />
+
+                <TextView
+                    android:id="@+id/conversation_secretfile_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="0.0dip"
+                    android:ellipsize="end"
+                    android:shadowColor="#ff000000"
+                    android:shadowRadius="1.0"
+                    android:singleLine="true"
+                    android:text="@string/conversation_options_secretfile"
+                    android:textColor="@color/skin_options_bar_item"
+                    android:textSize="12.0sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/conversation_watermark_layout"
+                android:layout_width="80.0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0.0dip"
+                android:layout_marginRight="0.0dip"
+                android:layout_marginTop="0.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/conversation_option_selector"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/conversation_watermark_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:src="@drawable/conversation_options_camera" />
+
+                <TextView
+                    android:id="@+id/conversation_watermark_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="0.0dip"
+                    android:ellipsize="end"
+                    android:shadowColor="#ff000000"
+                    android:shadowRadius="1.0"
+                    android:singleLine="true"
+                    android:text="@string/conversation_options_watermark"
+                    android:textColor="@color/skin_options_bar_item"
+                    android:textSize="12.0sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/conversation_rich_status_layout"
+                android:layout_width="80.0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0.0dip"
+                android:layout_marginRight="0.0dip"
+                android:layout_marginTop="0.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/conversation_option_selector"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/rich_status_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:src="@drawable/conversation_options_richstatus" />
+
+                <ProgressBar
+                    android:id="@+id/rich_status_pb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:indeterminateDrawable="@drawable/common_loading5"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/conversation_addfriend_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="0.0dip"
+                    android:ellipsize="end"
+                    android:shadowColor="#ff000000"
+                    android:shadowRadius="1.0"
+                    android:singleLine="true"
+                    android:text="@string/conversation_options_richStatus"
+                    android:textColor="@color/skin_options_bar_item"
+                    android:textSize="12.0sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

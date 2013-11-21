@@ -66,4 +66,11 @@
     <string name="open">打开</string>
     <string name="groupchat">群聊</string>
     <string name="about">关于</string>
+    
+    <string name="conversation_options_watermark">水印相机</string>
+    <string name="conversation_options_multichat">多人聊天</string>
+    <string name="conversation_options_saoyisao">扫一扫</string>
+    <string name="conversation_options_richStatus">个性签名</string>
+    <string name="conversation_options_dataline">传文件到电脑</string>
+    <string name="conversation_options_secretfile">闪照</string>
 </resources>

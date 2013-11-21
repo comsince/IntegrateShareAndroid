@@ -42,16 +42,27 @@
                 android:layout_marginRight="8dip"
                 android:background="@drawable/button_title_addfriends" />
         </LinearLayout>
-
-    <com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView
-        android:id="@+id/online_friend_list"
+        
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:cacheColorHint="@color/transparent"
-        android:background="@drawable/kaixin_background"
-        android:divider="@null"
-        android:fadingEdge="none"
-        android:listSelector="@drawable/list_selector_transition" >
-    </com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView>
+        android:layout_height="fill_parent" >
+
+        <com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView
+            android:id="@+id/online_friend_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/kaixin_background"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:listSelector="@drawable/list_selector_transition" >
+        </com.comsince.phonebook.view.pulltorefreshlistview.RefreshListView>
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/conversation_options_bar"
+            android:visibility="gone" />
+    </RelativeLayout>
 
 </LinearLayout>
