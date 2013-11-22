@@ -52,4 +52,7 @@
     <color name="color_dialog_list_press">#ff47caff</color>
     <color name="color_text_grey">#ff999999</color>
     <color name="add_black">#000000</color>
+    
+    <!-- music color -->
+    <color name="color_dividing_line_grey">#ffe1e4e6</color>
 </resources>

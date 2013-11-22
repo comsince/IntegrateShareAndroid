@@ -12,5 +12,8 @@
     <dimen name="PreferenceItemHeight">42dp</dimen>
     <dimen name="ConversationItemHeight">58dp</dimen>
     <dimen name="LargeAvatarSize">56dp</dimen>
+    
+    <!-- music dimes -->
+    <dimen name="dialog_title_height">40.0dip</dimen>
 
 </resources>

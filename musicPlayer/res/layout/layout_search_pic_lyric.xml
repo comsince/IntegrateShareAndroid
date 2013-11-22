@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/rename_playlist_prompt"
+            style="@style/DialogTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dialog_title_height"
+            android:text="搜索词图" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:layout_gravity="center_vertical"
+            android:background="@color/color_dividing_line_grey" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="120.0dip"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/rename_song"
+                android:layout_width="fill_parent"
+                android:layout_height="36.0dip"
+                android:layout_marginLeft="14.0dip"
+                android:layout_marginRight="14.0dip"
+                android:layout_marginTop="14.0dip"
+                android:background="@drawable/bg_edittext_new"
+                android:hint="歌名:"
+                android:imeOptions="actionNext"
+                android:maxLength="40"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip"
+                android:singleLine="true"
+                android:textSize="16.0dip" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/rename_artist"
+                android:layout_width="fill_parent"
+                android:layout_height="36.0dip"
+                android:layout_marginBottom="14.0dip"
+                android:layout_marginLeft="14.0dip"
+                android:layout_marginRight="14.0dip"
+                android:layout_marginTop="14.0dip"
+                android:background="@drawable/bg_edittext_new"
+                android:hint="歌手:"
+                android:imeOptions="actionDone"
+                android:maxLength="40"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip"
+                android:singleLine="true"
+                android:textSize="16.0dip" >
+            </EditText>
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:layout_gravity="center_vertical"
+            android:background="@color/color_dividing_line_grey" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="64.0dip"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip" >
+
+            <TextView
+                android:id="@+id/rename_create"
+                style="@style/DialogButton"
+                android:layout_marginRight="16.0dip"
+                android:text="@string/btn_confirm" />
+
+            <TextView
+                android:id="@+id/rename_cancel"
+                style="@style/DialogButton"
+                android:layout_width="match_parent"
+                android:text="@string/btn_cancel" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

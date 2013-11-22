@@ -56,4 +56,24 @@
     
     <style name="BaseDialog" parent="@android:style/Theme.Dialog" />
     
+    <!-- music style -->
+    <style name="DialogTitle">
+        <item name="android:textSize">14.0dip</item>
+        <item name="android:textColor">#ff667780</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">#fff2f4f5</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/dialog_title_height</item>
+    </style>
+    
+    <style name="DialogButton">
+        <item name="android:textSize">12.0dip</item>
+        <item name="android:textColor">#ff4b5c66</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bt_button</item>
+        <item name="android:layout_width">136.0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxWidth">136.0dip</item>
+    </style>
+    
 </resources>
