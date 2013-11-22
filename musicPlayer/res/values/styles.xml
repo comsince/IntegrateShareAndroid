@@ -76,4 +76,13 @@
         <item name="android:maxWidth">136.0dip</item>
     </style>
     
+    <!-- dialog animation -->
+    <style name="Animations" />
+   
+    <style name="Animations.PopUpMenu" parent="@style/Animations" />
+    <style name="Animations.PopUpMenu.Center" parent="@style/Animations.PopUpMenu">
+        <item name="android:windowEnterAnimation">@anim/popup_grow_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/popup_shrink_from_top</item>
+    </style>
+    
 </resources>

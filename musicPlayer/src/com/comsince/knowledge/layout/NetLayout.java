@@ -11,6 +11,8 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import com.comsince.knowledge.entity.NetMusic;
 import com.comsince.knowledge.entity.NetMusicList;
 import com.comsince.knowledge.utils.HttpTool;
 import com.comsince.knowledge.utils.SimpleXmlReaderUtil;
+import com.comsince.knowledge.view.dialog.StyleDialog;
 
 public class NetLayout extends LinearLayout {
 	View rootview;
@@ -42,6 +45,7 @@ public class NetLayout extends LinearLayout {
 		rootview = inflater.inflate(R.layout.netmusiclist, this, true);
 		initView();
 		initData();
+		initListener();
 	}
 
 	public void initView() {
@@ -100,6 +104,16 @@ public class NetLayout extends LinearLayout {
 			}
 
 		}.start();
+	}
+	
+	private void initListener(){
+		netlistview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				StyleDialog.getStyleDialog(context).show();
+			}
+		});
 	}
 
 	Handler handler = new Handler() {
