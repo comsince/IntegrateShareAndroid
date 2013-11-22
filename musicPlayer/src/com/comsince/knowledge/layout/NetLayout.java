@@ -25,6 +25,7 @@ import com.comsince.knowledge.entity.NetMusicList;
 import com.comsince.knowledge.utils.HttpTool;
 import com.comsince.knowledge.utils.SimpleXmlReaderUtil;
 import com.comsince.knowledge.view.dialog.StyleDialog;
+import com.comsince.knowledge.view.dialog.StyleDialog.StyleDialogListener;
 
 public class NetLayout extends LinearLayout {
 	View rootview;
@@ -111,7 +112,15 @@ public class NetLayout extends LinearLayout {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				StyleDialog.getStyleDialog(context).show();
+				StyleDialog dlg = StyleDialog.getStyleDialog(context);
+				dlg.setListener(new StyleDialogListener() {
+					
+					@Override
+					public void commit() {
+						
+					}
+				});
+				dlg.show();
 			}
 		});
 	}

@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
-
+    <!--android:layout_alignParentBottom="true"
+        可以是使装载该layout的dialog置于页面底部  -->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -85,4 +85,14 @@
         <item name="android:windowExitAnimation">@anim/popup_shrink_from_top</item>
     </style>
     
+    <style name="Animations.PopUpMenu.DropDownUp" parent="@style/Animations.PopUpMenu">
+        <item name="android:windowEnterAnimation">@anim/grow_fade_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/shrink_fade_out_from_bottom</item>
+    </style>
+    
+    <style name="AnimationDialogIphone">
+        <item name="android:windowEnterAnimation">@anim/bottom_to_current</item>
+        <item name="android:windowExitAnimation">@anim/current_to_bottom</item>
+    </style>
+    
 </resources>
