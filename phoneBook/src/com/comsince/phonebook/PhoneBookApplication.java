@@ -32,6 +32,8 @@ public class PhoneBookApplication extends Application {
     public static Context context;
     public static PhoneBookApplication phoneBookApplication;
     private NotificationManager mNotificationManager;
+    
+    public static Bitmap bitmap_s;
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -39,6 +41,8 @@ public class PhoneBookApplication extends Application {
 		phoneBookApplication = this;
 		try {
 			mAvatars = getAssets().list("avatar");
+			bitmap_s = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.phonebook);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
