@@ -22,6 +22,7 @@ import com.comsince.knowledge.utils.AlbumImageLoader;
 import com.comsince.knowledge.utils.AlbumImageLoader.ImageCallback;
 import com.comsince.knowledge.utils.StrTime;
 import com.comsince.knowledge.view.xlistview.MsgListView;
+import com.tarena.fashionmusic.MyApplication;
 
 public class LocalMusicListAdapter extends BaseAdapter {
 	private List<Music> musicList;
@@ -29,6 +30,7 @@ public class LocalMusicListAdapter extends BaseAdapter {
 	AlbumImageLoader albumImageLoader;
 	MsgListView listView;
 	int nowplaypos;
+	public Bitmap publicbitmap;
 
 	public LocalMusicListAdapter(Context context, List<Music> musicList, MsgListView listView) {
 		inflater = LayoutInflater.from(context);
@@ -40,6 +42,7 @@ public class LocalMusicListAdapter extends BaseAdapter {
 		// 获取异步加载图片对象
 		this.listView = listView;
 		albumImageLoader = new AlbumImageLoader(context);
+		publicbitmap = MyApplication.bitmap_s;
 		Log.d("Tag", "constructor");
 	}
 	
@@ -100,17 +103,18 @@ public class LocalMusicListAdapter extends BaseAdapter {
 
 			@Override
 			public void loadedImage(String albumkey, Bitmap bitmap) {
+				Log.d("pic", "LocalMusicListAdapter albumkey :" + albumkey+" exists :"+bitmap);
 				ImageView iv = (ImageView) listView.findViewWithTag(albumkey);
 				if (iv != null && bitmap != null) {
 					iv.setImageBitmap(bitmap);
 				}
 			}
 		});
-		
+		Log.d("pic", "LocalMusicListAdapter bitmap :" +music.getMusicName()+" exists :"+bitmap);
 		if (bitmap != null) {
 			//viewHolder.ivAlbum.setBackgroundResource(R.drawable.default_bg_s);
 		}else{
-			viewHolder.ivAlbum.setBackgroundResource(R.drawable.default_bg_s);
+			viewHolder.ivAlbum.setImageBitmap(publicbitmap);
 		}
 		
 

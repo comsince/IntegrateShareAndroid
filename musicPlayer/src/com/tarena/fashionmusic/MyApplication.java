@@ -5,18 +5,22 @@ import java.util.List;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.util.Log;
 
 import com.baidu.sharesdk.BaiduSocialShare;
 import com.baidu.sharesdk.SocialShareLogger;
 import com.baidu.sharesdk.ui.BaiduSocialShareUserInterface;
+import com.comsince.knowledge.R;
 import com.comsince.knowledge.constant.Constant;
 import com.comsince.knowledge.entity.Music;
 import com.comsince.knowledge.preferences.MusicPreference;
 import com.comsince.knowledge.utils.MusicDataUtil;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
 
 public class MyApplication extends Application {
 	public static MediaPlayer mediaPlayer;
@@ -28,6 +32,8 @@ public class MyApplication extends Application {
 	//百度社会化分享工具
 	public static BaiduSocialShare socialShare;
 	public static BaiduSocialShareUserInterface socialShareUi;
+	
+	public static Bitmap bitmap_s;
 
 	@Override
 	public void onCreate() {
@@ -39,6 +45,8 @@ public class MyApplication extends Application {
 			public void run() {
 				// 加载音乐文件列表
 				setMusics(MusicDataUtil.getMultiDatas(context));
+				bitmap_s = BitmapFactory.decodeResource(context.getResources(),
+						R.drawable.default_bg_s);
 			}
 		}).start();
 		// 初始化mediaPlayer

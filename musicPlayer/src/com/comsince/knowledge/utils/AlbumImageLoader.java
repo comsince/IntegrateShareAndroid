@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 public class AlbumImageLoader {
 	/**
@@ -100,6 +101,7 @@ public class AlbumImageLoader {
 			// 通过软引用，获取图片
 			Bitmap bitmap = rf.get();
 			// 如果该图片已经被释放，则将该path对应的键值对从map中移除
+			Log.d("pic", "AlbumImageLoader bitmap key :"+albumkey+"is exists ："+bitmap);
 			if (bitmap == null) {
 				caches.remove(albumkey);
 			} else {
