@@ -24,5 +24,11 @@ public class AndroidC2DMDemo extends Activity {
         	//否则说明已经向C2DM服务器注册过了
         	Log.v(TAG, "C2DM registered");
         }
-    }    
+    }
+    
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+    }
 }
