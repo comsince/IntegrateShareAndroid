@@ -29,6 +29,7 @@ public class AndroidC2DMDemo extends Activity {
     protected void onRestart() {
         // TODO Auto-generated method stub
         super.onRestart();
+        //onRestart here
     }
     //测试主干恢复
     //河滨分支
