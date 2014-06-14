@@ -9,7 +9,7 @@ public class AndroidC2DMDemo extends Activity {
 	private static final String TAG = "AndroidC2DMDemo";
 	public static final String SENDER_ID = "android.c2dm.demo@gmail.com"; //使用C2DM服务的用户账户
 	public static final String MESSAGE_KEY_ONE = "msg";   //和服务器商量好的接收消息的键值key
-	//这里增加一些测试数据，切换到分支test，切换
+	//这里增加一些测试数据，在master上修改
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
