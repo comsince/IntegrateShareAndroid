@@ -30,6 +30,7 @@ public class AndroidC2DMDemo extends Activity {
     protected void onRestart() {
         super.onRestart();
         Toast.makeText(this, "sj", Toast.LENGTH_SHORT).show();
+        //onRestart here
     }
     //测试主干恢复
     //河滨分支
