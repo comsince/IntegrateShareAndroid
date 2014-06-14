@@ -25,6 +25,7 @@ public class AndroidC2DMDemo extends Activity {
         	Log.v(TAG, "C2DM registered");
         }
     }
+    //测试主干恢复
     
 
 }
