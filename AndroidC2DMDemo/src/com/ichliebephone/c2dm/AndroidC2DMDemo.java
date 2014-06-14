@@ -3,6 +3,7 @@ package com.ichliebephone.c2dm;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 public class AndroidC2DMDemo extends Activity {
     /** Called when the activity is first created. */
@@ -27,8 +28,8 @@ public class AndroidC2DMDemo extends Activity {
     }
     @Override
     protected void onRestart() {
-        // TODO Auto-generated method stub
         super.onRestart();
+        Toast.makeText(this, "sj", Toast.LENGTH_SHORT).show();
     }
     //测试主干恢复
     //河滨分支
