@@ -36,11 +36,21 @@ import android.util.Log;
 public abstract class C2DMBaseReceiver extends IntentService {
 	//和C2DM Push的Intent内容相关
 	//重新向C2DM服务器注册
-    private static final String C2DM_RETRY = "com.google.android.c2dm.intent.RETRY";   
+    //private static final String C2DM_RETRY = "com.google.android.c2dm.intent.RETRY";   
     //向C2DM服务器注册后的回调处理
-    public static final String REGISTRATION_CALLBACK_INTENT = "com.google.android.c2dm.intent.REGISTRATION";  
+    //public static final String REGISTRATION_CALLBACK_INTENT = "com.google.android.c2dm.intent.REGISTRATION";  
     //接收到C2DM服务器的推送消息
-    private static final String C2DM_INTENT = "com.google.android.c2dm.intent.RECEIVE";
+    //private static final String C2DM_INTENT = "com.google.android.c2dm.intent.RECEIVE";
+    
+    // 重新向C2DM服务器注册
+    public static final String C2DM_RETRY = "com.meizu.c2dm.intent.RETRY";
+
+    public static final String REQUEST_C2DM_RETRY = "com.meizu.c2dm.service.RETRY";
+
+    // 向C2DM服务器注册后的回调处理
+    public static final String REGISTRATION_CALLBACK_INTENT = "com.meizu.c2dm.intent.REGISTRATION";
+    // 接收到C2DM服务器的推送消息
+    public static final String C2DM_INTENT = "com.meizu.c2dm.intent.RECEIVE";
 
     // Logging tag
     private static final String TAG = "C2DM";
@@ -186,13 +196,13 @@ public abstract class C2DMBaseReceiver extends IntentService {
             // Registration failed
             Log.e(TAG, "Registration error " + error);
             onError(context, error);
-            if ("SERVICE_NOT_AVAILABLE".equals(error)) {
+           /* if ("SERVICE_NOT_AVAILABLE".equals(error)) {
                 long backoffTimeMs = C2DMessaging.getBackoff(context);
                 
                 Log.d(TAG, "Scheduling registration retry, backoff = " + backoffTimeMs);
                 Intent retryIntent = new Intent(C2DM_RETRY);
                 PendingIntent retryPIntent = PendingIntent.getBroadcast(context, 
-                        0 /*requestCode*/, retryIntent, 0 /*flags*/);
+                        0 requestCode, retryIntent, 0 flags);
                 
                 AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                 am.set(AlarmManager.ELAPSED_REALTIME,
@@ -201,7 +211,7 @@ public abstract class C2DMBaseReceiver extends IntentService {
                 // Next retry should wait longer.
                 backoffTimeMs *= 2;
                 C2DMessaging.setBackoff(context, backoffTimeMs);
-            } 
+            } */
         } else {
             try {
                 onRegistered(context, registrationId);

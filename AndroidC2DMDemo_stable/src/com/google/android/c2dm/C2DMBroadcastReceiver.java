@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * Helper class to handle BroadcastReciver behavior.
@@ -22,6 +23,7 @@ public class C2DMBroadcastReceiver extends BroadcastReceiver {
     @Override
     public final void onReceive(Context context, Intent intent) {
         // To keep things in one place.
+        Log.i("C2DM", "onReceive: " + intent.getAction());
         C2DMBaseReceiver.runIntentInService(context, intent);
         setResult(Activity.RESULT_OK, null /* data */, null /* extra */);        
     }

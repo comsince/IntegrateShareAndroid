@@ -13,9 +13,9 @@ import android.util.Log;
 import com.google.android.c2dm.C2DMBaseReceiver;
 //接收C2DM服务器Push的消息，包括注册返回的registration_id消息，推送的数据消息等
 public class C2DMReceiver extends C2DMBaseReceiver{
-	
+    private static final String PACKAGE_NAME = "com.ichliebephone.c2dm";
 	private static final String TAG="C2DMReceiver";
-	//
+	/*//
 	public C2DMReceiver()
 	{
 		super(AndroidC2DMDemo.SENDER_ID);
@@ -23,7 +23,10 @@ public class C2DMReceiver extends C2DMBaseReceiver{
 	public C2DMReceiver(String senderId) {
 		super(senderId);
 		// TODO Auto-generated constructor stub
-	}
+	}*/
+	public C2DMReceiver() {
+        super(PACKAGE_NAME);
+    }
 	//接收到Push消息的回调函数
 	@Override
 	protected void onMessage(Context context, Intent intent) {

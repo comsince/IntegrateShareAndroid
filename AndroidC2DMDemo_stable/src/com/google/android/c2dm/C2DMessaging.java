@@ -33,8 +33,10 @@ import android.content.SharedPreferences.Editor;
 public class C2DMessaging {
     public static final String EXTRA_SENDER = "sender";
     public static final String EXTRA_APPLICATION_PENDING_INTENT = "app";
-    public static final String REQUEST_UNREGISTRATION_INTENT = "com.google.android.c2dm.intent.UNREGISTER";
-    public static final String REQUEST_REGISTRATION_INTENT = "com.google.android.c2dm.intent.REGISTER";
+    //public static final String REQUEST_UNREGISTRATION_INTENT = "com.google.android.c2dm.intent.UNREGISTER";
+    //public static final String REQUEST_REGISTRATION_INTENT = "com.google.android.c2dm.intent.REGISTER";
+    public static final String REQUEST_UNREGISTRATION_INTENT = "com.meizu.c2dm.intent.UNREGISTER";
+    public static final String REQUEST_REGISTRATION_INTENT = "com.meizu.c2dm.intent.REGISTER";
     public static final String LAST_REGISTRATION_CHANGE = "last_registration_change";
     public static final String BACKOFF = "backoff";
     public static final String GSF_PACKAGE = "com.google.android.gsf";  //GSF为GoogleServicesFramework.apk的缩写
