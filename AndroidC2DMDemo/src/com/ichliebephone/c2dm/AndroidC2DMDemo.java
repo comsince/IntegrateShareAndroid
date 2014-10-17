@@ -1,4 +1,4 @@
-package com.ichliebephone.c2dm;
+﻿package com.ichliebephone.c2dm;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ public class AndroidC2DMDemo extends Activity {
 	private static final String TAG = "AndroidC2DMDemo";
 	public static final String SENDER_ID = "android.c2dm.demo@gmail.com"; //使用C2DM服务的用户账户
 	public static final String MESSAGE_KEY_ONE = "msg";   //和服务器商量好的接收消息的键值key
-	//update
+	//update data
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
