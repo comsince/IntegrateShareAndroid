@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.mimi.model">
+	<class name="Message" table="T_Message" lazy="false">
+		<id name="messageId" type="java.lang.Long" column="messageId">
+		</id>
+		<property name="receiveId" column="receiveId" type="java.lang.Long" />
+		<property name="senderId" column="senderId" type="java.lang.Long" />
+		<property name="content" column="content" type="java.lang.String" />
+		<property name="alias" column="alias" type="java.lang.String" />
+		<property name="status" column="status" type="java.lang.Byte" />
+		<property name="createTime" column="createTime" type="java.util.Date" />
+	</class>
+ 
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.mimi.model">
+	<class name="BlackList" table="T_BLACKLIST" lazy="false">
+		<id name="sequenceId" type="java.lang.Integer" column="sequenceId">
+			<generator class="native" />
+		</id>
+		<property name="account" column="account" type="java.lang.String" />
+		<property name="sourceIp" column="sourceIp" type="java.lang.String" />
+		<property name="type" column="type" type="java.lang.Byte" />
+	</class>
+</hibernate-mapping>

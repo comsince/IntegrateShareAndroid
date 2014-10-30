@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.mimi.model">
+	<class name="Comment" table="T_COMMENT" lazy="false">
+		<id name="commentId" type="java.lang.String" column="commentId">
+		</id>
+		<property name="userId" column="userId" type="java.lang.String" />
+		<property name="matterId" column="matterId" type="java.lang.String" />
+		<property name="rank" column="rank" type="java.lang.Integer" />
+		<property name="content" column="content" type="java.lang.String" />
+		<property name="alias" column="alias" type="java.lang.String" />
+		<property name="timestamp" column="timestamp" type="java.lang.String" />
+	</class>
+ 
+</hibernate-mapping>

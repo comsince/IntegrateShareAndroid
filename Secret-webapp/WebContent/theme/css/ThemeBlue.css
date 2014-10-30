@@ -1,0 +1,74 @@
+@CHARSET "UTF-8";
+
+a {color: #006A92;}
+
+/*-------------top--------------------*/
+.navmain {
+	background-color: #14A7D5;
+}
+
+/*----------------form----------------*/
+input,.textarea,select,textarea,.selectTag{
+	border: 1px #68B8E0 solid;
+}
+.selectTag:hover,input:focus,.textarea:focus,.foucusView{
+	-webkit-box-shadow: 0px 0px 5px #6BCCFF;
+	-moz-box-shadow: 0px 0px 5px #6BCCFF;
+	-o-box-shadow: 0px 0px 5px #6BCCFF;
+	-ms-box-shadow: 0px 0px 5px #6BCCFF;
+	box-shadow: 0px 0px 5px #6BCCFF;
+}
+.selectItemPanel {
+  border: 1px solid #68B8E0;
+}
+.selectItemPanel {
+  border: 1px solid #68B8E0;
+}
+.selectTag{
+	border: 1px #68B8E0 solid;
+}
+.selectItem:hover{
+	border-bottom: solid 3px #14A7D4;
+}
+
+/*----------------ucenter----------------*/
+.leftnav ul li.active,.leftnav ul li:hover {
+	border-left: solid 3px #14A7D4;
+ }
+ .leftnav ul li.active a,.leftnav ul li:hover a {
+	color: #14A7D5;
+}
+.utable tr th {
+	background-color: #14A7D5;
+}
+
+/*----------------content----------------*/
+.simple_button:hover {
+    -webkit-box-shadow: 0px 0px 10px #6BCCFF;
+	-moz-box-shadow: 0px 0px 5px #6BCCFF;
+	-o-box-shadow: 0px 0px 5px #6BCCFF;
+	-ms-box-shadow: 0px 0px 5px #6BCCFF;
+	box-shadow: 0px 0px 10px #6BCCFF;
+}
+.simple_button {
+	border: solid 1px #186F8F;
+	background-color:#3bb3e0;
+	background-image: linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0, rgb(44,160,202)),
+	color-stop(1, rgb(62,184,229))
+	);
+	-webkit-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 1px 0px #fff;
+	-moz-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 1px 0px #fff;
+	box-shadow: inset 0px 1px 0px #7fd2f1, 0px 1px 0px #fff;
+}
+ .title h3{
+	border-bottom: #69CBF1 3px solid;
+}

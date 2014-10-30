@@ -1,0 +1,67 @@
+@CHARSET "UTF-8";
+ 
+ 
+/*-----------------------------------------------------dialog------------------------*/
+ 
+.g_dialog {
+position: absolute;
+overflow: hidden;
+z-index: 9999;
+border: 1px solid #AAA;
+border-image: initial;
+box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 8px;
+border-radius: 5px;
+min-width: 440px;
+background-color: #EAEAEA;
+}
+.dialog_head {
+background-color: #EAEAEA;
+padding: 5px 15px;
+line-height: 25px;
+font-weight: bold;
+border-radius: 5px 5px 0px 0px;
+border-bottom: 1px solid #CCC;
+}
+.g_dialog .ico_close_d, .qm_dialog .ico_minimize {
+position: absolute;
+right: 10px;
+top: 9px;
+background: url(https://res.mail.qq.com/zh_CN/htmledition/images/newicon/mail11fd22.png) -18px -240px no-repeat;
+width: 18px;
+height: 18px;
+border-radius: 2px;
+}
+.g_dialog .ico_close_d:hover {
+background-position: -54px -240px;
+}
+.dialog_inner {
+border-radius: 0px 0px 5px 5px;
+overflow: hidden;
+}
+.dialog_content {
+background-color: white;
+}
+.dialog_operate {
+background-color: #EAEAEA;
+padding: 5px 0px;
+border-top: 1px solid #CCC;
+}
+
+
+/*--------------------------controlpanel-----------------------------------*/
+
+.controlpanel{
+    height: 80px;
+	line-height: 80px;
+	border: 1px solid #14A7D5;
+	margin-right: 10px;
+	width: 100%;
+    background: url(../image/rcontentbg.png) repeat;
+}
+.controlpanel label{
+   	width: 60px;
+	padding-left: 10px;
+}
+ .controlpanel input{
+   height:35px;
+}

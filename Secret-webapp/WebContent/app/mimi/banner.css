@@ -1,0 +1,46 @@
+@charset "gb2312"; 
+
+body,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,hr
+	{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+
+.slide-ul {
+	position: relative;
+}
+
+ 
+.slide li {
+	float: left;
+	overflow: hidden;
+}
+
+ 
+
+ 
+.smallDiv {
+	position: absolute;
+	padding: 5px 0px;
+	overflow: hidden;
+	background: rgba(0, 0, 0, 0.5);
+	 
+}
+
+
+.info li img {
+	padding: 2px;
+	border: 0 none;
+	vertical-align: top;
+}
+
+.info .current {
+}
+
+.info .current img {
+	background: #f60;
+}
+ 
+ 

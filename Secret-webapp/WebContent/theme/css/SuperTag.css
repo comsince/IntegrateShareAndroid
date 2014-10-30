@@ -1,0 +1,37 @@
+@charset "UTF-8";
+.selectTag s{
+	border-color: #666 transparent transparent transparent;
+	border-style: solid;
+	border-width: 5px 5px;
+	font-size: 0;
+	position: absolute;
+	right: 6px;
+	top: 15px;
+	border-color: #666 transparent transparent;
+	_border-color: #666 #f7f7f7 #f7f7f7 #f7f7f7;
+	-webkit-transition: -webkit-transform .2s ease-in;
+	-webkit-backface-visibility: hidden;
+	-moz-transition: -moz-transform .2s ease-in;
+	-o-transition: -o-transform .2s ease-in;
+	transition: transform .2s ease-in;
+}
+.selectTag:hover s {
+	border-color: #666 transparent transparent transparent;
+	_border-color: #666 #f7f7f7 #f7f7f7 #f7f7f7;
+	-moz-transform: rotate(180deg);
+	-moz-transform-origin: 50% 30%;
+	-webkit-transform: rotate(180deg);
+	-webkit-transform-origin: 50% 30%;
+	-o-transform: rotate(180deg);
+	-o-transform-origin: 50% 30%;
+	transform: rotate(180deg);
+	transform-origin: 50% 30%;
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+	top: 5px	9;
+}
+
+.selectItem{
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
+}

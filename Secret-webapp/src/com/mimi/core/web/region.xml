@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+
+   <province id="99" name="北京"/>
+   <province id="98" name="天津"/>
+   <province id="97" name="上海"/>
+   <province id="96" name="重庆"/>
+   <province id="10" name="安徽">
+     <city id="1010" name="合肥"/>
+     <city id="1011" name="蚌埠"/>
+     <city id="1012" name="黄山"/>
+     <city id="1013" name="滁州"/>
+     <city id="1014" name="阜阳"/>
+     <city id="1015" name="亳州"/>
+     <city id="1016" name="安庆"/>
+   </province>
+   <province id="11" name="福建">
+     <city id="1110" name="厦门"/>
+     <city id="1111" name="泉州"/>
+     <city id="1112" name="莆田"/>
+     <city id="1113" name="龙岩"/>
+     <city id="1114" name="三明"/>
+     <city id="1115" name="晋江"/>
+     <city id="1116" name="南平"/>
+     <city id="1117" name="宁德"/>
+     <city id="1118" name="漳州"/>
+   </province>
+   <province id="12" name="广东">
+     <city id="1210" name="广州"/>
+     <city id="1211" name="深圳"/>
+     <city id="1212" name="东莞"/>
+     <city id="1213" name="佛山"/>
+     <city id="1214" name="中山"/>
+     <city id="1215" name="惠州"/>
+     <city id="1216" name="潮州"/>
+     <city id="1217" name="肇庆"/>
+     <city id="1218" name="河源"/>
+     <city id="1219" name="江门"/>
+     <city id="1220" name="湛江"/>
+     <city id="1221" name="清远"/>
+     <city id="1222" name="韶关"/>
+     <city id="1223" name="梅州"/>
+     <city id="1224" name="云浮"/>
+     <city id="1225" name="茂名"/>
+   </province>
+   <province id="13" name="广西">
+     <city id="1310" name="南宁"/>
+     <city id="1311" name="桂林"/>
+     <city id="1312" name="百色"/>
+     <city id="1313" name="柳州"/>
+     <city id="1314" name="钦州"/>
+     <city id="1315" name="玉林"/>
+     <city id="1316" name="梧州"/>
+     <city id="1317" name="来宾"/>
+   </province>
+   <province id="14" name="贵州">
+     <city id="1410" name="贵阳"/>
+     <city id="1411" name="遵义"/>
+     <city id="1412" name="毕节"/>
+     <city id="1413" name="铜仁"/>
+     <city id="1414" name="六盘水"/>
+     <city id="1415" name="安顺"/>
+   </province>
+   <province id="15" name="海南">
+     <city id="1510" name="海口"/>
+     <city id="1511" name="三亚"/>
+     <city id="1512" name="文昌"/>
+     <city id="1513" name="万宁"/>
+     <city id="1514" name="琼海"/>
+     <city id="1515" name="东方"/>
+     <city id="1516" name="儋州"/>
+   </province>
+   <province id="16" name="河北">
+     <city id="1610" name="石家庄"/>
+     <city id="1611" name="张家口"/>
+     <city id="1612" name="唐山"/>
+     <city id="1613" name="秦皇岛"/>
+     <city id="1614" name="邯郸"/>
+     <city id="1615" name="邢台"/>
+     <city id="1616" name="保定"/>
+     <city id="1617" name="承德"/>
+     <city id="1618" name="廊坊"/>    
+     <city id="1619" name="沧州"/>
+   </province>
+
+   <province id="17" name="河南">
+     <city id="1710" name="郑州"/>
+     <city id="1711" name="洛阳"/>
+     <city id="1712" name="开封"/>
+     <city id="1713" name="三门峡"/>
+     <city id="1714" name="商丘"/>
+     <city id="1715" name="南阳"/>
+     <city id="1716" name="平顶山"/>
+     <city id="1717" name="信阳"/>
+     <city id="1718" name="许昌"/>    
+     <city id="1719" name="焦作"/>
+     <city id="1720" name="周口"/>    
+     <city id="1721" name="驻马店"/>
+   </province>
+   
+   <province id="18" name="湖北">
+     <city id="1810" name="武汉"/>
+     <city id="1811" name="襄阳"/>
+     <city id="1812" name="十堰"/>
+     <city id="1813" name="随州"/>
+     <city id="1814" name="孝感"/>
+     <city id="1815" name="荆州"/>
+     <city id="1816" name="恩施"/>
+     <city id="1817" name="黄冈"/>
+     <city id="1818" name="咸宁"/>    
+     <city id="1819" name="宜昌"/>
+     <city id="1820" name="黄石"/>    
+   </province>
+   
+   <province id="19" name="湖南">
+     <city id="1910" name="长沙"/>
+     <city id="1911" name="衡阳"/>
+     <city id="1912" name="常德"/>
+     <city id="1913" name="张家界"/>
+     <city id="1914" name="郴州"/>
+     <city id="1915" name="湘潭"/>
+     <city id="1916" name="岳阳"/>
+     <city id="1917" name="益阳"/>
+     <city id="1918" name="株洲"/>    
+     <city id="1919" name="永州"/>
+   </province>
+   
+   <province id="20" name="江苏">
+     <city id="2010" name="南京"/>
+     <city id="2011" name="苏州"/>
+     <city id="2012" name="无锡"/>
+     <city id="2013" name="昆山"/>
+     <city id="2014" name="镇江"/>
+     <city id="2015" name="南通"/>
+     <city id="2016" name="常州"/>
+     <city id="2017" name="徐州"/>
+     <city id="2018" name="连云港"/>    
+     <city id="2019" name="盐城"/>
+     <city id="2020" name="淮安"/>
+     <city id="2021" name="扬州"/>
+   </province>
+   
+  <province id="21" name="江西">
+     <city id="2110" name="南昌"/>
+     <city id="2111" name="赣州"/>
+     <city id="2112" name="九江"/>
+     <city id="2113" name="宜春"/>
+     <city id="2114" name="吉安"/>
+     <city id="2115" name="抚州"/>
+     <city id="2116" name="景德镇"/>
+     <city id="2117" name="上饶"/>
+   </province>
+   
+  <province id="22" name="吉林">
+     <city id="2210" name="长春"/>
+     <city id="2211" name="白城"/>
+     <city id="2212" name="松原"/>
+     <city id="2213" name="吉林"/>
+     <city id="2214" name="通化"/>
+     <city id="2215" name="四平"/>
+   </province>
+   
+  <province id="23" name="辽宁">
+     <city id="2310" name="沈阳"/>
+     <city id="2311" name="大连"/>
+     <city id="2312" name="抚顺"/>
+     <city id="2313" name="朝阳"/>
+     <city id="2314" name="锦州"/>
+     <city id="2315" name="铁岭"/>
+     <city id="2316" name="丹东"/>
+     <city id="2317" name="鞍山"/>
+     <city id="2318" name="本溪"/>
+   </province>
+   
+   <province id="24" name="黑龙江">
+     <city id="2410" name="哈尔滨"/>
+     <city id="2411" name="牡丹江"/>
+     <city id="2412" name="佳木斯"/>
+     <city id="2413" name="鸡西"/>
+     <city id="2414" name="七台河"/>
+     <city id="2415" name="伊春"/>
+     <city id="2416" name="鹤岗"/>
+     <city id="2417" name="绥化"/>
+     <city id="2418" name="齐齐哈尔"/>
+   </province>
+   
+    <province id="25" name="内蒙古">
+     <city id="2510" name="呼和浩特"/>
+     <city id="2511" name="赤峰"/>
+     <city id="2512" name="鄂尔多斯"/>
+     <city id="2513" name="包头"/>
+     <city id="2514" name="通辽"/>
+     <city id="2515" name="呼伦贝尔"/>
+     <city id="2516" name="乌海"/>
+     <city id="2517" name="锡林浩特"/>
+     <city id="2518" name="满洲里"/>
+   </province>
+   
+  
+   <province id="26" name="浙江">
+     <city id="2610" name="杭州"/>
+     <city id="2611" name="绍兴"/>
+     <city id="2612" name="宁波"/>
+     <city id="2613" name="温州"/>
+     <city id="2614" name="台州"/>
+     <city id="2615" name="金华"/>
+     <city id="2616" name="丽水"/>
+     <city id="2617" name="湖州"/>
+     <city id="2618" name="嘉兴"/>
+     <city id="2619" name="衡州"/>
+   </province>  
+   
+   <province id="27" name="云南">
+     <city id="2710" name="昆明"/>
+     <city id="2711" name="丽江"/>
+     <city id="2712" name="玉溪"/>
+     <city id="2713" name="楚雄"/>
+     <city id="2714" name="大理"/>
+     <city id="2715" name="邵通"/>
+     <city id="2716" name="曲靖"/>
+   </province>  
+   
+   <province id="28" name="青海">
+     <city id="2810" name="西宁"/>
+     <city id="2811" name="格尔木"/>
+   </province>  
+   
+   <province id="29" name="山东">
+     <city id="2910" name="济南"/>
+     <city id="2911" name="青岛"/>
+     <city id="2912" name="威海"/>
+     <city id="2913" name="济宁"/>
+     <city id="2914" name="泰安"/>
+     <city id="2915" name="日照"/>
+     <city id="2916" name="聊城"/>
+     <city id="2917" name="潍坊"/>
+     <city id="2918" name="淄博"/>
+     <city id="2919" name="德州"/>
+     <city id="2920" name="聊城"/>
+     <city id="2921" name="滨州"/>
+     <city id="2922" name="烟台"/>
+     <city id="2923" name="临沂"/>
+   </province>
+   
+   <province id="30" name="山东">
+     <city id="3010" name="济南"/>
+     <city id="3011" name="青岛"/>
+     <city id="3012" name="威海"/>
+     <city id="3013" name="济宁"/>
+     <city id="3014" name="泰安"/>
+     <city id="3015" name="日照"/>
+     <city id="3016" name="聊城"/>
+     <city id="3017" name="潍坊"/>
+     <city id="3018" name="淄博"/>
+     <city id="3019" name="德州"/>
+     <city id="3020" name="聊城"/>
+     <city id="3021" name="滨州"/>
+     <city id="3022" name="烟台"/>
+     <city id="3023" name="临沂"/>
+   </province>
+   
+    <province id="31" name="山西">
+     <city id="3110" name="太原"/>
+     <city id="3111" name="运城"/>
+     <city id="3112" name="吕梁"/>
+     <city id="3113" name="临汾"/>
+     <city id="3114" name="晋城"/>
+     <city id="3115" name="大同"/>
+     <city id="3116" name="阳泉"/>
+     <city id="3117" name="忻州"/>
+     <city id="3118" name="长治"/>
+   </province> 
+   
+    <province id="32" name="陕西">
+     <city id="3210" name="西安"/>
+     <city id="3211" name="咸阳"/>
+     <city id="3212" name="汉中"/>
+     <city id="3213" name="榆林"/>
+     <city id="3214" name="神木"/>
+     <city id="3215" name="延安"/>
+     <city id="3216" name="安康"/>
+     <city id="3217" name="商洛"/>
+     <city id="3218" name="渭南"/>
+     <city id="3219" name="宝鸡"/>
+   </province> 
+   
+    <province id="33" name="四川">
+     <city id="3310" name="成都"/>
+     <city id="3311" name="广元"/>
+     <city id="3312" name="绵阳"/>
+     <city id="3313" name="内江"/>
+     <city id="3314" name="南充"/>
+     <city id="3315" name="雅安"/>
+     <city id="3316" name="西昌"/>
+     <city id="3317" name="宜宾"/>
+     <city id="3318" name="自贡"/>
+     <city id="3319" name="攀枝花"/>
+   </province>
+   
+   <province id="34" name="甘肃">
+     <city id="3410" name="兰州"/>
+     <city id="3411" name="嘉峪关"/>
+     <city id="3412" name="酒泉"/>
+     <city id="3413" name="张掖"/>
+     <city id="3414" name="武威"/>
+     <city id="3415" name="天水"/>
+     <city id="3416" name="金昌"/>
+     <city id="3417" name="陇南"/>
+     <city id="3418" name="定西"/>
+   </province> 
+   
+   <province id="35" name="宁夏">
+     <city id="3510" name="银川"/>
+     <city id="3511" name="吴忠"/>
+     <city id="3512" name="固原"/>
+   </province>   
+   
+  <province id="36" name="新疆">
+     <city id="3610" name="乌鲁木齐"/>
+     <city id="3611" name="库尔勒"/>
+     <city id="3612" name="喀什"/>
+     <city id="3613" name="伊犁"/>
+     <city id="3614" name="图木舒克"/>
+     <city id="3615" name="阿拉尔"/>
+     <city id="3616" name="克拉玛依"/>
+     <city id="3617" name="哈密"/>
+     <city id="3618" name="吐鲁番"/>
+   </province>
+   
+   <province id="37" name="西藏">
+     <city id="3710" name="拉萨"/>
+     <city id="3711" name="那曲"/>
+     <city id="3712" name="林芝"/>
+     <city id="3713" name="昌都"/>
+   </province>
+   
+   <province id="38" name="台湾">
+     <city id="3810" name="台北"/>
+     <city id="3811" name="台南"/>
+     <city id="3812" name="基隆"/>
+     <city id="3813" name="高雄"/>
+     <city id="3814" name="新竹"/>
+   </province>
+   <province id="95" name="香港"/>
+   <province id="94" name="澳门"/>              
+</data>
+ 

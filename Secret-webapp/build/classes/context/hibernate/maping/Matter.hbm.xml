@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.mimi.model">
+	<class name="Matter" table="T_MATTER" lazy="false">
+		<id name="matterId" type="java.lang.String" column="matterId">
+		</id>
+		<property name="userId" column="userId" type="java.lang.String" />
+		<property name="content" column="content" type="java.lang.String" />
+		<property name="alias" column="alias" type="java.lang.String" />
+		<property name="timestamp" column="timestamp" type="java.lang.String" />
+		<property name="lastretime" column="lastretime" type="java.lang.String" />
+		<property name="type" column="type" type="java.lang.String" />
+		<property name="recount" column="recount" type="java.lang.Integer" />
+		<property name="file" column="file"  type="java.lang.String" />
+		<property name="fileType" column="fileType" type="java.lang.String" />
+		<property name="vote" column="vote" type="java.lang.String" />
+	</class>
+ 
+</hibernate-mapping>
