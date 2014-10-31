@@ -101,6 +101,16 @@ public class API {
     	return matterList;
 		 
     }
+
+    /**
+     * 该方法只是验证本机服务的数据是否正确，仅作测试之用
+     * */
+    public static String getWechatValidateMsg() throws IOException {
+        Map<String,String> map = new HashMap<String,String>();
+        String result = httpPost(API_URL+"wechat_connectWechat.php",map);
+        return result;
+    }
+
 	public static String publishComment(Comment comment) throws ClientProtocolException, IOException, JSONException {
 		Map<String,String> map = new HashMap<String,String>();
 		comment.timestamp=String.valueOf(System.currentTimeMillis());

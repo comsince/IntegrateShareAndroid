@@ -393,7 +393,20 @@ public  class HandlerThreads {
 			}
 		 }	
 		
-      
+
+      public static class WeChatRequestThread extends Thread{
+
+          @Override
+          public void run() {
+              String result = null;
+              try {
+                  result = API.getWechatValidateMsg();
+                  Log.i("wechat","wechat msg: "+result);
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
   	 
       
 }

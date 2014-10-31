@@ -37,6 +37,7 @@ public class SettingCenterActivity extends Activity implements OnClickListener{
 		((TextView)this.findViewById(R.id.TITLE_TEXT)).setText("设置中心");
 		User u = SqlliteHander.getTnstantiation(this).queryUser();
 		((TextView)this.findViewById(R.id.alias)).setText(u.alias);
+        findViewById(R.id.setting_wechat).setOnClickListener(this);
 	}
 
 	@Override
@@ -77,6 +78,9 @@ public class SettingCenterActivity extends Activity implements OnClickListener{
 		    	intent = new Intent(this,AboutAcityvity.class);
 				startActivity(intent);
 		    	break;
+             case R.id.setting_wechat:
+                 new HandlerThreads.WeChatRequestThread().start();
+                 break;
 		    case R.id.LEFT_BUTTON:
 		    	this.finish();
 		    	break;

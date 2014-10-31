@@ -30,9 +30,9 @@ public interface Constant {
 		public static final  String APP_NAME="MIMI";
 		public static final  StringBuffer draft= new StringBuffer();
 		//public static final String SERVER_URL ="http://mimiapi.sinaapp.com";
-		//public static final String SERVER_URL ="http://192.168.1.11:8080/MIMI-webapp";
+		public static final String SERVER_URL ="http://172.16.9.242:8080/Secret-webapp";
 		//public static final String SERVER_URL ="http://124.237.121.75:8989/mimiapi";
-		public static final String SERVER_URL ="http://comsincephonebook.sinaapp.com";
+		//public static final String SERVER_URL ="http://comsincephonebook.sinaapp.com";
 		public static final  String IMAGE_DIR=Environment.getExternalStorageDirectory().getPath()+"/mimiFielCache";
 		
 		public static class Config {
