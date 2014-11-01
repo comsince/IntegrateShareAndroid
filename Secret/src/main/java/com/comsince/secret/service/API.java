@@ -11,6 +11,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.mime.FormBodyPart;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
@@ -105,8 +107,9 @@ public class API {
     /**
      * 该方法只是验证本机服务的数据是否正确，仅作测试之用
      * */
-    public static String getWechatValidateMsg() throws IOException {
+    public static String getWechatValidateMsg(String msg) throws IOException {
         Map<String,String> map = new HashMap<String,String>();
+        map.put("msg",msg);
         String result = httpPost(API_URL+"wechat_connectWechat.php",map);
         return result;
     }
@@ -321,11 +324,16 @@ public class API {
 		 {
 			 StringBody stringBody = new StringBody(map.get(key).toString(),
                      Charset.forName("UTF-8"));
-			 mpEntity.addPart(key,stringBody);
+             mpEntity.addPart(key,stringBody);
 		 }
 		 
-         // 设置参数实体  
-         httpPost.setEntity(mpEntity);  
+         // 设置参数实体
+         if(map.get("msg") != null){
+             httpPost.setEntity(new ByteArrayEntity(map.get("msg").getBytes("UTF-8")));
+         }else{
+             httpPost.setEntity(mpEntity);
+         }
+         //httpPost.setEntity(mpEntity);
          System.out.println("request params:--->>" + map.toString());
          // 获取HttpClient对象  
          HttpClient httpClient = new DefaultHttpClient();  

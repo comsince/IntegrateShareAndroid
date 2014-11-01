@@ -400,7 +400,16 @@ public  class HandlerThreads {
           public void run() {
               String result = null;
               try {
-                  result = API.getWechatValidateMsg();
+                  StringBuffer sb = new StringBuffer();
+                  sb.append("<xml>");
+                  sb.append("<ToUserName>comsince</ToUserName>");
+                  sb.append("<FromUserName>liaojinlong</FromUserName>");
+                  sb.append("<CreateTime>1348831860</CreateTime>");
+                  sb.append("<MsgType>text</MsgType>");
+                  sb.append("<Content>请求最新的秘密</Content>");
+                  sb.append("<MsgId>123456789</MsgId>");
+                  sb.append("</xml>");
+                  result = API.getWechatValidateMsg(sb.toString());
                   Log.i("wechat","wechat msg: "+result);
               } catch (IOException e) {
                   e.printStackTrace();
