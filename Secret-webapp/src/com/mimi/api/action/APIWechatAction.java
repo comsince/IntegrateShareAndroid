@@ -64,11 +64,9 @@ public class APIWechatAction extends SuperAction {
             sb.append("</xml>");
             System.out.println("weixin post xml "+sb.toString());
             response.setContentType("text/xml;charset=UTF-8");
-			result = processWechatReceiveMsg(sb.toString());
-			System.out.println("response xml "+result);
+			//processWechatReceiveMsg(sb.toString());
+			processWechatReceiveMsgFromStream(request.getInputStream());
 		}
-		//response.setContentType("text/xml;charset=UTF-8");
-		//response.getWriter().print(result);
 		return null;
 	}
 	
@@ -98,6 +96,30 @@ public class APIWechatAction extends SuperAction {
 			
 		}
 		return result;
+	}
+	
+	private void processWechatReceiveMsgFromStream(InputStream in){
+		String result = null;
+		GeneralReceiveMessage generalRecMsg = null;
+		try {
+			generalRecMsg = SimpleXmlReaderUtil.getInstance().readXmlFromInputStream(in, GeneralReceiveMessage.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String msgType = generalRecMsg.getMsgType();
+		if("text".equals(msgType)){
+			result = receiveTextMsg1(generalRecMsg);
+		}else if("image".equals(msgType)){
+			
+		}else if("voice".equals(msgType)){
+			
+		}else if("video".equals(msgType)){
+			
+		}else if("location".equals(msgType)){
+			
+		}else if("link".equals(msgType)){
+			
+		}
 	}
 	
 	/**
