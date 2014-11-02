@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
@@ -50,7 +53,7 @@ public class APIWechatAction extends SuperAction {
 			}
 			response.getWriter().print(result);
 		} else {
-			StringBuffer sb = new StringBuffer();
+			/*StringBuffer sb = new StringBuffer();
 			InputStream is = request.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is, "UTF-8");
 			BufferedReader br = new BufferedReader(isr);
@@ -58,9 +61,19 @@ public class APIWechatAction extends SuperAction {
 			while ((s = br.readLine()) != null) {
 				sb.append(s);
 			}
-			System.out.println("Weixin post xml " + sb.toString());
+			System.out.println("Weixin post xml " + sb.toString());*/
+			/*String responseStr = "<xml>"+  
+                    "<ToUserName>ljlong</ToUserName>"+  
+                    "<FromUserName>comsince</FromUserName>"+  
+                    "<CreateTime>12345678</CreateTime>"+  
+                    "<MsgType>text</MsgType>"+  
+                    "<Content>测试消息</Content>"+  
+                    "<MsgId>123456789</MsgId>"+  
+                    "</xml>";
 			response.setContentType("text/xml;charset=UTF-8");
-			processWechatReceiveMsg(sb.toString());
+			response.getWriter().print(responseStr);*/
+			responseMsg();
+			//processWechatReceiveMsg(sb.toString());
 		}
 		return null;
 	}
@@ -129,5 +142,82 @@ public class APIWechatAction extends SuperAction {
 		}
 		return content;
 	}
+	
+	
+	/**
+	 * 从输入流读出string，以供字符串反序列化
+	 * */
+	private String readStreamParameter(InputStream in){
+		StringBuilder buffer = new StringBuilder();  
+        BufferedReader reader=null;  
+        try{  
+            reader = new BufferedReader(new InputStreamReader(in));  
+            String line=null;  
+            while((line = reader.readLine())!=null){  
+                buffer.append(line);  
+            }  
+        }catch(Exception e){  
+            e.printStackTrace();  
+        }finally{  
+            if(null!=reader){  
+                try {  
+                    reader.close();  
+                } catch (IOException e) {  
+                    e.printStackTrace();  
+                }  
+            }  
+        }  
+        return buffer.toString();
+	}
+	
+	
+	public void responseMsg() throws IOException{  
+        String postStr=null;  
+        try{  
+            postStr=this.readStreamParameter(request.getInputStream());  
+        }catch(Exception e){  
+            e.printStackTrace();  
+        }  
+        //System.out.println(postStr);  
+        if (null!=postStr&&!postStr.isEmpty()){  
+            Document document=null;  
+            try{  
+                document = DocumentHelper.parseText(postStr);  
+            }catch(Exception e){  
+                e.printStackTrace();  
+            }  
+            if(null==document){  
+                response.getWriter().print("");;  
+                return;
+            }  
+            Element root=document.getRootElement();  
+            String fromUsername = root.elementText("FromUserName");  
+            String toUsername = root.elementText("ToUserName");  
+            String keyword = root.elementTextTrim("Content");  
+            String time = new Date().getTime()+"";  
+            String textTpl = "<xml>"+  
+                        "<ToUserName><![CDATA[%1$s]]></ToUserName>"+  
+                        "<FromUserName><![CDATA[%2$s]]></FromUserName>"+  
+                        "<CreateTime>%3$s</CreateTime>"+  
+                        "<MsgType><![CDATA[%4$s]]></MsgType>"+  
+                        "<Content><![CDATA[%5$s]]></Content>"+  
+                        "<FuncFlag>0</FuncFlag>"+  
+                        "</xml>";               
+              
+            if(null!=keyword&&!keyword.equals(""))  
+            {  
+                String msgType = "text";  
+                String contentStr = "Welcome to wechat world!";  
+                String resultStr = textTpl.format(textTpl, fromUsername, toUsername, time, msgType, contentStr);  
+                response.getWriter().print(resultStr);  
+            }else{  
+                response.getWriter().print("Input something...");  
+            }  
+  
+        }else {  
+            response.getWriter().print("");  
+        }  
+    }  
+	
 
 }
