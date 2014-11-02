@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
@@ -53,27 +54,9 @@ public class APIWechatAction extends SuperAction {
 			}
 			response.getWriter().print(result);
 		} else {
-			/*StringBuffer sb = new StringBuffer();
-			InputStream is = request.getInputStream();
-			InputStreamReader isr = new InputStreamReader(is, "UTF-8");
-			BufferedReader br = new BufferedReader(isr);
-			String s = "";
-			while ((s = br.readLine()) != null) {
-				sb.append(s);
-			}
-			System.out.println("Weixin post xml " + sb.toString());*/
-			/*String responseStr = "<xml>"+  
-                    "<ToUserName>ljlong</ToUserName>"+  
-                    "<FromUserName>comsince</FromUserName>"+  
-                    "<CreateTime>12345678</CreateTime>"+  
-                    "<MsgType>text</MsgType>"+  
-                    "<Content>测试消息</Content>"+  
-                    "<MsgId>123456789</MsgId>"+  
-                    "</xml>";
 			response.setContentType("text/xml;charset=UTF-8");
-			response.getWriter().print(responseStr);*/
 			responseMsg();
-			//processWechatReceiveMsg(sb.toString());
+			//processWechatReceiveMsg(readStreamParameter(request.getInputStream()));
 		}
 		return null;
 	}
@@ -124,7 +107,7 @@ public class APIWechatAction extends SuperAction {
 	}
 
 	private String getHotTextSecret() {
-		String content = null;
+		String content = "";
 		Page page = new Page();
 		page.setOrder("timestamp");
 		PARAM_MAP.put("order", "timestamp");
@@ -137,8 +120,15 @@ public class APIWechatAction extends SuperAction {
 			log.error(e.getMessage(), e);
 		}
 		if (page.getDataList() != null && page.getDataList().size() > 0) {
-			Matter matter = (Matter) page.getDataList().get(0);
+			int current = new Random().nextInt(page.getDataList().size());
+			Matter matter = (Matter) page.getDataList().get(current);
 			content = matter.getContent();
+		}
+		if(content != null && content.length() >300){
+			content = content.substring(0, 300);
+		} 
+		if(content == null || "".equals(content)){
+			content = "请重新输入任意字符";
 		}
 		return content;
 	}
@@ -189,12 +179,12 @@ public class APIWechatAction extends SuperAction {
             if(null==document){  
                 response.getWriter().print("");;  
                 return;
-            }  
-            Element root=document.getRootElement();  
+            }
+            Element root=document.getRootElement();
             String fromUsername = root.elementText("FromUserName");  
             String toUsername = root.elementText("ToUserName");  
             String keyword = root.elementTextTrim("Content");  
-            String time = new Date().getTime()+"";  
+            String time = new Date().getTime()+"";
             String textTpl = "<xml>"+  
                         "<ToUserName><![CDATA[%1$s]]></ToUserName>"+  
                         "<FromUserName><![CDATA[%2$s]]></FromUserName>"+  
@@ -205,15 +195,14 @@ public class APIWechatAction extends SuperAction {
                         "</xml>";               
               
             if(null!=keyword&&!keyword.equals(""))  
-            {  
-                String msgType = "text";  
-                String contentStr = "Welcome to wechat world!";  
-                String resultStr = textTpl.format(textTpl, fromUsername, toUsername, time, msgType, contentStr);  
-                response.getWriter().print(resultStr);  
+            {
+                String msgType = "text";
+                String contentStr = getHotTextSecret();
+                String resultStr = textTpl.format(textTpl, fromUsername, toUsername, time, msgType, contentStr);
+                response.getWriter().print(resultStr);
             }else{  
-                response.getWriter().print("Input something...");  
+                response.getWriter().print("请输入任意字符串");  
             }  
-  
         }else {  
             response.getWriter().print("");  
         }  
