@@ -16,5 +16,8 @@ public class TextResponseMessage extends BaseMessage{
 		this.content = content;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return super.toString()+"--Content"+content;
+	}
 }

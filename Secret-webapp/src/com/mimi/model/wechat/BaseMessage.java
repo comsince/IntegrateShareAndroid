@@ -2,24 +2,39 @@ package com.mimi.model.wechat;
 
 import org.simpleframework.xml.Element;
 
+/**
+ * notice： 通过simpleframework解析出来的带有空格的字符，注意在比较的时候留意
+ * **/
 public class BaseMessage {
-	@Element(name="ToUserName")
+	@Element(name="URL",required=false)
+	private String url;
+	
+	@Element(name="ToUserName",required=false)
 	private String toUserName;
 	
-	@Element(name="FromUserName")
+	@Element(name="FromUserName",required=false)
 	private String fromUserName;
 	
-	@Element(name="CreateTime")
-	private Integer createTime;
+	@Element(name="CreateTime",required=false)
+	private String createTime;
 	
-	@Element(name="MsgType")
+	@Element(name="MsgType",required=false)
 	private String msgType;
 	
-	@Element(name="MsgId")
-	private Integer msgId;
+	@Element(name="MsgId",required=false)
+	private String msgId;
+
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public String getToUserName() {
-		return toUserName;
+		return toUserName.trim();
 	}
 
 	public void setToUserName(String toUserName) {
@@ -27,35 +42,41 @@ public class BaseMessage {
 	}
 
 	public String getFromUserName() {
-		return fromUserName;
+		return fromUserName.trim();
 	}
 
 	public void setFromUserName(String fromUserName) {
 		this.fromUserName = fromUserName;
 	}
 
-	public Integer getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Integer createTime) {
-		this.createTime = createTime;
-	}
-
 	public String getMsgType() {
-		return msgType;
+		return msgType.trim();
 	}
 
 	public void setMsgType(String msgType) {
 		this.msgType = msgType;
 	}
 
-	public Integer getMsgId() {
-		return msgId;
+	public String getCreateTime() {
+		return createTime;
 	}
 
-	public void setMsgId(Integer msgId) {
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getMsgId() {
+		return msgId.trim();
+	}
+
+	public void setMsgId(String msgId) {
 		this.msgId = msgId;
+	}
+
+	@Override
+	public String toString() {
+		return "URL--"+url+"--ToUserName--"+toUserName+"--FromUserName--"+fromUserName+"--CreateTime--"+createTime
+				+"--MsgType--"+msgType+"--MsgId--"+msgId;
 	}
 	
 	

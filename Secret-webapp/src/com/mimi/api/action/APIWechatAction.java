@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.Map;
 import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
@@ -22,6 +25,8 @@ import com.mimi.model.Matter;
 import com.mimi.model.Page;
 import com.mimi.model.wechat.GeneralReceiveMessage;
 import com.mimi.model.wechat.TextResponseMessage;
+import com.mimi.model.wechat.resp.TextMessage;
+import com.mimi.util.MessageUtil;
 import com.mimi.util.SignUtil;
 
 public class APIWechatAction extends SuperAction {
@@ -55,7 +60,8 @@ public class APIWechatAction extends SuperAction {
 			response.getWriter().print(result);
 		} else {
 			response.setContentType("text/xml;charset=UTF-8");
-			responseMsg();
+			//responseMsg();
+			response.getWriter().print(processRequest(request));
 			//processWechatReceiveMsg(readStreamParameter(request.getInputStream()));
 		}
 		return null;
@@ -72,8 +78,9 @@ public class APIWechatAction extends SuperAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("weixin message:"+generalRecMsg.toString());
 		String msgType = generalRecMsg.getMsgType();
-		if ("text".equals(msgType)) {
+		if (msgType.trim().equals("text")) {
 			result = receiveTextMsg(generalRecMsg);
 		} else if ("image".equals(msgType)) {
 
@@ -90,14 +97,19 @@ public class APIWechatAction extends SuperAction {
 	}
 
 	private String receiveTextMsg(GeneralReceiveMessage generalRecMsg) {
-		StringBuffer sb = new StringBuffer();
+		String [] formatString = new String[4];
+		formatString[0] = "//<![CDATA[%1$s]]//>";
+		formatString[1] = "<![CDATA[%1$s]]>";
+		formatString[2] = "<![CDATA[%1$s]]>";
+		formatString[3] = "<![CDATA[%1$s]]>";
 		TextResponseMessage textResMsg = new TextResponseMessage();
-		textResMsg.setToUserName(generalRecMsg.getToUserName());
-		textResMsg.setFromUserName(generalRecMsg.getFromUserName());
-		textResMsg.setMsgType(generalRecMsg.getMsgType());
-		textResMsg.setCreateTime(new Date().getDate());
-		textResMsg.setContent(getHotTextSecret());
+		textResMsg.setToUserName(formatString[0].format(formatString[0], generalRecMsg.getToUserName()));
+		textResMsg.setFromUserName(formatString[1].format(formatString[1], generalRecMsg.getFromUserName()));
+		textResMsg.setMsgType(formatString[2].format(formatString[2], generalRecMsg.getMsgType()));
+		textResMsg.setCreateTime(new Date().getTime()+"");
+		textResMsg.setContent(formatString[3].format(formatString[3],getHotTextSecret()));
 		textResMsg.setMsgId(generalRecMsg.getMsgId());
+		System.out.println("weixin message:"+textResMsg.toString());
 		try {
 			SimpleXmlReaderUtil.getInstance().writeXml(textResMsg, response.getWriter());
 		} catch (IOException e) {
@@ -191,7 +203,7 @@ public class APIWechatAction extends SuperAction {
                         "<CreateTime>%3$s</CreateTime>"+  
                         "<MsgType><![CDATA[%4$s]]></MsgType>"+  
                         "<Content><![CDATA[%5$s]]></Content>"+  
-                        "<FuncFlag>0</FuncFlag>"+  
+                        //"<FuncFlag>0</FuncFlag>"+  
                         "</xml>";               
               
             if(null!=keyword&&!keyword.equals(""))  
@@ -208,5 +220,81 @@ public class APIWechatAction extends SuperAction {
         }  
     }  
 	
+	/**
+	 * 处理微信发来的请求
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public String processRequest(HttpServletRequest request) {
+		String respMessage = null;
+		try {
+			// 默认返回的文本消息内容
+			String respContent = "请求处理异常，请稍候尝试！";
+
+			// xml请求解析
+			Map<String, String> requestMap = MessageUtil.parseXml(request);
+
+			// 发送方帐号（open_id）
+			String fromUserName = requestMap.get("FromUserName");
+			// 公众帐号
+			String toUserName = requestMap.get("ToUserName");
+			// 消息类型
+			String msgType = requestMap.get("MsgType");
+
+			// 回复文本消息
+			TextMessage textMessage = new TextMessage();
+			textMessage.setToUserName(fromUserName);
+			textMessage.setFromUserName(toUserName);
+			textMessage.setCreateTime(new Date().getTime());
+			textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+			textMessage.setFuncFlag(0);
+
+			// 文本消息
+			if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
+				respContent = "您发送的是文本消息！";
+			}
+			// 图片消息
+			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
+				respContent = "您发送的是图片消息！";
+			}
+			// 地理位置消息
+			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
+				respContent = "您发送的是地理位置消息！";
+			}
+			// 链接消息
+			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
+				respContent = "您发送的是链接消息！";
+			}
+			// 音频消息
+			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
+				respContent = "您发送的是音频消息！";
+			}
+			// 事件推送
+			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
+				// 事件类型
+				String eventType = requestMap.get("Event");
+				// 订阅
+				if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
+					respContent = "谢谢您的关注！";
+				}
+				// 取消订阅
+				else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
+					// TODO 取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息
+				}
+				// 自定义菜单点击事件
+				else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
+					// TODO 自定义菜单权没有开放，暂不处理该类消息
+				}
+			}
+			textMessage.setContent(getHotTextSecret());
+			respMessage = MessageUtil.textMessageToXml(textMessage);
+			System.out.println("response msg: "+respMessage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return respMessage;
+	}
 
 }
