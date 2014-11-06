@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.gson.Gson;
 import com.mimi.common.Constants;
 import com.mimi.core.service.MatterService;
+import com.mimi.core.service.WeChatProcessService;
 import com.mimi.core.util.SimpleXmlReaderUtil;
 import com.mimi.core.web.SuperAction;
 import com.mimi.model.Matter;
@@ -38,8 +39,15 @@ public class APIWechatAction extends SuperAction {
 	@Autowired
 	private MatterService matterServiceImpl;
 
+	@Autowired
+	private WeChatProcessService weChatProcessServiceImpl;
+	
 	public void setMatterServiceImpl(MatterService matterServiceImpl) {
 		this.matterServiceImpl = matterServiceImpl;
+	}
+
+	public void setWeChatProcessServiceImpl(WeChatProcessService weChatProcessServiceImpl) {
+		this.weChatProcessServiceImpl = weChatProcessServiceImpl;
 	}
 
 	public String connectWechat() throws IOException {
@@ -231,28 +239,31 @@ public class APIWechatAction extends SuperAction {
 		try {
 			// 默认返回的文本消息内容
 			String respContent = "请求处理异常，请稍候尝试！";
-
 			// xml请求解析
 			Map<String, String> requestMap = MessageUtil.parseXml(request);
-
 			// 发送方帐号（open_id）
 			String fromUserName = requestMap.get("FromUserName");
 			// 公众帐号
 			String toUserName = requestMap.get("ToUserName");
 			// 消息类型
-			String msgType = requestMap.get("MsgType");
-
-			// 回复文本消息
-			TextMessage textMessage = new TextMessage();
-			textMessage.setToUserName(fromUserName);
-			textMessage.setFromUserName(toUserName);
-			textMessage.setCreateTime(new Date().getTime());
-			textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
-			textMessage.setFuncFlag(0);
-
+			String msgType = requestMap.get("MsgType").trim();
+			//消息内容
+			String content = requestMap.get("Content");
 			// 文本消息
 			if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
-				respContent = "您发送的是文本消息！";
+				// 回复文本消息
+				TextMessage textMessage = new TextMessage();
+				textMessage.setToUserName(fromUserName);
+				textMessage.setFromUserName(toUserName);
+				textMessage.setCreateTime(new Date().getTime());
+				textMessage.setContent(content);
+				textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+				respMessage = weChatProcessServiceImpl.processTextMsg(textMessage);
+				if(respMessage == null){
+					textMessage.setContent(getHotTextSecret());
+					respMessage = MessageUtil.textMessageToXml(textMessage);
+				}
+				System.out.println("response msg: "+respMessage);
 			}
 			// 图片消息
 			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
@@ -287,13 +298,9 @@ public class APIWechatAction extends SuperAction {
 					// TODO 自定义菜单权没有开放，暂不处理该类消息
 				}
 			}
-			textMessage.setContent(getHotTextSecret());
-			respMessage = MessageUtil.textMessageToXml(textMessage);
-			System.out.println("response msg: "+respMessage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return respMessage;
 	}
 

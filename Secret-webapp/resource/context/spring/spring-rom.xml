@@ -53,4 +53,6 @@
 	         <property name="messageDao" ref="messageDaoImpl"/>
 	</bean>
 	
+	<bean id="weChatProcessServiceImpl" class="com.mimi.core.service.impl.WeChatProcessServiceImpl"/>
+	
 </beans>
