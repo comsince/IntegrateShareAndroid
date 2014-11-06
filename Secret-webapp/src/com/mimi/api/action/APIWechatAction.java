@@ -148,7 +148,7 @@ public class APIWechatAction extends SuperAction {
 			content = content.substring(0, 300);
 		} 
 		if(content == null || "".equals(content)){
-			content = "请重新输入任意字符";
+			content = "网络超时，请重新输入";
 		}
 		return content;
 	}

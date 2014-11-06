@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.mimi.model.wechat.resp.Article;
 import com.mimi.model.wechat.resp.MusicMessage;
@@ -185,4 +187,18 @@ public class MessageUtil {
 			};
 		}
 	});
+	
+	/**
+	 * 获取图灵接口状态码，根据状态码解析数据
+	 * **/
+	public static int getTulingStatusCode(String jsonStr){
+		String code = null;
+		try {
+			JSONObject jsonObject = new JSONObject(jsonStr);
+			code = jsonObject.getString("code");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+        return Integer.valueOf(code);
+	}
 }
