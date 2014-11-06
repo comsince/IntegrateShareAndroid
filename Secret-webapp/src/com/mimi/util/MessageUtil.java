@@ -1,17 +1,27 @@
 package com.mimi.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Writer;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.dom4j.Branch;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import com.mimi.model.wechat.req.BaseMessage;
+import com.mimi.model.wechat.req.EventMessage;
+import com.mimi.model.wechat.req.ReqTextMessage;
 import com.mimi.model.wechat.resp.Article;
 import com.mimi.model.wechat.resp.MusicMessage;
 import com.mimi.model.wechat.resp.NewsMessage;
@@ -122,6 +132,41 @@ public class MessageUtil {
 
 		return map;
 	}
+	
+	/**
+	 * xml对象解析
+	 * @throws Exception 
+	 * */
+	public static BaseMessage parseXmltoObject(HttpServletRequest request) throws Exception{
+		BaseMessage baseMsg = null;
+		Map<String, String> requestMap = parseXml(request);
+		// 发送方帐号（open_id）
+	    String fromUserName = requestMap.get("FromUserName");
+	    // 公众帐号
+		String toUserName = requestMap.get("ToUserName");
+		// 消息类型
+		String msgType = requestMap.get("MsgType").trim();
+		// 消息内容
+		String content = requestMap.get("Content");
+		// 事件类型
+		String eventType = requestMap.get("Event");
+		if(msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)){
+			baseMsg = new ReqTextMessage();
+			baseMsg.setToUserName(fromUserName);
+			baseMsg.setFromUserName(toUserName);
+			baseMsg.setCreateTime(new Date().getTime());
+			baseMsg.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_TEXT);
+			((ReqTextMessage) baseMsg).setContent(content);
+		}else if(msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)){
+			baseMsg = new EventMessage();
+			baseMsg.setToUserName(fromUserName);
+			baseMsg.setFromUserName(toUserName);
+			baseMsg.setCreateTime(new Date().getTime());
+			baseMsg.setMsgType(MessageUtil.REQ_MESSAGE_TYPE_EVENT);
+			((EventMessage) baseMsg).setEvent(eventType.trim());
+		}
+	    return baseMsg;
+	}
 
 	/**
 	 * 文本消息对象转换成xml
@@ -185,4 +230,44 @@ public class MessageUtil {
 			};
 		}
 	});
+	
+	/**
+	 * 获取图灵接口状态码，根据状态码解析数据
+	 * **/
+	public static int getTulingStatusCode(String jsonStr){
+		String code = null;
+		try {
+			JSONObject jsonObject = new JSONObject(jsonStr);
+			code = jsonObject.getString("code");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+        return Integer.valueOf(code);
+	}
+	
+	/**
+	 * 从输入流读出string，以供字符串反序列化
+	 * */
+	private String readStreamParameter(InputStream in){
+		StringBuilder buffer = new StringBuilder();  
+        BufferedReader reader=null;  
+        try{  
+            reader = new BufferedReader(new InputStreamReader(in));  
+            String line=null;  
+            while((line = reader.readLine())!=null){  
+                buffer.append(line);  
+            }  
+        }catch(Exception e){  
+            e.printStackTrace();  
+        }finally{  
+            if(null!=reader){  
+                try {  
+                    reader.close();  
+                } catch (IOException e) {  
+                    e.printStackTrace();  
+                }  
+            }  
+        }  
+        return buffer.toString();
+	}
 }

@@ -6,7 +6,7 @@ package com.mimi.model.wechat.req;
  * @author liufeng
  * @date 2013-05-19
  */
-public class TextMessage extends BaseMessage {
+public class ReqTextMessage extends BaseMessage {
 	// 消息内容
 	private String Content;
 
