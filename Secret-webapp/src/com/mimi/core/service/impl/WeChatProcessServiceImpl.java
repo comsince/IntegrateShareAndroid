@@ -184,6 +184,8 @@ public class WeChatProcessServiceImpl implements WeChatProcessService {
     	newsMsg.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
     	return newsMsg;
     }
+    
+    
 
 	
     
