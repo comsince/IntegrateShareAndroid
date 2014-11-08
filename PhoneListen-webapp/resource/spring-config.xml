@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation=" 
+	  http://www.springframework.org/schema/beans 
+	  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	  http://www.springframework.org/schema/tx 
+	  http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	  http://www.springframework.org/schema/aop 
+	  http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	"
+	> 
+
+	 <!-- =============================================================== -->
+	<!-- Resources                                                       -->
+	<!-- =============================================================== -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+				<value>classpath:config.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- =============================================================== -->
+	<!-- Data Source                                                     -->
+	<!-- =============================================================== 
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbcDriverClassName}" />
+		<property name="url" value="${jdbcUrl}" />
+		<property name="username" value="${jdbcUsername}" />
+		<property name="password" value="${jdbcPassword}" />
+		<property name="maxActive" value="${jdbcMaxActive}" />
+		<property name="maxIdle" value="${jdbcMaxIdle}" />
+		<property name="maxWait" value="${jdbcMaxWait}" />
+		<property name="defaultAutoCommit" value="true" />
+		<property name="validationQuery" value="${jdbcValidationQuery}" />
+	</bean> 
+	-->
+	
+	     <!-- 数据源配置 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbcDriverClassName}" />
+        <property name="jdbcUrl" value="${jdbcUrl}" />
+        <property name="properties">
+            <props>
+                <prop key="user">${jdbcUsername}</prop>
+                <prop key="password">${jdbcPassword}</prop>
+                <prop key="acquireIncrement">${c3p0.acquireIncrement}</prop>
+                <prop key="acquireRetryAttempts">${c3p0.acquireRetryAttempts}</prop>
+                <prop key="acquireRetryDelay">${c3p0.acquireRetryDelay}</prop>
+                <prop key="checkoutTimeout">${c3p0.checkoutTimeout}</prop>
+                <prop key="idleConnectionTestPeriod">${c3p0.idleConnectionTestPeriod}</prop>
+                <prop key="automaticTestTable">${c3p0.automaticTestTable}</prop>
+                <prop key="preferredTestQuery">${c3p0.preferredTestQuery}</prop>
+                <prop key="maxIdleTime">${c3p0.maxIdleTime}</prop>
+                <prop key="initialPoolSize">${c3p0.initialPoolSize}</prop>
+                <prop key="minPoolSize">${c3p0.minPoolSize}</prop>
+                <prop key="maxPoolSize">${c3p0.maxPoolSize}</prop>
+            </props>
+        </property>
+    </bean>
+	
+	<!-- sessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+	</bean>
+	
+	
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+     <aop:config proxy-target-class="true">
+		<aop:pointcut expression="execution(* com.farsunset.pmmp.service.impl.*.*(..))" id="Serivce" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="Serivce" />
+	</aop:config>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="count*" read-only="true" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+</beans>

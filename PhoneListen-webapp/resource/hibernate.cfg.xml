@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+<session-factory>
+   
+   
+   
+	<property name="hibernate.dialect">${hibernate.dialect}</property>
+	<property name="hibernate.format_sql">false</property>
+	<property name="hibernate.use_sql_comments">true</property>
+    <property name="hibernate.show_sql">true</property>
+	<property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.connection.release_mode">auto</property>  
+    <property name="hibernate.autoReconnect">true</property>  
+    <property name="hibernate.generate_statistics">true</property>
+
+	<!--映射文件配置-->
+	<mapping class="com.farsunset.pmmp.model.User" />
+	<mapping class="com.farsunset.pmmp.model.Record" />
+	 
+</session-factory>
+
+</hibernate-configuration>
+

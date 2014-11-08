@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<powers>
+   <power index="0" name="人员管理"/>
+   <power index="1" name="审核"/>
+   <power index="2" name="发布文章"/>
+   <power index="3" name="删除评论"/>
+   <power index="4" name="创建兴趣组"/>
+</powers>
+ 

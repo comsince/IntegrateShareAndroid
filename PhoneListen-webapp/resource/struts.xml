@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts-devModel" value="true" />
+	<constant name="struts.action.extension" value="action,do,api" />
+	<constant name="struts.multipart.maxSize" value="100000000"/> 
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+<constant name="struts.multipart.saveDir" value="/tmp"/>
+<constant name="struts.multipart.parser" value="jakarta"/>
+  <package name="admin" extends="struts-default" namespace="/admin">
+		 
+		<action name="user_*" class="com.farsunset.pmmp.admin.action.UserAction" method="{1}">
+		  <result name="manage" type="dispatcher">/console/user/manage.jsp</result>
+		  <result name="edit" type="dispatcher">/console/user/UserEdit.jsp</result>
+		  <result name="loginSuccess" type="redirect">/console/index.jsp</result>
+		  <result name="loginFailed"  type="redirect">/console/login.jsp</result>
+		  
+		  <result name="gpsManage" type="dispatcher">/console/user/gpsManage.jsp</result>
+		  <result name="netManage" type="dispatcher">/console/user/netManage.jsp</result>
+		  <result name="milieuManage" type="dispatcher">/console/user/milieuManage.jsp</result>
+		</action>
+        
+		 
+		<action name="record_*" class="com.farsunset.pmmp.admin.action.RecordAction" method="{1}">
+		  <result name="CALL_MANAGE" type="dispatcher">/console/record/call_manage.jsp</result>
+		  <result name="SMS_MANAGE" type="dispatcher">/console/record/sms_manage.jsp</result>
+		  <result name="CONTACT_MANAGE" type="dispatcher">/console/record/contact_manage.jsp</result>
+		  <result name="LOCATION_MANAGE" type="dispatcher">/console/record/location_manage.jsp</result>
+		</action>
+		 
+	</package> 
+	 
+	<package name="cgi" extends="struts-default" namespace="/cgi">
+		<action name="record_*" class="com.farsunset.pmmp.api.action.RecordAction" method="{1}"></action>
+	</package> 
+</struts>
