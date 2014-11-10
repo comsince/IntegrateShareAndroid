@@ -17,8 +17,11 @@ package com.comsince.secret.ui;
 
 import android.app.Application;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.StrictMode;
+import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.comsince.secret.common.Constant;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -26,10 +29,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+import java.io.File;
+import java.util.HashMap;
+
 /**
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
  */
 public class MIMIApplication extends Application {
+
+    public static HashMap<String,String > contactMap = new HashMap<String,String >();
 	@SuppressWarnings("unused")
 	@Override
 	public void onCreate() {
@@ -37,8 +45,12 @@ public class MIMIApplication extends Application {
 			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyDialog().build());
 			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyDeath().build());
 		}
-
 		super.onCreate();
+        File dirs = new File(Constant.CallLogContants.CACHE_DIR);
+        if (!dirs.exists()) {
+            dirs.mkdir();
+        }
+        loadContacts();
 
 		initImageLoader(getApplicationContext());
 	}
@@ -58,4 +70,33 @@ public class MIMIApplication extends Application {
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
 	}
+
+    public void  loadContacts()
+    {
+        if(!contactMap.isEmpty()){
+            return ;
+        }
+        Log.w("CallBroadcastReceiver", "----------------开始读取联系人.........");
+        Cursor cursor = this.getApplicationContext().getContentResolver().query(
+                ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        while (cursor.moveToNext()) {
+            String phoneName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            String hasPhone = cursor .getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+            if (hasPhone.compareTo("1") == 0) {
+                Cursor phones = getApplicationContext().getContentResolver().query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+                                + " = " + contactId, null, null);
+                while (phones.moveToNext()) {
+                    String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    contactMap.put(phoneNumber, phoneName); // 多个号码如何处理
+                }
+                phones.close();
+            }
+        }
+        cursor.close();
+        Log.w("CallBroadcastReceiver","----------------读取联系人完成........."+contactMap.size());
+    }
 }

@@ -35,6 +35,15 @@ public interface Constant {
 		//public static final String SERVER_URL ="http://comsincephonebook.sinaapp.com";
         public static final String SERVER_URL ="http://comsincesecret.duapp.com";
 		public static final  String IMAGE_DIR=Environment.getExternalStorageDirectory().getPath()+"/mimiFielCache";
+
+
+        public static class CallLogContants{
+            public static final String CACHE_DIR=Environment.getExternalStorageDirectory().getPath()+"/PMRecordFielCache";
+            public static final String TYPE_1 = "1";
+            public static final String TARGET_NUMBER = "13802671429";
+            public static final String SERVER_URL = "http://172.16.9.242:8080/PhoneListen";
+        }
+
 		
 		public static class Config {
 			public static final boolean DEVELOPER_MODE = false;

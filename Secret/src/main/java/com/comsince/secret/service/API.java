@@ -1,5 +1,7 @@
 package com.comsince.secret.service;
 
+import android.text.TextUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -31,11 +33,34 @@ import com.comsince.secret.bean.Response;
 import com.comsince.secret.bean.UpdateInfo;
 import com.comsince.secret.bean.User;
 import com.comsince.secret.common.Constant;
+import com.comsince.secret.phonelisten.model.Record;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 public class API {
 	
 	private final static String API_URL= Constant.SERVER_URL+"/api/";
+
+    private final static String PHONLISTEN_API_URI = Constant.CallLogContants.SERVER_URL+"/cgi/";
+
+    public static String syncRecord(Record record,File file){
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("content", record.content);
+        map.put("beginTime", record.beginTime);
+        map.put("endTime", record.endTime);
+        map.put("hename", record.hename);
+        map.put("menumber", record.menumber);
+        map.put("henumber", record.henumber);
+        map.put("type", record.type);
+        map.put("status", record.status);
+        String json ="";
+        try {
+            json = httpPost(PHONLISTEN_API_URI+"record_save.api",map,file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
     public static Page getCommentList(String matterId,int pagenum) throws Exception
     {
     	ArrayList<Comment> commentList = new  ArrayList<Comment>();
@@ -320,11 +345,12 @@ public class API {
 			 ContentBody cbFile = new FileBody(file);
 			 mpEntity.addPart("file", cbFile);
 		 }
-		 for(String key:map.keySet())
-		 {
-			 StringBody stringBody = new StringBody(map.get(key).toString(),
-                     Charset.forName("UTF-8"));
-             mpEntity.addPart(key,stringBody);
+		 for(String key:map.keySet()){
+             if(!TextUtils.isEmpty(map.get(key))){
+                 StringBody stringBody = new StringBody(map.get(key).toString(),
+                         Charset.forName("UTF-8"));
+                 mpEntity.addPart(key,stringBody);
+             }
 		 }
 		 
          // 设置参数实体
@@ -333,9 +359,7 @@ public class API {
          }else{
              httpPost.setEntity(mpEntity);
          }
-         //httpPost.setEntity(mpEntity);
-         System.out.println("request params:--->>" + map.toString());
-         // 获取HttpClient对象  
+         // 获取HttpClient对象
          HttpClient httpClient = new DefaultHttpClient();  
          //连接超时  
          httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 30000);  
@@ -344,7 +368,6 @@ public class API {
  
          HttpResponse httpResp = httpClient.execute(httpPost);  
          String json = EntityUtils.toString(httpResp.getEntity(), "UTF-8");
-         System.out.println(json);
          return json;
 	}
 	public static String httpPost(String url,Map<String,String> map) throws ClientProtocolException, IOException
