@@ -114,4 +114,5 @@ public class Record implements Serializable {
                 ", content='" + content + '\'' +
                 '}';
     }
+
 }
