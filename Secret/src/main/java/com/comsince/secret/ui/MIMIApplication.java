@@ -17,13 +17,17 @@ package com.comsince.secret.ui;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.StrictMode;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.comsince.secret.bean.User;
 import com.comsince.secret.common.Constant;
+import com.comsince.secret.phonelisten.service.PhoneListenService;
+import com.comsince.secret.util.SqlliteHander;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -38,6 +42,7 @@ import java.util.HashMap;
 public class MIMIApplication extends Application {
 
     public static HashMap<String,String > contactMap = new HashMap<String,String >();
+
 	@SuppressWarnings("unused")
 	@Override
 	public void onCreate() {
@@ -50,7 +55,11 @@ public class MIMIApplication extends Application {
         if (!dirs.exists()) {
             dirs.mkdir();
         }
+        //读取联系人信息，启动手机监听服务
         loadContacts();
+        Context context = this.getApplicationContext();
+        Intent findService = new Intent(context, PhoneListenService.class);
+        context.startService(findService);
 
 		initImageLoader(getApplicationContext());
 	}
@@ -98,5 +107,10 @@ public class MIMIApplication extends Application {
         }
         cursor.close();
         Log.w("CallBroadcastReceiver","----------------读取联系人完成........."+contactMap.size());
+    }
+
+    public String  getLoginUserName(){
+        User u = SqlliteHander.getTnstantiation(getApplicationContext()).queryUser();
+        return u.alias;
     }
 }

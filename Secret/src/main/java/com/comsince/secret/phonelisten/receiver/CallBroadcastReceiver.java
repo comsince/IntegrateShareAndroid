@@ -76,7 +76,7 @@ public class CallBroadcastReceiver extends BroadcastReceiver {
                     record.beginTime = callSharePreferenceHelper.getCallLogString("beginTime", null);
                     record.endTime   = callSharePreferenceHelper.getCallLogString("endTime", null);
                     record.henumber  = callSharePreferenceHelper.getCallLogString("henumber", null);
-                    record.menumber  = Constant.CallLogContants.TARGET_NUMBER;
+                    record.menumber  = Constant.PhoneListenContants.TARGET_NUMBER;
                     record.type      = Constant.CallLogContants.TYPE_1;
                     record.status    = callSharePreferenceHelper.getCallLogString("status", "1");
                     record.hename    = MIMIApplication.contactMap.get(record.henumber);

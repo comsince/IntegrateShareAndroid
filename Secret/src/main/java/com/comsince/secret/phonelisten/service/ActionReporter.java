@@ -21,7 +21,7 @@ public class ActionReporter implements Runnable {
 
     @Override
     public void run() {
-        Log.i("CallBroadcastReceiver","***************CallBroadcastReceiver--开始上传通话记录");
+        Log.i("CallBroadcastReceiver","***************CallBroadcastReceiver--开始上传记录");
         String result = API.syncRecord(record, voicefile);
         Log.i("CallBroadcastReceiver",result);
     }

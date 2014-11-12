@@ -24,6 +24,10 @@ public class Record implements Serializable {
 	
 	public String type; 
 
+    /**
+     * 通话记录 1
+     * 短信：1 发送 2 接收
+     * */
 	public String status;
 	
 	public String content;
