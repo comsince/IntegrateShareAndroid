@@ -57,6 +57,11 @@ public class RecordDaoImpl extends HibernateBaseDao<Record>{
 		return criteria.list();
 	}
 
+	public Record queryByName(String name) {
+		Criteria c = getSession().createCriteria(Record.class);
+		c.add(Restrictions.eq("hename", name));
+		return (Record) c.uniqueResult();
+	}
   
 
 }

@@ -38,7 +38,7 @@
 					通讯录 
 				</div>
 				<div class="panel-body" style="padding: 5px;">
-					<form action="<%=basePath%>/admin/record_smsManage.action" method="post"
+					<form action="<%=basePath%>/admin/record_contactManage.action" method="post"
 						id="searchForm" style="padding: 0px;">
 						<input type="hidden" name="currentPage" id="currentPage" />
 						<table style="width: 100%;" class="utable">
@@ -71,33 +71,11 @@
 								</tr>
 							</thead>
 							<tbody id="checkPlanList">
- 
-								<tr>
-										<td>
-											 13567654356
-										</td>
-										 
-										<td>
-											张三
-										</td>
-										<td>
-										</td>
-								</tr>	
-								<tr>
-										<td>
-											 1366543126
-										</td>
-										 
-										<td>
-											李四
-										</td>
-										<td>
-										</td>
-								</tr>	
+							
 								<c:forEach var="record" items="${page.dataList}">
 									<tr id="${record.gid}">
 										<td>
-											${record.menumber }
+											${record.henumber }
 										</td>
 										 
 									 

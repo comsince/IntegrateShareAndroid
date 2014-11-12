@@ -35,9 +35,10 @@ public class HibernateBaseDao<T> extends HibernateDaoSupport {
 	}
  
 	public void update(Object o) {
-		
-
-		
 		getHibernateTemplate().update(o);
+	}
+	
+	public void saveOrUpdate(Object o){
+		getHibernateTemplate().saveOrUpdate(o);
 	}
 }

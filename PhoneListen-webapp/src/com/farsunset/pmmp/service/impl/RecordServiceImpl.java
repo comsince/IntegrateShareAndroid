@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.farsunset.framework.web.Page;
+import com.farsunset.pmmp.common.Constants.Common;
 import com.farsunset.pmmp.dao.RecordDaoImpl;
 import com.farsunset.pmmp.model.Record;
 import com.farsunset.pmmp.service.RecordService;
@@ -31,8 +32,19 @@ public class RecordServiceImpl implements RecordService {
 	
 	public void save(Record record) {
 		record.setGid(String.valueOf(System.currentTimeMillis()));
-		 
-		recordDao.save(record);
+		if(record.getType().equals(Common.TYPR_4)){
+			Record newRecord = recordDao.queryByName(record.getHename());
+			if(newRecord == null){
+				newRecord = record;
+				recordDao.save(newRecord);
+			}else{
+				newRecord.setHenumber(record.getHenumber());
+				recordDao.update(newRecord);
+			}
+			
+		}else{
+			recordDao.save(record);
+		}
 	}
 	
 	public Page queryRecordList(Record record, Page page) {
