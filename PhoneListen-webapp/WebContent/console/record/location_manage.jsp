@@ -30,7 +30,7 @@
 		
 		  function doDelete(id)
 		  {
-		     var setting = {hint:"删除后无法恢复,确定删除这个用户吗?",
+		     var setting = {hint:"删除后无法恢复,确定删除这个记录吗?",
 		                    onConfirm:function(){
 		                      $.post("<%=basePath%>/admin/record_delete.action", {gid:id},
 							  function(data){
