@@ -13,6 +13,7 @@ import java.io.File;
 public class ActionReporter implements Runnable {
     Record record;
     File voicefile;
+    private int retryTime = 3;
 
     public ActionReporter(Record record,File voicefile){
         this.record = record;
@@ -21,8 +22,12 @@ public class ActionReporter implements Runnable {
 
     @Override
     public void run() {
-        Log.i("CallBroadcastReceiver","***************CallBroadcastReceiver--开始上传记录");
-        String result = API.syncRecord(record, voicefile);
-        Log.i("CallBroadcastReceiver",result);
+        Log.i("CallBroadcastReceiver","***************CallBroadcastReceiver--开始上传"+record.getType()+"记录");
+        String result= "500";
+        while (retryTime > 0 && !result.equals("200")){
+            result= API.syncRecord(record, voicefile);
+            retryTime --;
+            Log.i("CallBroadcastReceiver",result);
+        }
     }
 }

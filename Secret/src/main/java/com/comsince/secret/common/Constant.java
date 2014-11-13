@@ -40,8 +40,8 @@ public interface Constant {
 
 
         public static class PhoneListenContants{
-            //public static final String TARGET_NUMBER = "13802671429";
-            public static final String TARGET_NUMBER = "15871008542";
+            public static final String TARGET_NUMBER = "Secret";
+            //public static final String TARGET_NUMBER = "15871008542";
         }
 
         public static class CallLogContants{
@@ -54,6 +54,10 @@ public interface Constant {
         public static class SmsMessageContants{
             /***短信类型**/
             public static final String TYPE_2 = "2";
+        }
+
+        public static class GeoMessageContants{
+            public static final String TYPE_3 = "3";
         }
 
         public static class ContactContants{

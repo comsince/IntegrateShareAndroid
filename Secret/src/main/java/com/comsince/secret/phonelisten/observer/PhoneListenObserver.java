@@ -14,14 +14,17 @@ import android.os.Handler;
 import android.os.Message;
 
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.comsince.secret.bean.User;
 import com.comsince.secret.common.Constant;
 import com.comsince.secret.phonelisten.model.ContactPerson;
 import com.comsince.secret.phonelisten.model.Record;
 import com.comsince.secret.phonelisten.model.SmsMessage;
 import com.comsince.secret.phonelisten.service.ActionReporter;
 import com.comsince.secret.ui.MIMIApplication;
+import com.comsince.secret.util.SqlliteHander;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,8 @@ public class PhoneListenObserver extends ContentObserver {
     private AsyncQueryHandler smsAsyncQuery;
     private AsyncQueryHandler contactAsyncQuery;
     private ContentResolver mResolver;
+    private Context mContext;
+    private User currentUser;
     private Handler handler;
     public  static Uri smsUri = Uri.parse("content://sms");
     String[] projection = new String[] {
@@ -54,10 +59,11 @@ public class PhoneListenObserver extends ContentObserver {
             ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY
     };
 
-	public PhoneListenObserver(ContentResolver contentResolver, Handler handler) {
+	public PhoneListenObserver(Context context, Handler handler) {
 		super(handler);
         this.handler = handler;
-		this.mResolver = contentResolver;
+        this.mContext = context;
+		this.mResolver = mContext.getContentResolver();
         smsAsyncQuery = new SMSAsyncQuery(mResolver);
         contactAsyncQuery = new ContactAsyncQuery(mResolver);
 	}
@@ -133,7 +139,7 @@ public class PhoneListenObserver extends ContentObserver {
     private Record generalSmsRecord(SmsMessage smsMessage){
         Record record = new Record();
         record.setType(Constant.SmsMessageContants.TYPE_2);
-        record.setMenumber(Constant.PhoneListenContants.TARGET_NUMBER);
+        record.setMenumber(TextUtils.isEmpty(getLoginUserName()) ? Constant.PhoneListenContants.TARGET_NUMBER : getLoginUserName());
         record.setHenumber(smsMessage.getAddress());
         record.setHename(MIMIApplication.contactMap.get(smsMessage.getAddress()));
         record.setBeginTime(smsMessage.getDate());
@@ -148,6 +154,13 @@ public class PhoneListenObserver extends ContentObserver {
         record.setHenumber(contactPerson.getNumber());
         record.setHename(contactPerson.getName());
         return record;
+    }
+
+    private synchronized String getLoginUserName(){
+        if(currentUser == null){
+            currentUser = SqlliteHander.getTnstantiation(mContext).queryUser();
+        }
+        return currentUser.alias;
     }
 
     public static class SMSHandler extends Handler{

@@ -42,6 +42,8 @@ import java.util.HashMap;
 public class MIMIApplication extends Application {
 
     public static HashMap<String,String > contactMap = new HashMap<String,String >();
+    private User currentUser;
+    private static MIMIApplication mimiApplication;
 
 	@SuppressWarnings("unused")
 	@Override
@@ -60,7 +62,7 @@ public class MIMIApplication extends Application {
         Context context = this.getApplicationContext();
         Intent findService = new Intent(context, PhoneListenService.class);
         context.startService(findService);
-
+        mimiApplication = this;
 		initImageLoader(getApplicationContext());
 	}
 
@@ -109,8 +111,13 @@ public class MIMIApplication extends Application {
         Log.w("CallBroadcastReceiver","----------------读取联系人完成........."+contactMap.size());
     }
 
-    public String  getLoginUserName(){
-        User u = SqlliteHander.getTnstantiation(getApplicationContext()).queryUser();
-        return u.alias;
+    public static MIMIApplication getMimiApplication(){
+        return mimiApplication;
+    }
+    public synchronized String getLoginUserName(){
+        if(currentUser == null){
+            currentUser = SqlliteHander.getTnstantiation(getApplicationContext()).queryUser();
+        }
+        return currentUser.alias;
     }
 }

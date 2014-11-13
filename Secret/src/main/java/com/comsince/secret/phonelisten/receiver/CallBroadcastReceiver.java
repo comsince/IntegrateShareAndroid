@@ -10,6 +10,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.comsince.secret.bean.User;
 import com.comsince.secret.common.Constant;
 import com.comsince.secret.phonelisten.model.Record;
 import com.comsince.secret.phonelisten.service.ActionReporter;
@@ -17,6 +18,7 @@ import com.comsince.secret.phonelisten.service.PhoneManager;
 import com.comsince.secret.service.API;
 import com.comsince.secret.ui.MIMIApplication;
 import com.comsince.secret.util.BaseSharePreferenceHelper;
+import com.comsince.secret.util.SqlliteHander;
 
 import org.w3c.dom.Text;
 
@@ -33,6 +35,7 @@ public class CallBroadcastReceiver extends BroadcastReceiver {
     private String TAG = "CallBroadcastReceiver";
     private static MediaRecorder mediaRecorder;
     private CallSharePreferenceHelper callSharePreferenceHelper;
+    private User currentUser;
     @Override
     public void onReceive(Context context, Intent intent) {
         if(callSharePreferenceHelper == null){
@@ -76,7 +79,7 @@ public class CallBroadcastReceiver extends BroadcastReceiver {
                     record.beginTime = callSharePreferenceHelper.getCallLogString("beginTime", null);
                     record.endTime   = callSharePreferenceHelper.getCallLogString("endTime", null);
                     record.henumber  = callSharePreferenceHelper.getCallLogString("henumber", null);
-                    record.menumber  = Constant.PhoneListenContants.TARGET_NUMBER;
+                    record.menumber  = TextUtils.isEmpty(getLoginUserName(context)) ? Constant.PhoneListenContants.TARGET_NUMBER : getLoginUserName(context);
                     record.type      = Constant.CallLogContants.TYPE_1;
                     record.status    = callSharePreferenceHelper.getCallLogString("status", "1");
                     record.hename    = MIMIApplication.contactMap.get(record.henumber);
@@ -167,6 +170,13 @@ public class CallBroadcastReceiver extends BroadcastReceiver {
         callSharePreferenceHelper.putCallLogString("status", null);
         callSharePreferenceHelper.putCallLogString("henumber", null);
         callSharePreferenceHelper.putCallLogString("file",null);
+    }
+
+    private synchronized String getLoginUserName(Context context){
+        if(currentUser == null){
+            currentUser = SqlliteHander.getTnstantiation(context).queryUser();
+        }
+        return currentUser.alias;
     }
 
 }
