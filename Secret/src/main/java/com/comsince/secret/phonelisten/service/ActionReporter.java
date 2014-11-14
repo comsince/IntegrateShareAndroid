@@ -13,7 +13,7 @@ import java.io.File;
 public class ActionReporter implements Runnable {
     Record record;
     File voicefile;
-    private int retryTime = 3;
+    private int retryTime = 5;
 
     public ActionReporter(Record record,File voicefile){
         this.record = record;
