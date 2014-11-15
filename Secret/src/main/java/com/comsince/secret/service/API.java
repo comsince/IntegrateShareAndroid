@@ -374,16 +374,10 @@ public class API {
          Log.i("mimi","result json "+json);
          return json;
 	}
-	public static String httpPost(String url,Map<String,String> map) throws ClientProtocolException, IOException
-	{
+	public static String httpPost(String url,Map<String,String> map) throws ClientProtocolException, IOException{
         String result = null;
-        retryTime = 3;
-         while(retryTime > 0 && (TextUtils.isEmpty(result) || result.contains("500"))){
-             Log.i("mimi","retry"+retryTime);
-             result = httpPost(url,map,null);
-             retryTime--;
-         }
-		 return result;
+        result = httpPost(url,map,null);
+	    return result;
 	}
 	public static Matter mapapingMatter(JSONObject obj) throws JSONException
 	{

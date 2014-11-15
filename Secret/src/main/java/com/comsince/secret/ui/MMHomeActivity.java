@@ -442,7 +442,7 @@ public class MMHomeActivity extends Activity implements OnClickListener,SuperLis
 		{
 			menuWindow.dismiss();
 		}
-	 return true;
+	 return false;
     }
 
     @Override
