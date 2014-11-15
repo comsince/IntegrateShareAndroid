@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -434,7 +435,6 @@ public class MMHomeActivity extends Activity implements OnClickListener,SuperLis
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		 
 		if(!menuWindow.isShowing())
 		{
 			menuWindow.showAtLocation(findViewById(R.id.view_pager), Gravity.BOTTOM, 0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -442,10 +442,15 @@ public class MMHomeActivity extends Activity implements OnClickListener,SuperLis
 		{
 			menuWindow.dismiss();
 		}
-	 return false;
-}
+	 return true;
+    }
 
-	@Override
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
 	public void onRefresh() {
 		// TODO Auto-generated method stub
 		new HandlerThreads.MatterListThread(matterHandler, 1,order).start();

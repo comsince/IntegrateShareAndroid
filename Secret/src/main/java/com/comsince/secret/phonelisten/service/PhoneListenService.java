@@ -42,6 +42,7 @@ public class PhoneListenService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        addLocaionService();
         return super.onStartCommand(intent, flags, startId);
     }
 

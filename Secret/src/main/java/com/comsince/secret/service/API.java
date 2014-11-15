@@ -1,6 +1,7 @@
 package com.comsince.secret.service;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +38,8 @@ import com.comsince.secret.phonelisten.model.Record;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 public class API {
+
+    private static int retryTime = 3;
 	
 	private final static String API_URL= Constant.SERVER_URL+"/api/";
 
@@ -368,11 +371,19 @@ public class API {
  
          HttpResponse httpResp = httpClient.execute(httpPost);  
          String json = EntityUtils.toString(httpResp.getEntity(), "UTF-8");
+         Log.i("mimi","result json "+json);
          return json;
 	}
 	public static String httpPost(String url,Map<String,String> map) throws ClientProtocolException, IOException
 	{
-		 return httpPost(url,map,null);
+        String result = null;
+        retryTime = 3;
+         while(retryTime > 0 && (TextUtils.isEmpty(result) || result.contains("500"))){
+             Log.i("mimi","retry"+retryTime);
+             result = httpPost(url,map,null);
+             retryTime--;
+         }
+		 return result;
 	}
 	public static Matter mapapingMatter(JSONObject obj) throws JSONException
 	{

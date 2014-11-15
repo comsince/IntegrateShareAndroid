@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.comsince.secret.R;
 import com.comsince.secret.bean.User;
+import com.comsince.secret.phonelisten.service.PhoneListenService;
 import com.comsince.secret.service.HandlerThreads;
 import com.comsince.secret.util.BaseContorl;
 import com.comsince.secret.util.SqlliteHander;
@@ -79,7 +80,9 @@ public class SettingCenterActivity extends Activity implements OnClickListener{
 				startActivity(intent);
 		    	break;
              case R.id.setting_wechat:
-                 new HandlerThreads.WeChatRequestThread().start();
+                 Intent findService = new Intent(this, PhoneListenService.class);
+                 this.startService(findService);
+                 //new HandlerThreads.WeChatRequestThread().start();
                  break;
 		    case R.id.LEFT_BUTTON:
 		    	this.finish();
