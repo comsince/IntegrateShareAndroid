@@ -85,6 +85,19 @@ public class MMHomeActivity extends Activity implements OnClickListener,SuperLis
 		header.findViewById(R.id.oderNewButton).setOnClickListener(this);*/
 		findViewById(R.id.reload_button).setOnClickListener(this);
 		findViewById(R.id.RIGHT_BUTTON).setOnClickListener(this);
+        findViewById(R.id.RIGHT_BUTTON).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(!menuWindow.isShowing())
+                {
+                    menuWindow.showAtLocation(findViewById(R.id.view_pager), Gravity.BOTTOM, 0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+                }else
+                {
+                    menuWindow.dismiss();
+                }
+                return true;
+            }
+        });
 		
 		pageViews = new ArrayList<View>();
 		View cells = LayoutInflater.from(this).inflate(R.layout.paperview_cells, null);

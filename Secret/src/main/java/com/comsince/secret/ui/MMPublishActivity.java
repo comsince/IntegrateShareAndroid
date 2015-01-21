@@ -169,7 +169,7 @@ public class MMPublishActivity extends Activity implements OnClickListener{
 		{
 		   case R.id.publishButton:
 			   String content = ((EditText)findViewById(R.id.matterContent)).getText().toString().trim();
-				if(  content.length() < 20)
+				if(  content.length() < 1)
 				{
 					BaseContorl.doShowHToask(MMPublishActivity.this,"多说一点点吧!");
 					return ;
@@ -215,7 +215,8 @@ public class MMPublishActivity extends Activity implements OnClickListener{
 		   case R.id.imageButton:
 			   Intent intent = new Intent();  
                /* 开启Pictures画面Type设定为image */  
-               intent.setType("image/*");  
+               intent.setType("image/*");
+               intent.addCategory(Intent.CATEGORY_OPENABLE);
                /* 使用Intent.ACTION_GET_CONTENT这个Action */  
                intent.setAction(Intent.ACTION_GET_CONTENT);   
                /* 取得相片后返回本画面 */  

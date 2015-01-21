@@ -316,7 +316,7 @@ public class MMPreviewActivity extends Activity implements OnClickListener{
 				   break;
 			   case R.id.publishButton:
 				   String commentText = ((EditText)findViewById(R.id.commentText)).getText().toString().trim();
-					if(commentText.length() < 10)
+					if(commentText.length() < 1)
 					{
 						BaseContorl.doShowHToask(this,"多说一点点吧!");
 						return ;
